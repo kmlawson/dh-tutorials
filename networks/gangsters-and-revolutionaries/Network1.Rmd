@@ -21,13 +21,17 @@ output:
 
 There are a number of user friendly tools for visualizing networks out there which don't require any programming knowledge. These include [Cytoscape](http://cytoscape.org/) and [Gephi](https://gephi.org/), among others. The [language R](https://www.r-project.org/), however, has become a popular and powerful platform for data analysis, as well as the cleaning of data, visualization of texts, networks, and geographical information. R benefits from a large ecosystem of open source packages, and in recent years, a collection of them that have come to be known as the [Tidyverse](https://www.tidyverse.org/) has made the process of exploring data significantly easier. On the network analysis front, mature packages like `statnet` and `igraph` are joined by new ones including the pair `tidygraph` and `ggraph` to make it fairly easy to visualize and explore networks in R.
 
-This tutorial was decided for history students in a masters level skills module at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
+This tutorial was decided for history students in a masters level [skills module](https://github.com/kmlawson/skills-in-transnational-history) at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
 
-This website was created as an R Notebook which can be downloaded [here. You can run all of the code here in one go with cmd/ctrl-option-r or you can run code from  a single section using cmd/ctrl-shift-enter
+**Prerequisites:** My students working with this tutorial R Notebook have done a little bit of previous work with R and text analysis with material from *Text Mining with R* by Julia Silge & David Robinson, *Text Analysis with R for Students of Literature* by Matthew Jockers, and read some of *A User's Guide to Network Analysis in R* on `igraph` as well has having completed the DataCamp module [Introduction to the Tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse). I would suggest trying this tutorial if you have had a least some basic introduction to R and familiarity with RStudio.
 
-For this exercise you need the packages: readr igraph dplyr tibble ggplot2 ggraph tidygraph
+This website was created as an R Notebook which can be used if you have [R installed](https://www.r-project.org/) and open the file in [RStudio](https://www.rstudio.com/). You can download the files used in this tutorial [here in the github repository](https://github.com/kmlawson/dh-tutorials/tree/master/networks/gangsters-and-revolutionaries). If you open this notebook in RStudio, you will see the code and can run all of it in one go with cmd/ctrl-option-r. Alternatively, you can run code from a single section using cmd/ctrl-shift-enter. Many of the questions below ask you to see what happens when you tweak some of the code found here.
 
-Choose **"Install Packages..."** from the **Tools** menu and enter the above packages in separated by a space. After the packages are already installed (you may have had some of them already), then load them.
+For this exercise you need the packages: 
+
+readr dplyr fircats tibble ggplot2 ggraph tidygraph igraph
+
+In RStudio **"Install Packages..."** from the **Tools** menu and you can paste in the above list of packages separated as they are by a space and press **Install**. After the packages are installed (you may have had some of them already), then load them as follows:
 
 ```{r Load Libraries, message=FALSE}
 library(readr)
@@ -40,15 +44,9 @@ library(ggraph)
 library(tidygraph)
 ```
 
-```{r include=FALSE}
-# extrafont::loadfonts()
-# knitr::opts_chunk$set(dev='cairo_pdf')
-# options(encoding = 'UTF-8')
-```
-
 ## Importing the Data
 
-Great. Now we need to get our data into our network. Put the nodes.csv and edges.csv files that I have shared with you into the working directory where you should be keeping this notebook file (or set the working directory to the write place in the Session menu).
+Great. Now we need to get our data into our network. Put the [nodes.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/nodes.csv) and [edges.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/edges.csv) files that I have shared with you into the working directory where you should be keeping this notebook file (or set the working directory to the write place in the Session menu).
 
 We will now load the nodes into a nodes data frame and edges into an edges data frame. The "head" command with 10 as a parameter will give you a peak at the contents of each file.
 
@@ -61,9 +59,11 @@ head(edges,10)
 
 Notice that the nodes have age, nationality, location, mentions (let us say this is number of times they appear in some source or collection of sources). I have also an arbitrary binary discuss column where I have manually flagged up a few important characters I might want to emphasise.
 
+When preparing a collection of nodes and edges for network visualization it is usually best to have a column in the nodes table with unique id numbers that are used as a reference key to all other information about that agent. Then, in the edges table, you would see only the relevant id numbers, instead of the names. However, for this simple example, to increase the readability of the files as we learn the basics, I have chosen to use the given name the fictional individuals (there are just one or two real given names that fit the description of individuals for this network to add to the fun for East Asian historians) without any special id column.
+
 ## Creating a Simple Network
 
-Now we need to create a network object from our nodes and edges:
+Let us create a network object from our nodes and edges:
 
 ```{r Create Graph}
 my_network=graph_from_data_frame(d=edges,directed=TRUE,vertices=nodes)
