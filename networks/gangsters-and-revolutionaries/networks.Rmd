@@ -1,0 +1,457 @@
+---
+title: "Toilers and Gangsters"
+subtitle: "Simple Network Visualization with R for Historians"
+author: "Konrad M. Lawson"
+output:
+  html_document:
+    df_paged: paged
+    df_print: kable
+    highlight: monochrome
+    theme: cosmo
+    toc: yes
+    toc_depth: 4
+    toc_float: no
+  pdf_document:
+    toc: yes
+    toc_depth: '4'
+    latex_engine: xelatex
+---
+
+# Simple Network Visualisation with R 
+
+In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
+
+This is an R Notebook which can be . You can run all of the code here in one go with cmd/ctrl-option-r or you can run code from  a single section using cmd/ctrl-shift-enter
+
+For this exercise you need the packages: readr igraph dplyr tibble ggplot2 ggraph tidygraph
+
+Choose **"Install Packages..."** from the **Tools** menu and enter the above packages in separated by a space. After the packages are already installed (you may have had some of them already), then load them.
+
+```{r Load Libraries, message=FALSE}
+library(readr)
+library(igraph)
+library(dplyr)
+library(tibble)
+library(forcats)
+library(ggplot2)
+library(ggraph)
+library(tidygraph)
+```
+
+```{r include=FALSE}
+# extrafont::loadfonts()
+# knitr::opts_chunk$set(dev='cairo_pdf')
+# options(encoding = 'UTF-8')
+```
+
+## Importing the Data
+
+Great. Now we need to get our data into our network. Put the nodes.csv and edges.csv files that I have shared with you into the working directory where you should be keeping this notebook file (or set the working directory to the write place in the Session menu).
+
+We will now load the nodes into a nodes data frame and edges into an edges data frame. The "head" command with 10 as a parameter will give you a peak at the contents of each file.
+
+```{r Load Data, message=FALSE}
+nodes<-read_csv("nodes.csv")
+edges<-read_csv("edges.csv")
+head(nodes,20)
+head(edges,10)
+```
+
+Notice that the nodes have age, nationality, location, mentions (let us say this is number of times they appear in some source or collection of sources). I have also an arbitrary binary discuss column where I have manually flagged up a few important characters I might want to emphasise.
+
+## Creating a Simple Network
+
+Now we need to create a network object from our nodes and edges:
+
+```{r Create Graph}
+my_network=graph_from_data_frame(d=edges,directed=TRUE,vertices=nodes)
+```
+
+This creates an `igraph` network object, but it is a format that is easily understood by `ggraph` and most of its features. Later in this exercise we will convert this to a `tidygraph` tibble graph. For now, we can very easily create a simple graph diagram using the `ggraph()` command. It works in a very similar fashion to ggplot, which it is an expansion of. You tell it the network to use, assign a layout type, then add options. In this case we will simply add a geom_edge_link() which will give us the edges, and a geom_node_point() which will display points.
+
+```{r First Diagram}
+ggraph(my_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link() +
+	  # Add a node point geometry
+	  geom_node_point() 
+```
+
+This is very simple. We can see that it is placed on an x,y axis and looks like a kind of special ggplot diagram. There is lots of things we might want to do to improve this.
+
+## Adding Labels
+
+Let us start by adding labels to the graph. Under geom_node_point() we will add a geom_node_label(). The aesthetics we will give it are to connect its label to the name column of our nodes, set the font face.
+
+Then, back outside the aesthetics `aes()` we will set the transparency level to 60% (`alpha=0.6`). This may seem like somethign we would put inside the aesthetic, but because we are giving it a specific value, and not mapping it to our data, it goes outside. This will allow us to see any edge lines and nodes behind the label. 
+
+We also add the `repel = TRUE` here to help with the formatting of the location of the labels.
+
+```{r Add Labels}
+ggraph(my_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link() +
+	  # Add a node point geometry
+	  geom_node_point() +
+    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel=TRUE)
+```
+
+### Questions 1
+
+Try the following questions below.
+
+1. What happens if you remove the `repel=TRUE` (remember to cut out the trailing comma too)?
+2. How would you show the age instead of the name?
+3. What would you do if you wanted remove the nodes altogether and just use labels instead of nodes? Try this without transparency and removing the repel feature.
+
+## Adding a Theme
+
+Both ggplot and ggraph can work with "themes" that store lots of custom settings that we can apply to our graphs. You can store a theme in a function that calls the theme and then add that theme function to any graph you call. You might, for example, create several to match different purposes. See the [*R for Data Science*](https://r4ds.had.co.nz/) book, or *ggplot: Elegant Graphics for Data Analysis* or the DataCamp class [Communicating with Data in R (Tidyverse)](https://www.datacamp.com/courses/communicating-with-data-in-the-tidyverse) or just run `?theme` for more on themes.
+
+Let us create a theme to use for our graphs. They will make the background a light grey, extend the margins, remove the axis text, ticks, and titles. It will also remove all the grid lines. 
+
+```{r Theme}
+network_theme<- function() {
+  theme(
+    text=element_text(family="Times New Roman",face="bold"),
+    plot.background = element_rect(fill="gray95"),
+    plot.margin = unit(c(20,20,15,10), units="mm"),
+    axis.text = element_blank(),
+    axis.ticks = element_blank(),
+    axis.title = element_blank(),
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    panel.background = element_blank()
+  )
+}
+```
+
+We need only call `network_theme()` at the end of our graphs to apply these settings.
+
+Now in our next graph, notice the changes caused by our theme and no other changes:
+
+```{r Graph with Theme}
+ggraph(my_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link() +
+	  # Add a node point geometry
+	  geom_node_point() +
+    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel = TRUE) +
+    network_theme()
+```
+
+## Adding Labels and More
+
+Now let us begin adding some more things to our graph. Using the labs() function, we can add a title, a caption on the source of the data at the bottom right. Also in labs() we can rename the legend titles. Notice I use the escaped n character in one case to create a two line legend header. Notice that, in the case of the edge width, I had to use an "edge_" prefix before naming the legend header.
+
+We'll also make some other additions to our graph diagram. In the `geom_edge_link()` aesthetics, we will tell it to vary the width of the edgbe by the intensity column of our data. Then outside the aesthetics we will fix the color of the lines to a mid level grey.
+
+We can control the scale of the width with the `scale_edge_width()` function, which sets the range to a minimum of 0.2 in width and a maximum of 2, scaling the numbers to something within that range. 
+
+For our nodes, our `aes()` now scales the size of the node by the number of mentions in the sources, and the color of the nodes according to the nationality.
+
+```{r Labels and More}
+ggraph(my_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(aes(width = intensity),colour="grey50") +
+    # What happens when you change grey50 to grey20 or grey90? 
+    scale_edge_width(range = c(0.2, 2.0)) +
+	  # Add a node point geometry
+	  geom_node_point(aes(size=mentions,color=nationality)) +
+    labs(
+      width = "Weight",
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Source\nMentions",
+      color = "Nationality"
+    ) +
+    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel = TRUE) +
+    network_theme()
+```
+
+### Questions 2
+
+1. How would you change the code so that the transparency varied according to mentions?
+2. How would you vary the color by location rather than nationality?
+
+## Showing Direction with Arrows
+
+We have a directed network. You can add arrows to the `geom_edge_link()` as below. Notice I also switched from width to transparency to show varying intensity and instead of showing nationality with node color, now show the gender.
+
+```{r Directed Network Arrows}
+ggraph(my_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(arrow = arrow(length = unit(1.5, 'mm')), 
+                   end_cap = circle(1.3, 'mm'), aes(alpha = intensity)) +
+    # What happens when you change the 1.5 in the length? or the 1.5 in the end_cap circle?
+    scale_edge_width(range = c(0.2, 2.5), guide=FALSE) +
+	  # Add a node point geometry
+	  geom_node_point(aes(size=mentions,color=factor(gender))) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Source\nMentions",
+      color = "Gender",
+      edge_alpha = "Weight"
+    ) +
+    # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
+    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    # Try changing geom_node_label to geom_node_text above. What happens?
+    network_theme()
+```
+
+### Questions 3
+
+1. Change the code so that instead of varying the size of the node by the number of source mentions, it adjusts the size by the **discuss** column of the node table. This is a number 0 or 1. 
+
+2. In the scale command for the `geom_node_point`, scale the size from 2 to 8 by adding a `scale_size()` 
+
+## Creating a Subgraph by Filtering on an Edge attribute
+
+One of the variables we have that we haven't used is the kind column in the node data, which is a number from 1-3. What if we wanted to create a second diagram that only shows those relationships which are of kind 3? 
+
+The `tidygraph` library has a nice `activate()` method that allows you to manipulate nodes and edges or filter them in various ways. Instead of calling `activate(edges)` before manipulating edges, there is also a nice shortcut, with `%E>%` instead of the usual pipe or `%N>%` to work with your nodes. For this we need to take our `igraph` network and convert it to a `tbl_graph` with `as_tbl_graph()` and then we can use the `filter()` command to find just the edges which have a `kind==3`. If graphed this immediately, we would see the filtered edges, but also a number of isolated nodes no longer connected to the rest of the graph. We can activate the node layer and then filter out the isolated nodes with `filter(!node_is_isolated())`.
+
+
+```{r Kind Equals Three}
+as_tbl_graph(my_network) %E>%
+  filter(kind==3)  %N>%
+  filter(!node_is_isolated()) %>%
+  ggraph(layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(arrow = arrow(length = unit(1.5, 'mm')), 
+                   end_cap = circle(1.5, 'mm'), aes(alpha = intensity)) +
+    # What happens when you change the 1.5 in the length? or the 1.5 in the end_cap circle?
+    scale_edge_width(range = c(0.2, 2.5), guide=FALSE) +
+	  # Add a node point geometry
+	  geom_node_point(aes(size=mentions,color=nationality)) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Source\nMentions",
+      color = "Nationality",
+      edge_alpha = "Weight"
+    ) +
+    # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
+    geom_node_label((aes(label = name, family="serif")), alpha=0.4, show.legend=FALSE, repel = TRUE) +
+    # Try changing geom_node_label to geom_node_text above. What happens?
+    network_theme()
+```
+
+### Questions 4
+
+1. Go back and change the filter to look only for edges of kind 2, then again for kind 1. 
+2. Instead of filtering by kind, create a graph diagram of only the people based in Tokyo, or only the Koreans in the network. 
+3. How would you create a subgraph showing only those whose relationship `year_start` was before 1890 and `year_end` after 1910? You can do this with two filter commands, or with a compound `&` statement.
+
+## Community Detection
+
+Network scientists have developed a variety of algorithms to detect communities in a network. While the analytical value of this algorithmically derived grouping in the context of historical research may be limited, for larger networks, it can help you identify clusters to explore. For more on this read the chapter on "Subgroups" in the book *A User's Guide to Network Analysis in R*. The `tidygraph` package inherits many of the community detection algorithms imbedded into `igraph` and makes them available to us, including Edge-betweenness (`group_edge_betweenness`), Leading eigenvector (`group_leading_eigen`), Fast-greedy (`group_fast_greedy`), Louvain (`group_louvain`), Walktrap (`group_walktrap`), Label propagation (`group_label_prop`), InfoMAP (`group_infomap`), Spinglass (`group_spinglass`), and Optimal (`group_optimal`). Some community algorithms are designed to take into account direction or weight, while others ignore it. Below we try Walktrap, which is not, in fact, designed for directed networks, but try comparing its results with other community detection algorithms and note the differences. 
+
+```{r}
+as_tbl_graph(my_network) %>% 
+  to_undirected() %>%
+  mutate(community = as.factor(group_walktrap())) %>% 
+  ggraph(layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(aes(alpha = intensity), show.legend = FALSE) +
+    # No longer need the arrow because we have made our graph undirected  
+    scale_edge_width(range = c(0.2, 2.5), guide=FALSE) +
+	  geom_node_point(aes(size=mentions, color=community)) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Source\nMentions",
+      color = "Community"
+    ) +
+    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    network_theme()
+```
+
+### Questions 5
+
+1. Had you done so manually, would you have divided up the graph into "communities" along these lines? Which assignments by the algorithm look out of place to you?
+2. Try the other community detection algorithms and compare the results.
+
+## Other Layouts
+
+Up until now we have been using the Kamada-Kawai layout algorithm to determine the look of our network. There are a range of the other layouts you can create with the replacement of the layout type.
+
+Below see our graph with the Fruchterman-Reingold layout.
+
+```{r message=FALSE}
+ggraph(my_network, layout = "fr") +
+	  # Add an edge link geometry
+	  geom_edge_link(arrow = arrow(length = unit(1.5, 'mm')), 
+                   end_cap = circle(1.5, 'mm'), aes(alpha = intensity)) +
+    # What happens when you change grey50 to grey20 or grey90? 
+    scale_edge_width(range = c(0.2, 2.0)) +
+	  geom_node_point(aes(size=mentions,color=nationality)) +
+    scale_size(range = c(2,10)) +
+    labs(
+      edge_width= "Weight",
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Source\nMentions",
+      color = "Nationality",
+      width = "Test"
+    ) +
+    geom_node_label((aes(label = name, family="serif",alpha=0.6)), show.legend=FALSE, repel = TRUE) +
+    network_theme()
+```
+
+There is also a "circular" layout, which takes a bit more tweaking of the parameters and size to get it to fit well:
+
+```{r  fig.width=5.5}
+ggraph(my_network, layout = "linear",  circular = TRUE) + 
+  geom_edge_arc(aes(width = intensity), alpha = 0.8) + 
+  scale_edge_width(range = c(0.2, 1)) +
+  geom_node_label(aes(label = name), size=2.2) +
+  labs(edge_width = "Weight") +
+  theme_graph() +
+  theme(legend.position="bottom")
+```
+
+### Questions 6 Playing with the Layouts
+
+1. Try replacing the `layout=""` to the following possible layouts: `sugiyama`,`star`,`dh`,`gem`,`graphopt`,`drl` and compare the results.
+2. Why did I add the `fig.width=5` option used in the case of the circular layout in the declration of the r code section. What happens if you remove it?
+3. Why did I hard code the font size `, size=2.2` outside of the `aes()` for the `geom_node_label()`? What happens if you cut that out?
+4. What happens if you add another ggplot option (don't forget the + on the end of the previous line!) with `coord_cartesian(xlim=c(-1.5,1.5),ylim=c(-1.5,1.5))`
+5. How could I colour the labels by the nationality of the nodes? By the location of the members?
+6. How could I set it so that the size of the labels changes according to the age of the members of the network?
+7. How could I limit the range of the size of the fonts from sizes 2 to 4?
+
+## Adding Some Network Analysis
+
+Although we have been using the ggraph package to visualise our network, the graph itself is an igraph object and can take advantage of all the analytical tools in igraph:
+
+Look how easy it is to add columns, using our trusty dplyr `mutate()` to add columes with the betweenness, closeness, and eigenvector centrality computed for our nodes, together with the total, in, and out degrees.
+
+```{r Analyse Network, warning=FALSE}
+nodes_analysis<- nodes %>% 
+  mutate(between=betweenness(my_network, directed=FALSE),
+         degree_all=degree(my_network,mode="all"),
+         degree_in=degree(my_network,mode="in"),
+         degree_out=degree(my_network,mode="out"),
+         closeness=closeness(my_network),
+         eigenvector=evcent(my_network)$vector)
+```
+
+**Note:** *If your graph is in `tidygraph` you can also use the wide variety of  `centrality_` prefixed functions.*
+
+We can do a quick comparison of in, out and total degree of the nodes, which measures the outgoing and incoming relationships, or their total, minus any overlapping edges. Notice I used the fct_reorder() function from the forcats library to re-sort the names by their total degree (degree_all). Comment out that line to see what happens to the graph.
+
+```{r Degree Comparisons}
+nodes_analysis %>%
+  mutate(person = fct_reorder(person, degree_all)) %>%
+  ggplot() +
+    geom_point(aes(x=degree_in,y=person, color="In Degree")) + # , color="khaki2"
+    geom_point(aes(x=degree_out,y=person, color="Out Degree")) + # , color="cadetblue3"
+    geom_point(aes(x=degree_all,y=person,size=eigenvector, color="Total Degree")) + # ,color="darkslategrey"
+  scale_size(range=c(0.3,4)) +
+  labs(
+	    x = "In and Degree",
+	    y = "Name",
+	    color = "Degrees",
+	    title = "Degrees and Total Degrees with Eigenvector Centrality",
+	    subtitle = "As Seen in Toilers and Gangsters Network",
+	    caption = "Total degree is sum of in & out minus doubled counted edges.",
+	    size = "Eigenvector\nCentrality"
+	  )
+```
+
+With this data we could easily plot the relationship between various kinds of centrality. Betweenness centrality is a measure of the degree to which a node is a gatekeeper to other nodes. How many of the shortest paths between nodes must pass through a given node? Eigenvector centrality tries to judge the importance of a node by the relative connectivity of its neighbors. Read more about it [here](https://www.sci.unich.it/~francesc/teaching/network/eigenvector.html). Let us compare the two in our own network:
+
+```{r Explore Betweenness and Eigenvector}
+nodes_analysis %>%
+  ggplot() +
+    geom_point(aes(x=between,y=eigenvector,size=degree_all)) +
+    labs(
+	    x = "Betweenness",
+	    y = "Eigenvector Centrality",
+	    title = "Relationship between Betweenness and Eigenvector Centrality ",
+	    subtitle = "As Seen in Toilers and Gangsters Network",
+	    size = "Node\nDegree"
+	  )
+```
+
+How about the relationship bewteen Eigenvector centrality and another measure, closeness centrality. Closeness centrality is a measure of how close a given node is to all the other nodes.
+
+```{r Explore Closeness and Eigenvector}
+nodes_analysis %>%
+  ggplot() +
+    geom_point(aes(x=closeness,y=eigenvector,size=degree_all)) +
+    labs(
+	    x = "Closeness Centrality",
+	    y = "Eigenvector Centrality",
+	    title = "Relationship between Closeness and Eigenvector Centrality ",
+	    subtitle = "As Seen in Toilers and Gangsters Network",
+	    size = "Node\nDegree"
+	  )
+```
+
+Now that we have all this information, we can also now redo our network graph using any of these measures. Let us get a network graph that incorporates all the new variables we had added to the node table:
+
+```{r}
+my_analysed_network=graph_from_data_frame(d=edges,directed=TRUE,vertices=nodes_analysis)
+```
+
+For example, here is a graph diagram with the size of the node changed to indicate its betweenness.
+
+```{r Graph Betweenness}
+ggraph(my_analysed_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(arrow = arrow(length = unit(1.5, 'mm')), 
+                   end_cap = circle(1.5, 'mm'), aes(alpha = intensity)) +
+    # What happens when you change the 1.5 in the length? or the 1.5 in the end_cap circle?
+    scale_edge_width(range = c(0.2, 2.5), guide=FALSE) +
+	  # Add a node point geometry
+	  geom_node_point(aes(size=between,color=nationality)) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      size = "Betweenness",
+      color = "Nationality",
+      edge_alpha = "Weight"
+    ) +
+    # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
+    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    # Try changing geom_node_label to geom_node_text above. What happens?
+    network_theme()
+```
+
+### Questions 7
+
+1. How would you change this to colour by location, but size by closeness centrality? Or eigenvector centrality?
+2. How would you create a ggplot that showed the relationship between betweenness centrality and the mentions in the sources?
+3. Challenge: How would you create a ggplot that visualized the comparison of the average betweenness of women in the network compared to men?
+4. Challenge: What steps would you need to go through to compare the total density (ratio of the number of the edges vs. possible edges) of the members of the network in each of the three nationalities? What about in each location? How could you plot this in a simple bar graph? You may have to do some exploring in the documentation for `igraph` or `ggraph`
+
+
+This should give you a good start at creating network graph diagrams using R. See some of these resources for more:
+
+## Books
+
+Luke, Douglas A. *A User’s Guide to Network Analysis in R*. 1st ed. 2015 edition. Cham Hildesheim New York: Springer, 2015.
+
+Wickham, Hadley. *Ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016.
+
+Scott, John. *Social Network Analysis*. 3rd ed., 2013.
+
+Scott, John, and Peter J. Carrington, eds. *The SAGE Handbook of Social Network Analysis*. London ; Thousand Oaks, Calif: SAGE, 2011.
+
+Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and Applications*. Cambridge University Press, 1994.
+
+
+
+- [Jesse Sadler's Tutorial on ggraph](https://www.jessesadler.com/post/network-analysis-with-r/)
+- Douglas Luke's *A User's Guide to Network Analysis in R* - Uses statnet and igraph but also shows how to convert between them. Unfortunately, all plots are with base R plots, rather than ggplot.
+- [Network Science in R - A Tidy Approach](https://www.datacamp.com/courses/network-science-in-r-a-tidy-approach) - Massimo Franceschet's course uses ggraph and igraph and makes use of more advanced approaches. See his useful collection of materials on his syllabus [Dear Network Science](https://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/syllabus.html)
+- [Thomas Lin Pederson's Blog](https://www.data-imaginist.com/tags/ggraph/) - postings by the author of the ggraph package related to it.
+- [An Introduction to Ggraph](http://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/make/ggraph/ggraph.html) 
+- [Another Game of Thrones network analysis – this time with tidygraph and ggraph](https://www.r-bloggers.com/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/)
+- [Katherine Ognyanova's Fantastic igraph Overview](http://kateto.net/netscix2016) - Really nice and extensive exploration of igraph features.
+- [igraph](http://igraph.org/r/) - The homepage and documentation for igraph on R. Also available on Python.
+
+*This was written with the help of various books mentioned above, but mostly thanks to 40-60 google searches, with the answers found generally on the websites above, Stack Overflow, and obscure online bulletin boards.*

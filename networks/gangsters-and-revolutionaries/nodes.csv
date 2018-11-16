@@ -1,0 +1,32 @@
+person,location,age,nationality,mentions,discuss,gender
+Tomohiko,Tokyo,22,Japan,14,1,m
+Kyoungmin,Seoul,55,Korea,12,0,m
+Jiurong,Shanghai,44,China,3,0,f
+Sangok,Pusan,33,Korea,5,0,m
+Yoshinobu,Tokyo,66,Japan,67,1,m
+Wei,Qingdao,57,China,30,1,f
+Songbae,Seoul,36,Korea,26,0,m
+Minjun,Pusan,55,Korea,4,0,m
+Hayun,Pusan,22,Korea,2,0,m
+Minjae,Pusan,30,Korea,12,0,m
+Hyŏnu ,Pusan,21,Korea,7,0,m
+Hyejin,Pusan,18,Korea,9,0,f
+Sunja,Pusan,21,Korea,1,0,f
+Chŏngsu ,Taegu,20,Korea,22,1,m
+Yŏngsik,Taegu,35,Korea,1,0,m
+Pyŏngho,Taegu,31,Korea,3,0,m
+Guiying,Harbin,28,China,6,1,f
+Xiuying,Harbin,24,China,14,0,f
+Guoran,Dalian,22,China,7,1,m
+Yŏngsu,Tokyo,31,Korea,34,0,f
+Yōsuke,Nagoya,26,Japan,10,0,m
+Kei,Osaka,24,Japan,3,0,m
+Senjūrō,Kagoshima,35,Japan,1,0,m
+Masahirō,Kagoshima,41,Japan,1,0,m
+Takamasa,Kōchi,45,Japan,4,0,m
+Michiō,Niigata,37,Japan,1,0,m
+Kanno,Osaka,32,Japan,44,1,f
+Fumiko,Seoul,29,Japan,31,1,f
+Kikue,Tokyo,40,Japan,14,0,f
+Zhen,Yizheng,30,China,29,1,f
+Jongmyung,Seoul,23,Korea,10,0,f
