@@ -19,9 +19,11 @@ output:
 
 # Simple Network Visualisation with R 
 
-In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
+There are a number of user friendly tools for visualizing networks out there which don't require any programming knowledge. These include [Cytoscape](http://cytoscape.org/) and [Gephi](https://gephi.org/), among others. The [language R](https://www.r-project.org/), however, has become a popular and powerful platform for data analysis, as well as the cleaning of data, visualization of texts, networks, and geographical information. R benefits from a large ecosystem of open source packages, and in recent years, a collection of them that have come to be known as the [Tidyverse](https://www.tidyverse.org/) has made the process of exploring data significantly easier. On the network analysis front, mature packages like `statnet` and `igraph` are joined by new ones including the pair `tidygraph` and `ggraph` to make it fairly easy to visualize and explore networks in R.
 
-This is an R Notebook which can be . You can run all of the code here in one go with cmd/ctrl-option-r or you can run code from  a single section using cmd/ctrl-shift-enter
+This tutorial was decided for history students in a masters level skills module at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
+
+This website was created as an R Notebook which can be downloaded [here. You can run all of the code here in one go with cmd/ctrl-option-r or you can run code from  a single section using cmd/ctrl-shift-enter
 
 For this exercise you need the packages: readr igraph dplyr tibble ggplot2 ggraph tidygraph
 
@@ -435,7 +437,7 @@ This should give you a good start at creating network graph diagrams using R. Se
 
 Luke, Douglas A. *A User’s Guide to Network Analysis in R*. 1st ed. 2015 edition. Cham Hildesheim New York: Springer, 2015.
 
-Wickham, Hadley. *Ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016.
+Wickham, Hadley. *ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016.
 
 Scott, John. *Social Network Analysis*. 3rd ed., 2013.
 
@@ -453,5 +455,8 @@ Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and A
 - [Another Game of Thrones network analysis – this time with tidygraph and ggraph](https://www.r-bloggers.com/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/)
 - [Katherine Ognyanova's Fantastic igraph Overview](http://kateto.net/netscix2016) - Really nice and extensive exploration of igraph features.
 - [igraph](http://igraph.org/r/) - The homepage and documentation for igraph on R. Also available on Python.
+- [Historical Network Research](http://historicalnetworkresearch.org/bibliography/) - An extensive bibliography. Especially good resource for looking at examples of historical scholarhip that use network science
+- [Awesome Network Analysis](https://github.com/briatte/awesome-network-analysis) - Nice collection of books and resources.
+- [Using Metadata to Find Paul Revere](https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/) - A fun way to introduce history lovers to the potential of SNA in historical research.
 
 *This was written with the help of various books mentioned above, but mostly thanks to 40-60 google searches, with the answers found generally on the websites above, Stack Overflow, and obscure online bulletin boards.*
