@@ -21,7 +21,7 @@ output:
 
 There are a number of user friendly tools for visualizing networks out there which don't require any programming knowledge. These include [Cytoscape](http://cytoscape.org/) and [Gephi](https://gephi.org/), among others. The [language R](https://www.r-project.org/), however, has become a popular and powerful platform for data analysis, as well as the cleaning of data, visualization of texts, networks, and geographical information. R benefits from a large ecosystem of open source packages, and in recent years, a collection of them that have come to be known as the [Tidyverse](https://www.tidyverse.org/) has made the process of exploring data significantly easier. On the network analysis front, mature packages like `statnet` and `igraph` are joined by new ones including the pair `tidygraph` and `ggraph` to make it fairly easy to visualize and explore networks in R.
 
-This tutorial was decided for history students in a masters level [skills module](https://github.com/kmlawson/skills-in-transnational-history) at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
+This tutorial was designed for history students in a masters level [skills module](https://github.com/kmlawson/skills-in-transnational-history) at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
 
 **Prerequisites:** My students working with this tutorial R Notebook have done a little bit of previous work with R and text analysis with material from *Text Mining with R* by Julia Silge & David Robinson, *Text Analysis with R for Students of Literature* by Matthew Jockers, and read some of *A User's Guide to Network Analysis in R* on `igraph` as well has having completed the DataCamp module [Introduction to the Tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse). I would suggest trying this tutorial if you have had a least some basic introduction to R and familiarity with RStudio.
 
@@ -69,7 +69,7 @@ Let us create a network object from our nodes and edges:
 my_network=graph_from_data_frame(d=edges,directed=TRUE,vertices=nodes)
 ```
 
-This creates an `igraph` network object, but it is a format that is easily understood by `ggraph` and most of its features. Later in this exercise we will convert this to a `tidygraph` tibble graph. For now, we can very easily create a simple graph diagram using the `ggraph()` command. It works in a very similar fashion to ggplot, which it is an expansion of. You tell it the network to use, assign a layout type, then add options. In this case we will simply add a geom_edge_link() which will give us the edges, and a geom_node_point() which will display points.
+This creates an `igraph` network object, but it is a format that is easily understood by `ggraph` and most of its features. Later in this exercise we will convert this to a `tidygraph` tibble graph. For now, we can very easily create a simple graph diagram using the `ggraph()` command. It works in a very similar fashion to `ggplot`, which it is an expansion of. You tell it the network to use, assign a layout type, then add options. In this case we will simply add a geom_edge_link() which will give us the edges, and a geom_node_point() which will display points.
 
 ```{r First Diagram}
 ggraph(my_network, layout = "kk") +
@@ -144,7 +144,7 @@ ggraph(my_network, layout = "kk") +
 
 ## Adding Labels and More
 
-Now let us begin adding some more things to our graph. Using the labs() function, we can add a title, a caption on the source of the data at the bottom right. Also in labs() we can rename the legend titles. Notice I use the escaped n character in one case to create a two line legend header. Notice that, in the case of the edge width, I had to use an "edge_" prefix before naming the legend header.
+Now let us begin adding some more things to our graph. Using the `labs()` function, we can add a title, a caption on the source of the data at the bottom right. Also in `labs()` we can rename the legend titles. Notice I use the escaped n character in one case to create a two line legend header. Notice that, in the case of the edge width, I had to use an "edge_" prefix before naming the legend header.
 
 We'll also make some other additions to our graph diagram. In the `geom_edge_link()` aesthetics, we will tell it to vary the width of the edgbe by the intensity column of our data. Then outside the aesthetics we will fix the color of the lines to a mid level grey.
 
@@ -155,17 +155,17 @@ For our nodes, our `aes()` now scales the size of the node by the number of ment
 ```{r Labels and More}
 ggraph(my_network, layout = "kk") +
 	  # Add an edge link geometry
-	  geom_edge_link(aes(width = intensity),colour="grey50") +
+	  geom_edge_link(aes(width=intensity),colour="grey50") +
     # What happens when you change grey50 to grey20 or grey90? 
     scale_edge_width(range = c(0.2, 2.0)) +
 	  # Add a node point geometry
 	  geom_node_point(aes(size=mentions,color=nationality)) +
     labs(
-      width = "Weight",
       title = "Toilers and Gangsters, 1860-1950",
       caption = "Data from the 'Toilers and Gangsters' public dataset",
       size = "Source\nMentions",
-      color = "Nationality"
+      color = "Nationality",
+      edge_width = "Weight"
     ) +
     geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel = TRUE) +
     network_theme()
@@ -296,7 +296,7 @@ ggraph(my_network, layout = "fr") +
       caption = "Data from the 'Toilers and Gangsters' public dataset",
       size = "Source\nMentions",
       color = "Nationality",
-      width = "Test"
+      edge_width = "Weight"
     ) +
     geom_node_label((aes(label = name, family="serif",alpha=0.6)), show.legend=FALSE, repel = TRUE) +
     network_theme()
@@ -447,16 +447,19 @@ Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and A
 
 
 
-- [Jesse Sadler's Tutorial on ggraph](https://www.jessesadler.com/post/network-analysis-with-r/)
+- [Jesse Sadler's Tutorial on ggraph](https://www.jessesadler.com/post/network-analysis-with-r/) - This tutorial is a wonderful alternative to what you have done here, and has the advantage of working on a real historical dataset. See also Jesse Sadler's numerous other informative posts and tutorials.
 - Douglas Luke's *A User's Guide to Network Analysis in R* - Uses statnet and igraph but also shows how to convert between them. Unfortunately, all plots are with base R plots, rather than ggplot.
 - [Network Science in R - A Tidy Approach](https://www.datacamp.com/courses/network-science-in-r-a-tidy-approach) - Massimo Franceschet's course uses ggraph and igraph and makes use of more advanced approaches. See his useful collection of materials on his syllabus [Dear Network Science](https://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/syllabus.html)
 - [Thomas Lin Pederson's Blog](https://www.data-imaginist.com/tags/ggraph/) - postings by the author of the ggraph package related to it.
 - [An Introduction to Ggraph](http://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/make/ggraph/ggraph.html) 
-- [Another Game of Thrones network analysis – this time with tidygraph and ggraph](https://www.r-bloggers.com/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/)
+- [Another Game of Thrones network analysis – this time with tidygraph and ggraph](https://www.r-bloggers.com/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/) - A fun tutorial walking through the use og ggraph on the characters of this popular series.
 - [Katherine Ognyanova's Fantastic igraph Overview](http://kateto.net/netscix2016) - Really nice and extensive exploration of igraph features.
 - [igraph](http://igraph.org/r/) - The homepage and documentation for igraph on R. Also available on Python.
 - [Historical Network Research](http://historicalnetworkresearch.org/bibliography/) - An extensive bibliography. Especially good resource for looking at examples of historical scholarhip that use network science
 - [Awesome Network Analysis](https://github.com/briatte/awesome-network-analysis) - Nice collection of books and resources.
 - [Using Metadata to Find Paul Revere](https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/) - A fun way to introduce history lovers to the potential of SNA in historical research.
+- ["Demystifying Networks"](http://journalofdigitalhumanities.org/1-1/demystifying-networks-by-scott-weingart/) - A classic introduction from Scott Weingart, see also several posts in this series. 
+- [Miriam Posner's Glossary of Social Network Analysis](https://github.com/miriamposner/network_analysis_workshop/blob/master/Social%20Network%20Analysis%20Glossary.docx?raw=true) - See also Miriam Posner's [cytoscape tutorials](https://github.com/miriamposner/cytoscape_tutorials) which are the best out there for using cytoscape in the humanities.
+- [If Everything is a Network, Nothing is a Network](https://visualisingadvocacy.org/blog/if-everything-network-nothing-network) by  Mushon Zer-Aviv
 
-*This was written with the help of various books mentioned above, but mostly thanks to 40-60 google searches, with the answers found generally on the websites above, Stack Overflow, and obscure online bulletin boards.*
+*This R Notebook was written with the help of various books and tutorials mentioned above, but mostly thanks to 40-60 google searches, with the answers found generally on the websites above, Stack Overflow, and obscure online bulletin boards.*
