@@ -30,7 +30,7 @@ This tutorial was designed for history students in a masters level [skills modul
 
 **Prerequisites:** My students working with this tutorial R Notebook have done a little bit of previous work with R and text analysis with material from *Text Mining with R* by Julia Silge & David Robinson, *Text Analysis with R for Students of Literature* by Matthew Jockers, and read some of *A User's Guide to Network Analysis in R* on `igraph` as well has having completed the DataCamp module [Introduction to the Tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse). I would suggest trying this tutorial if you have had a least some basic introduction to R and familiarity with RStudio.
 
-This website, which adapts material from Jesse Sadler and Douglas A. Luke, among others (see the bibliography below). was created as an R Notebook which can be used if you have [R installed](https://www.r-project.org/) and open the file in [RStudio](https://www.rstudio.com/). You can download the files used in this tutorial [here in the github repository](https://github.com/kmlawson/dh-tutorials/tree/master/networks/gangsters-and-revolutionaries). If you open this notebook in RStudio, you will see the code and can run all of it in one go with cmd/ctrl-option-r. Alternatively, you can run code from a single section using cmd/ctrl-shift-enter. Many of the questions below ask you to see what happens when you tweak some of the code found here.
+This tutorial is inspired by or adapts material by Jesse Sadler and Douglas A. Luke, among others (see the bibliography below). It was created as an "R Notebook"" which can be used by anyone directly if you have [R installed](https://www.r-project.org/) and open the file in [RStudio](https://www.rstudio.com/). You can download the files used in this tutorial [here in the github repository](https://github.com/kmlawson/dh-tutorials/tree/master/networks/gangsters-and-revolutionaries). If you open this notebook in RStudio, you will see the code and can run all of it in one go with cmd/ctrl-option-r. Alternatively, you can run code from a single section using cmd/ctrl-shift-enter. Many of the questions below ask you to see what happens when you tweak some of the code found here.
 
 For this exercise you need the packages: 
 
@@ -57,12 +57,12 @@ library(scales)
 
 Great. Now we need to get our data into our network. Put the [nodes.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/nodes.csv) and [edges.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/edges.csv) files that I have shared with you into the working directory where you should be keeping this notebook file (or set the working directory to the write place in the Session menu).
 
-We will now load the nodes into a nodes data frame and edges into an edges data frame. The "head" command with 10 as a parameter will give you a peak at the contents of each file.
+We will now load the nodes into a nodes data frame and edges into an edges data frame. The `head()` command with 10 as a parameter will give you a peak at the contents of each file.
 
 ```{r Load Data, message=FALSE}
 nodes<-read_csv("nodes.csv")
 edges<-read_csv("edges.csv")
-head(nodes,20)
+head(nodes,10)
 head(edges,10)
 ```
 
@@ -292,7 +292,7 @@ Let us import a list of edges between individuals and organisations.
 
 ```{r Import Organisation Edges, message=FALSE}
 affiliations<-read_csv("org-edges.csv")
-affiliations
+head(affiliations,10)
 ```
 
 We have now a table with relationships between indivdiuals and organisations, but it would be nice to create a merged node table which joins all the attribute information from organisations, which includes the location of the organisations' headquarters, and all the attribute data for individuals. We can use `full_join()` for this.
@@ -302,7 +302,7 @@ We have now a table with relationships between indivdiuals and organisations, bu
 org_nodes<-read_csv("orgs.csv") # Orgs have a name, but also a HQ location
 
 merged_nodes<-full_join(nodes,org_nodes,by = c("person" = "Name"))
-merged_nodes
+tail(merged_nodes,20)
 ```
 
 Now we can create a network object from this merged information. In order to keep track of what nodes are part of each mode (individuals or organisations) we'll add a `type` column to the node data that will get a `TRUE` value if it is one of the organisations.
@@ -412,7 +412,6 @@ prep<- affiliations %>%
   mutate(from=From,to=To,kind=4,intensity=1,year_start=NA,year_end=NA) %>%
   select(from,to,kind,intensity,year_start,year_end)
 merged_edges<- bind_rows(edges,prep)
-merged_edges
 ```
 Now let us create a new network object with this merged edge table and our previously merged node table and plot the results:
 
@@ -665,7 +664,7 @@ This is not only useful for you to embed any of the graphs seen here in a separa
 
 The following `ggsave()` command, for example, will save the last plot you have made to the disk as `plot.svg` which is zoom independent in its resolution, and a second version saved as a `png` file but with a fixed size:
 
-```{r Saving Plots}
+```{r Saving Plots, messages=FALSE}
 ggsave("plot.svg",plot=last_plot(),device="svg")
 # Will save the plot to the working directory of R Studio
 ggsave("plot.png",plot=last_plot(),device="png", width=20, height=20, units="cm")
@@ -688,8 +687,6 @@ Scott, John. *Social Network Analysis*. 3rd ed., 2013. - A great introductory te
 Scott, John, and Peter J. Carrington, eds. *The SAGE Handbook of Social Network Analysis*. London ; Thousand Oaks, Calif: SAGE, 2011.
 
 Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and Applications*. Cambridge University Press, 1994. - The classic text in the field which devles into the mathamatical foundations of graph theory.
-
-
 
 ### Online Tutorials and Resources
 
