@@ -7,7 +7,7 @@ output:
     df_paged: paged
     df_print: kable
     highlight: monochrome
-    code_folding: hide
+    code_folding: show
     theme: cosmo
     toc: yes
     toc_depth: 4
