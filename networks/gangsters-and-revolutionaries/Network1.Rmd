@@ -104,7 +104,7 @@ ggraph(my_network, layout = "kk") +
 	  geom_edge_link() +
 	  # Add a node point geometry
 	  geom_node_point() +
-    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel=TRUE)
+    geom_node_label(aes(label = name),family="serif", alpha=0.6, repel=TRUE)
 ```
 
 ### Questions 1
@@ -124,7 +124,7 @@ Let us create a theme to use for our graphs. They will make the background a lig
 ```{r Theme}
 network_theme<- function() {
   theme(
-    text=element_text(family="Times New Roman",face="bold"),
+    text=element_text(family="serif",face="bold"),
     plot.background = element_rect(fill="gray95"),
     plot.margin = unit(c(20,20,15,10), units="mm"),
     axis.text = element_blank(),
@@ -147,7 +147,7 @@ ggraph(my_network, layout = "kk") +
 	  geom_edge_link() +
 	  # Add a node point geometry
 	  geom_node_point() +
-    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif", alpha=0.6, repel = TRUE) +
     network_theme()
 ```
 
@@ -176,7 +176,7 @@ ggraph(my_network, layout = "kk") +
       color = "Nationality",
       edge_width = "Weight"
     ) +
-    geom_node_label((aes(label = name, family="serif")), alpha=0.6, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif", alpha=0.6, repel = TRUE) +
     network_theme()
 ```
 
@@ -206,7 +206,7 @@ ggraph(my_network, layout = "kk") +
       edge_alpha = "Weight"
     ) +
     # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
-    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif",alpha=0.6, repel = TRUE) +
     # Try changing geom_node_label to geom_node_text above. What happens?
     network_theme()
 ```
@@ -244,7 +244,7 @@ as_tbl_graph(my_network) %E>%
       edge_alpha = "Weight"
     ) +
     # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
-    geom_node_label((aes(label = name, family="serif")), alpha=0.4, show.legend=FALSE, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif", alpha=0.4, show.legend=FALSE, repel = TRUE) +
     # Try changing geom_node_label to geom_node_text above. What happens?
     network_theme()
 ```
@@ -275,7 +275,7 @@ as_tbl_graph(my_network) %>%
       size = "Source\nMentions",
       color = "Community"
     ) +
-    geom_node_label((aes(label = name)),family="serif",alpha=0.6, repel = TRUE) +
+    geom_node_label(aes(label = name),family="serif",alpha=0.6, repel = TRUE) +
     network_theme()
 ```
 
@@ -393,7 +393,7 @@ ggraph(org_projection, layout = "kk") +
       shape = "Person or\nOrganization",
       color = "Organization"
     ) +
-    geom_node_label((aes(label = name)), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
     network_theme()
 ```
 
@@ -416,7 +416,7 @@ merged_edges
 ```
 Now let us create a new network object with this merged edge table and our previously merged node table and plot the results:
 
-```{r One Plot To Rule Them All, fig.width=15, warning=FALSE}
+```{r One Plot To Rule Them All, warning=FALSE}
 fully_merged=graph_from_data_frame(d=merged_edges,directed=TRUE,vertices=merged_nodes)
 V(fully_merged)$type<-V(fully_merged)$name  %in% org_nodes$Name
 
@@ -437,6 +437,8 @@ ggraph(fully_merged, layout = "kk") +
     geom_node_label((aes(label = ifelse(type==0,as.character(name),""))), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
     network_theme()
 ```
+
+This plot includes too much information to communicate its contents clearly at this size. If you plan on creating complex plots, I suggest you use `ggsave()` (see below) to export large versions of the graph after playing with the figure widths and heights.
 
 ## Other Layouts
 
@@ -461,7 +463,7 @@ ggraph(my_network, layout = "fr") +
       color = "Nationality",
       edge_width = "Weight"
     ) +
-    geom_node_label((aes(label = name)), family="serif",alpha=0.6, show.legend=FALSE, repel = TRUE) +
+    geom_node_label(aes(label = name), family="serif",alpha=0.6, show.legend=FALSE, repel = TRUE) +
     network_theme()
 ```
 
@@ -581,7 +583,7 @@ ggraph(my_analysed_network, layout = "kk") +
       edge_alpha = "Weight"
     ) +
     # Notice I used the edge_ prefix in order to give a legend title to the edge attribte
-    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    geom_node_label(aes(label = name),, family="serif",alpha=0.6, repel = TRUE) +
     # Try changing geom_node_label to geom_node_text above. What happens?
     network_theme()
 ```
