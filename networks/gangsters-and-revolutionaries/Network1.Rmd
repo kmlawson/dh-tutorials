@@ -22,15 +22,19 @@ output:
 
 There are a number of user friendly tools for visualizing networks out there which don't require any programming knowledge. These include [Cytoscape](http://cytoscape.org/) and [Gephi](https://gephi.org/), among others. The [language R](https://www.r-project.org/), however, has become a popular and powerful platform for data analysis, as well as the cleaning of data, visualization of texts, networks, and geographical information. R benefits from a large ecosystem of open source packages, and in recent years, a collection of them that have come to be known as the [Tidyverse](https://www.tidyverse.org/) has made the process of exploring data significantly easier. On the network analysis front, mature packages like `statnet` and `igraph` are joined by new ones including the pair `tidygraph` and `ggraph` to make it fairly easy to visualize and explore networks in R.
 
+Network science is an active and well developed field in the sciences and social sciences such as sociology. In history, however, while use and reference to "networks" is now very common in publications, the use of formal analytical network analysis has been rather more limited. Learn more at work in this area at the website dedicated to [Historical Network Research](historicalnetworkresearch.org/resources/hnr-bibliography/recent-additions_bib/).
+
+Effective use of formal network analysis depends on strong familiarity with the science and mathematics of graphs. However, there are many contexts in which visualising a historical network is useful without more advanced techniques that tap the full *analytical* potential of network exploration. Illustrating historical research with a network graph diagram can help the reader better grasp the scope and connections of a group of individuals you may be discussing in your research. This the *illustrative* value of social network visualisations depends in great part on the ability to craft visualisations that communicate well. Network visualisation is also a way to explore connections and patterns in your historical materials which, as your collection of individuals and organisations (if you create a "bimodal" network, see below) grow in number beyond the point you can easily derive patterns by browsing a table or spreadsheet. We might call this the *heuristic* value of social network visualisations. It may include some use of basic network analysis tools, but it uses them usually as a path to new qeustions, or as a way to cast the spotlight on possible patterns that you can explore in depth, perhaps returning to other sources and methods. This tutorial is primarily for students and scholars in the humanities who are interested in network visualisations for its *illustrative* and *heuristic* potential, but who may want to gain some familiarity and exposure to its *analytical* potential.
+
 This tutorial was designed for history students in a masters level [skills module](https://github.com/kmlawson/skills-in-transnational-history) at the University of St Andrews MLitt programme in Global, Transnational, and Spatial history to get a first taste of how R might be used to explore historical networks. In this exercise we will practice creating some simple network visualisations using a fictional network of East Asian gangsters and revolutionaries.
 
 **Prerequisites:** My students working with this tutorial R Notebook have done a little bit of previous work with R and text analysis with material from *Text Mining with R* by Julia Silge & David Robinson, *Text Analysis with R for Students of Literature* by Matthew Jockers, and read some of *A User's Guide to Network Analysis in R* on `igraph` as well has having completed the DataCamp module [Introduction to the Tidyverse](https://www.datacamp.com/courses/introduction-to-the-tidyverse). I would suggest trying this tutorial if you have had a least some basic introduction to R and familiarity with RStudio.
 
-This website was created as an R Notebook which can be used if you have [R installed](https://www.r-project.org/) and open the file in [RStudio](https://www.rstudio.com/). You can download the files used in this tutorial [here in the github repository](https://github.com/kmlawson/dh-tutorials/tree/master/networks/gangsters-and-revolutionaries). If you open this notebook in RStudio, you will see the code and can run all of it in one go with cmd/ctrl-option-r. Alternatively, you can run code from a single section using cmd/ctrl-shift-enter. Many of the questions below ask you to see what happens when you tweak some of the code found here.
+This website, which adapts material from Jesse Sadler and Douglas A. Luke, among others (see the bibliography below). was created as an R Notebook which can be used if you have [R installed](https://www.r-project.org/) and open the file in [RStudio](https://www.rstudio.com/). You can download the files used in this tutorial [here in the github repository](https://github.com/kmlawson/dh-tutorials/tree/master/networks/gangsters-and-revolutionaries). If you open this notebook in RStudio, you will see the code and can run all of it in one go with cmd/ctrl-option-r. Alternatively, you can run code from a single section using cmd/ctrl-shift-enter. Many of the questions below ask you to see what happens when you tweak some of the code found here.
 
 For this exercise you need the packages: 
 
-readr dplyr fircats tibble ggplot2 ggraph tidygraph igraph
+readr dplyr tidyr stringr fircats tibble ggplot2 ggraph tidygraph igraph visNetwork scales
 
 In RStudio **"Install Packages..."** from the **Tools** menu and you can paste in the above list of packages separated as they are by a space and press **Install**. After the packages are installed (you may have had some of them already), then load them as follows:
 
@@ -38,11 +42,15 @@ In RStudio **"Install Packages..."** from the **Tools** menu and you can paste i
 library(readr)
 library(igraph)
 library(dplyr)
+library(tidyr)
+library(stringr)
 library(tibble)
 library(forcats)
 library(ggplot2)
 library(ggraph)
 library(tidygraph)
+library(visNetwork)
+library(scales)
 ```
 
 ## Importing the Data
@@ -408,7 +416,7 @@ merged_edges
 ```
 Now let us create a new network object with this merged edge table and our previously merged node table and plot the results:
 
-```{r One Plot To Rule Them All, fig.width=15}
+```{r One Plot To Rule Them All, fig.width=15, warning=FALSE}
 fully_merged=graph_from_data_frame(d=merged_edges,directed=TRUE,vertices=merged_nodes)
 V(fully_merged)$type<-V(fully_merged)$name  %in% org_nodes$Name
 
@@ -585,26 +593,107 @@ ggraph(my_analysed_network, layout = "kk") +
 3. Challenge: How would you create a ggplot that visualized the comparison of the average betweenness of women in the network compared to men?
 4. Challenge: What steps would you need to go through to compare the total density (ratio of the number of the edges vs. possible edges) of the members of the network in each of the three nationalities? What about in each location? How could you plot this in a simple bar graph? You may have to do some exploring in the documentation for `igraph` or `ggraph`
 
+## Creating an Interactive Network Graph with visNetwork
+
+There are a number of ways to make your network graph interactive, especially in a website. These include using a [Shiny](https://shiny.rstudio.com/) app, [D3.js](https://d3js.org/) and its R connector [networkD3](https://christophergandrud.github.io/networkD3/), or the R package `visNetwork`. See Jesse Sadler's [network tutorial](https://www.jessesadler.com/post/network-analysis-with-r/) for a comparison of D3.js and visNetwork, as well as a demonstration of how you can use networkD3 to create what is known as a Sankey diagram.
+
+To convert our simple network to a visNetwork that will allow interaction, we'll have to abandon our use of given name in the place of id numbers as a key. If you have been using id numbers from the start (recommended) in your node and edge tables, you don't need this step at all. The convert our tables, we'll add an id number column to our nodes, and then replace all the given names in the edges table with their corresponding id number. First let us add an id column to the nodes and few the top ten rows of the resulting data frame:
+
+```{r Add IDs to Node Table}
+nodes_wids<-nodes %>%
+  mutate(id=seq.int(n())) %>%
+  # add the id column with a sequence of integers from 1 to the total number of entries
+  select(id,person,location,age,nationality,mentions,discuss,gender)
+  # the select statement here just reorders the columns to put id first
+head(nodes_wids,10)
+```
+
+Now let's replace the names with the node id numbers in the from and to columns of the edge table using the `match()` function. For each row of our new from column, we ask it to supply us the node id for the row in which the name in the edges from column matches the name in the person column of the now id-equiped `nodes_wids` varialbe.
+
+```{r Convert Names to IDs in the Edges Table}
+from_ids<- nodes_wids$id[match(edges$from,nodes_wids$person)]
+# We replace the names in the from column in the edge table with the ids from nodes_wids
+to_ids <-nodes_wids$id[match(edges$to,nodes_wids$person)]
+# We replace the names in the to column in the edge table with the ids from nodes_wids
+edges_wids <-data_frame(from=from_ids,to=to_ids,kind=edges$kind,intensity=edges$intensity,year_start=edges$year_start,year_end=edges$year_end)
+# We glue together the edges data frame again but this time with the id numbers.
+head(edges_wids,10)
+```
+
+Now we can produce the `visNetwork` interactive plot with our new `nodes_wids` and `edges_wids` node and edge tables. 
+
+```{r}
+visNetwork(nodes_wids, edges_wids)
+```
+
+This is a very limited and boring graph, however. You can click on and manipulate the nodes but its physics allows for very limited moving of things around before they spring back into place. It is also missing almost everything else useful to communicate anything.
+
+Now let us create a visNetwork object with more information communicated that you can freely manipulate by clicking on nodes. It will also include navigation buttons for easily manipulation of zoom levels and panning. If we add columns to the data which indicate things like size (of the nodes), width (of the edges), and color (of the nodes). Zoom in on the graph and you will see that the labels fade in and out depending on your zoom level.
+
+```{r visNetwork}
+nodes_wlabels<-nodes_wids %>%
+  mutate(label=person) %>%
+  # visNetwork looks for a "label" column to label the nodes, so I've added this column with the contents from the person column.
+  mutate(size=rescale(mentions,to=c(10,50))) %>%
+  # adding a size column and scaling it with the rescale function of the scales package to a number between 10 and 50 will determine the size of our node
+  mutate(color=str_replace(str_replace(str_replace(nationality,"China","#0f9e45"),"Korea","#4167a3
+"),"Japan","#db310d"))
+  # Here I have done three string replaces on nationality, to replace China, Korea, and Japan with the colors we want to use.
+
+edges_wformat<-edges_wids %>%
+  mutate(width=rescale(intensity,to=c(1,13)))
+  # here again it is looking for a "width" column, which I have added with the contents of the 
+  # intensity column, but using the rescale function of the scales package to scale to a number
+  # between 1 and 13
+
+visNetwork(nodes_wlabels, edges_wformat, width = "100%") %>%
+  visIgraphLayout(layout = "layout_with_kk") %>% 
+  visEdges(arrows = "to", width=) %>% # Try "middle" for comparison
+  visInteraction(navigationButtons = TRUE) # Uncomment this line to see what it does
+```
+
+There are many more ways to customise the visNetwork options. For more on this, see the documentation for the [visNetwork package](https://datastorm-open.github.io/visNetwork/).
+
+
+## Saving Your Plots
+
+There are a number of ways of extracting the plots you produce. One convenient way is the use of the `ggsave()` command in the `ggplot()` package.
+
+This is not only useful for you to embed any of the graphs seen here in a separate document but gives you the ability to create a crystal clear SVG version that is unpixelated at any zoom, or save a PNG version, for example, at a size much larger than those shown here, so that there is less chance of nodes overlapping.
+
+The following `ggsave()` command, for example, will save the last plot you have made to the disk as `plot.svg` which is zoom independent in its resolution, and a second version saved as a `png` file but with a fixed size:
+
+```{r Saving Plots}
+ggsave("plot.svg",plot=last_plot(),device="svg")
+# Will save the plot to the working directory of R Studio
+ggsave("plot.png",plot=last_plot(),device="png", width=20, height=20, units="cm")
+```
+
+
 
 This should give you a good start at creating network graph diagrams using R. See some of these resources for more:
 
-## Books
+## Further Reading
 
-Luke, Douglas A. *A User’s Guide to Network Analysis in R*. 1st ed. 2015 edition. Cham Hildesheim New York: Springer, 2015.
+### Books
 
-Wickham, Hadley. *ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016.
+Luke, Douglas A. *A User’s Guide to Network Analysis in R*. 1st ed. 2015 edition. Cham Hildesheim New York: Springer, 2015. - Much of the code here is adapted from examples in this volume. Uses statnet and igraph but also shows how to convert between them. Unfortunately, all plots are with base R plots, rather than ggplot.
 
-Scott, John. *Social Network Analysis*. 3rd ed., 2013.
+Wickham, Hadley. *ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016. - ggraph is built on top of ggplot and many of the customisations to graphs benefit from understanding how ggplot works.
+
+Scott, John. *Social Network Analysis*. 3rd ed., 2013. - A great introductory text on the topic for humanities students.
 
 Scott, John, and Peter J. Carrington, eds. *The SAGE Handbook of Social Network Analysis*. London ; Thousand Oaks, Calif: SAGE, 2011.
 
-Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and Applications*. Cambridge University Press, 1994.
+Wasserman, Stanley, and Katherine Faust. *Social Network Analysis: Methods and Applications*. Cambridge University Press, 1994. - The classic text in the field which devles into the mathamatical foundations of graph theory.
 
 
 
-- [Jesse Sadler's Tutorial on ggraph](https://www.jessesadler.com/post/network-analysis-with-r/) - This tutorial is a wonderful alternative to what you have done here, and has the advantage of working on a real historical dataset. See also Jesse Sadler's numerous other informative posts and tutorials.
-- Douglas Luke's *A User's Guide to Network Analysis in R* - Uses statnet and igraph but also shows how to convert between them. Unfortunately, all plots are with base R plots, rather than ggplot.
-- [Network Science in R - A Tidy Approach](https://www.datacamp.com/courses/network-science-in-r-a-tidy-approach) - Massimo Franceschet's course uses ggraph and igraph and makes use of more advanced approaches. See his useful collection of materials on his syllabus [Dear Network Science](https://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/syllabus.html)
+### Online Tutorials and Resources
+
+- [Jesse Sadler's Tutorial on ggraph](https://www.jessesadler.com/post/network-analysis-with-r/) - This tutorial is the main inspiration for this one, and is a wonderful alternative to what you have done here , and has the advantage of working on a real historical dataset. See also Jesse Sadler's numerous other informative posts and tutorials.
+- [Network Science in R - A Tidy Approach](https://www.datacamp.com/courses/network-science-in-r-a-tidy-approach) - Massimo Franceschet's course uses ggraph and igraph and makes use of more advanced approaches. See his useful collection of materials on his syllabus 
+- [Dear Network Science](https://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/syllabus.html)
 - [Thomas Lin Pederson's Blog](https://www.data-imaginist.com/tags/ggraph/) - postings by the author of the ggraph package related to it.
 - [An Introduction to Ggraph](http://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/make/ggraph/ggraph.html) 
 - [Another Game of Thrones network analysis – this time with tidygraph and ggraph](https://www.r-bloggers.com/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/) - A fun tutorial walking through the use og ggraph on the characters of this popular series.

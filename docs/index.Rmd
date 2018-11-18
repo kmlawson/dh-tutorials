@@ -1,0 +1,13 @@
+---
+title: "DH Tutorials"
+output: 
+  html_document:
+    df_paged: paged
+    df_print: kable
+    highlight: monochrome
+    theme: cosmo
+---
+
+This website will serve as a host for various tutorials I put together. 
+
+[Toilers and Gangsters: Simple Network Visualization with R for Historians](https://kmlawson.github.io/dh-tutorials/network.html)
