@@ -18,6 +18,11 @@ output:
     latex_engine: xelatex
 ---
 
+<style type="text/css">
+body{ /* Normal  */
+      font-size: 19px;
+</style>
+
 # Simple Network Visualisation with R 
 
 There are a number of user friendly tools for visualizing networks out there which don't require any programming knowledge. These include [Cytoscape](http://cytoscape.org/) and [Gephi](https://gephi.org/), among others. The [language R](https://www.r-project.org/), however, has become a popular and powerful platform for data analysis, as well as the cleaning of data, visualization of texts, networks, and geographical information. R benefits from a large ecosystem of open source packages, and in recent years, a collection of them that have come to be known as the [Tidyverse](https://www.tidyverse.org/) has made the process of exploring data significantly easier. On the network analysis front, mature packages like `statnet` and `igraph` are joined by new ones including the pair `tidygraph` and `ggraph` to make it fairly easy to visualize and explore networks in R.
@@ -59,7 +64,7 @@ Now we need to get our data into our network.
 
 The raw data that is used for network analysis and visualisation is usually in the form of **edge** and **node** tables. When visualised, these are the lines and points of a graph diagram. The **nodes** of your network are very often indivduals along with any attributes tied to those individuals. You can style the nodes in your network graphs using these attributes. 
 
-Even more important than the nodes are a table of **edges* which contain the relational information of your network: the relationships between your agents, or between agents and organisations in the case of bimodal graphs (see below). These relationships may also have attributes that can be visualised with styling.
+Even more important than the nodes are a table of **edges** which contain the relational information of your network: the relationships between your agents, or between agents and organisations in the case of bimodal graphs (see below). These relationships may also have attributes that can be visualised with styling. John Scott's introductory text *Social Network Analysis* has a nice chapter on considerations for collecting and organising your data for analysis and visualisation you might want to consult.
 
 Put the [nodes.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/nodes.csv) and [edges.csv](https://raw.githubusercontent.com/kmlawson/dh-tutorials/master/networks/gangsters-and-revolutionaries/edges.csv) files that I have shared with you into the working directory where you should be keeping this notebook file (or set the working directory to the write place in the Session menu).
 
@@ -689,7 +694,7 @@ Luke, Douglas A. *A User’s Guide to Network Analysis in R*. 1st ed. 2015 editi
 
 Wickham, Hadley. *ggplot2: Elegant Graphics for Data Analysis*. 2nd ed. 2016 edition. New York, NY: Springer, 2016. - ggraph is built on top of ggplot and many of the customisations to graphs benefit from understanding how ggplot works.
 
-Scott, John. *Social Network Analysis*. 3rd ed., 2013. - A great introductory text on the topic for humanities students.
+Scott, John. *Social Network Analysis*. 4th ed., 2017. - A great introductory text on the topic for humanities students.
 
 Scott, John, and Peter J. Carrington, eds. *The SAGE Handbook of Social Network Analysis*. London ; Thousand Oaks, Calif: SAGE, 2011.
 
