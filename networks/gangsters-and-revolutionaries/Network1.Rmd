@@ -7,6 +7,7 @@ output:
     df_paged: paged
     df_print: kable
     highlight: monochrome
+    code_folding: hide
     theme: cosmo
     toc: yes
     toc_depth: 4
@@ -250,7 +251,7 @@ as_tbl_graph(my_network) %E>%
 
 Network scientists have developed a variety of algorithms to detect communities in a network. While the analytical value of this algorithmically derived grouping in the context of historical research may be limited, for larger networks, it can help you identify clusters to explore. For more on this read the chapter on "Subgroups" in the book *A User's Guide to Network Analysis in R*. The `tidygraph` package inherits many of the community detection algorithms imbedded into `igraph` and makes them available to us, including Edge-betweenness (`group_edge_betweenness`), Leading eigenvector (`group_leading_eigen`), Fast-greedy (`group_fast_greedy`), Louvain (`group_louvain`), Walktrap (`group_walktrap`), Label propagation (`group_label_prop`), InfoMAP (`group_infomap`), Spinglass (`group_spinglass`), and Optimal (`group_optimal`). Some community algorithms are designed to take into account direction or weight, while others ignore it. Below we try Walktrap, which is not, in fact, designed for directed networks, but try comparing its results with other community detection algorithms and note the differences. 
 
-```{r}
+```{r Community Detection}
 as_tbl_graph(my_network) %>% 
   to_undirected() %>%
   mutate(community = as.factor(group_walktrap())) %>% 
@@ -266,7 +267,7 @@ as_tbl_graph(my_network) %>%
       size = "Source\nMentions",
       color = "Community"
     ) +
-    geom_node_label((aes(label = name, family="serif")),alpha=0.6, repel = TRUE) +
+    geom_node_label((aes(label = name)),family="serif",alpha=0.6, repel = TRUE) +
     network_theme()
 ```
 
@@ -275,9 +276,159 @@ as_tbl_graph(my_network) %>%
 1. Had you done so manually, would you have divided up the graph into "communities" along these lines? Which assignments by the algorithm look out of place to you?
 2. Try the other community detection algorithms and compare the results.
 
+## Bimodal Networks
+
+Bimodal, bipartite, or affiliation networks have two different types of nodes and generally only link between the two types of nodes. As the term "affiliation network" suggests, this is often in the form of the affiliation of an individual to an organisation of some kind. 
+
+Let us import a list of edges between individuals and organisations.
+
+```{r Import Organisation Edges, message=FALSE}
+affiliations<-read_csv("org-edges.csv")
+affiliations
+```
+
+We have now a table with relationships between indivdiuals and organisations, but it would be nice to create a merged node table which joins all the attribute information from organisations, which includes the location of the organisations' headquarters, and all the attribute data for individuals. We can use `full_join()` for this.
+
+```{r Created Merged Nodes}
+# 
+org_nodes<-read_csv("orgs.csv") # Orgs have a name, but also a HQ location
+
+merged_nodes<-full_join(nodes,org_nodes,by = c("person" = "Name"))
+merged_nodes
+```
+
+Now we can create a network object from this merged information. In order to keep track of what nodes are part of each mode (individuals or organisations) we'll add a `type` column to the node data that will get a `TRUE` value if it is one of the organisations.
+
+```{r Create Bimodal Network Object}
+
+affiliation_network=graph_from_data_frame(d=affiliations,directed=FALSE,vertices=merged_nodes)
+V(affiliation_network)$type<-V(affiliation_network)$name  %in% org_nodes$Name
+
+```
+
+Now we can great a graph diagram of our bimodal network. In the code, I have made a few customisations to our usual graphs above by setting the shape of the node to correspond to whether it is an individual or an organisation and then chose a circle (`ggplot` shape number 19) or a square (15). I increased the `fig_width` to make the chart wider, and used some conditionals in the form of `ifelse()` to conditionally distinguish the organisations by color, and only assign labels to individuals.
+
+**Note:** If you run this code in R Studio, note the difference between the appearance of the plots within R Studio and the exported web page version.
+
+```{r Bimodal Graph Diagram, fig.width=10, warning=FALSE}
+ggraph(affiliation_network, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link() +
+    geom_node_point(aes(size=type, shape=type, color=ifelse(type==1,as.character(name),NA))) +
+    scale_color_discrete(breaks=unique(affiliations$To)) +
+    scale_size_discrete(range=c(2,4), guide=FALSE) +
+    scale_shape_manual(values=c(19,15), guide=FALSE) +  
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      shape = "Person or\nOrganization",
+      color = "Organization"
+    ) +
+    geom_node_label((aes(label = ifelse(type==0,as.character(name),""))), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    network_theme()
+```
+
+You can also use a special `bipartite` layout for the graph that produces a hierarchical look. Sometimes the `tree` layout will also produce a desirable effect as well.
+
+```{r Bimodal Graph Diagram Bipartite Layout, fig.width=15, warning=FALSE}
+ggraph(affiliation_network, layout = "bipartite") +
+	  # Add an edge link geometry
+	  geom_edge_link() +
+    geom_node_point(aes(size=type, shape=type, color=ifelse(type==1,as.character(name),NA))) +
+    scale_color_discrete(breaks=unique(affiliations$To)) +
+    scale_size_discrete(range=c(2,4), guide=FALSE) +
+    scale_shape_manual(values=c(19,15), guide=FALSE) +  
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      shape = "Person or\nOrganization",
+      color = "Organization"
+    ) +
+    geom_node_label((aes(label = ifelse(type==0,as.character(name),""))), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    network_theme()
+```
+
+Bimodal graphs are nice for visualising the connections between two different types of things. As Scott Weingart has argued in several web posts, including his overview of [bimodal networks](http://scottbot.net/networks-demystified-9-modality/), they are significantly more difficult to analysis using formal network analysis methods, including the challenge of exploring various forms of centrality or clustering coefficients.  
+
+They are valuable, however, as a *heuristic* visualisation to explore your network and discover new questions, or areas to focus in on for more research. They can also serve more simple *illustrative* purposes when you are exploring a historical network in your narrative and want to illustrate visually relationships between individuals and organisations or some other combination of two modes even without formal analysis being carried out.
+
+One useful transformation of your bimodal newtorks that can be particularly useful, especially for larger networks than the one we are dealing with here, is to explore connections between the nodes in one mode or the other by means of their connections to the other mode. In our historical example, we might explore what the connectivity is between organisations based on members who tie them together, or, what connections are there between individuals by virtue of the fact that they share membership in an organisation. These are called **projections** of bimodal networks. 
+
+To create these projections we can use the `igraph`  function `bipartite.projection()` function. This will create a list with two projections `proj1` and `proj2`, one for each mode. Let us assign each one to its own network object and then plot them.
+
+```{r Bipartite Network Projections}
+network_projections<-bipartite.projection(affiliation_network)
+member_projection<-network_projections$proj1
+org_projection<-network_projections$proj2
+ggraph(member_projection, layout = "kk") +
+	  geom_edge_link(aes(alpha=weight, width=weight)) +
+    scale_edge_width(range = c(0.1, 1.5), name="Weight") +
+    scale_edge_alpha(range = c(0.3, 1), guide=FALSE) +
+    geom_node_point(size=3) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950: Bipartite Projection of Members",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      shape = "Person or\nOrganization",
+      color = "Organization"
+    ) +
+    geom_node_label((aes(label = name)), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    network_theme()
+
+ggraph(org_projection, layout = "kk") +
+	  geom_edge_link(aes(alpha=weight, width=weight)) +
+    scale_edge_width(range = c(0.1, 1.5), name="Weight") +
+    scale_edge_alpha(range = c(0.3, 1), guide=FALSE) +
+    geom_node_point(size=3) +
+    labs(
+      title = "Toilers and Gangsters, 1860-1950: Bipartite Projection of Organisations",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      shape = "Person or\nOrganization",
+      color = "Organization"
+    ) +
+    geom_node_label((aes(label = name)), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    network_theme()
+```
+
+## One Plot to Rule Them All 
+
+Bimodal networks include only connections between two different modes. But there is nothing preventing you from flattening a bimodal graph and including all the edges from our unimodal network. That is, you can create a visualisation, for illustrative or heuristic purposes, that depicts both relationships between individuals and between these individuals and the organisations. 
+
+To do this, we will merge the edge table with relationships between individuals and organisations, with that of individuals to individuals. We can then visualise them all together, and use various visual features to help make the plot more readable but anyone who has used software such as Cytoscape, for example, will see that it is much easier to customise the visualisation there than here. Especially if the aim is just to explore your data as a part of the research and thinking process, then Cytoscape is a much easier alternative for this.
+
+```{r Merge Edges}
+prep<- affiliations %>%
+  mutate(from=From,to=To,kind=4,intensity=1,year_start=NA,year_end=NA) %>%
+  select(from,to,kind,intensity,year_start,year_end)
+merged_edges<- bind_rows(edges,prep)
+merged_edges
+```
+Now let us create a new network object with this merged edge table and our previously merged node table and plot the results:
+
+```{r One Plot To Rule Them All}
+fully_merged=graph_from_data_frame(d=merged_edges,directed=TRUE,vertices=merged_nodes)
+V(fully_merged)$type<-V(fully_merged)$name  %in% org_nodes$Name
+
+ggraph(fully_merged, layout = "kk") +
+	  # Add an edge link geometry
+	  geom_edge_link(aes(width=intensity)) +
+    scale_edge_width(range=c(0.1,1.5), name="Intensity") +
+    geom_node_point(aes(size=type, shape=type, color=ifelse(type==1,as.character(name),NA))) +
+    scale_color_discrete(breaks=unique(affiliations$To)) +
+    scale_size_discrete(range=c(2,4), guide=FALSE) +
+    scale_shape_manual(values=c(19,15), guide=FALSE) +  
+    labs(
+      title = "Toilers and Gangsters, 1860-1950",
+      caption = "Data from the 'Toilers and Gangsters' public dataset",
+      shape = "Person or\nOrganization",
+      color = "Organization"
+    ) +
+    geom_node_label((aes(label = ifelse(type==0,as.character(name),""))), family="serif", alpha=0.7, show.legend=FALSE, repel = TRUE) +
+    network_theme()
+```
+
 ## Other Layouts
 
-Up until now we have been using the Kamada-Kawai layout algorithm to determine the look of our network. There are a range of the other layouts you can create with the replacement of the layout type.
+Up until now we have been mostly using the Kamada-Kawai layout algorithm to determine the look of our network. There are a range of the other layouts you can create with the replacement of the layout type.
 
 Below see our graph with the Fruchterman-Reingold layout.
 
@@ -298,7 +449,7 @@ ggraph(my_network, layout = "fr") +
       color = "Nationality",
       edge_width = "Weight"
     ) +
-    geom_node_label((aes(label = name, family="serif",alpha=0.6)), show.legend=FALSE, repel = TRUE) +
+    geom_node_label((aes(label = name)), family="serif",alpha=0.6, show.legend=FALSE, repel = TRUE) +
     network_theme()
 ```
 

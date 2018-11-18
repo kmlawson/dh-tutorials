@@ -2,7 +2,7 @@ from,to,kind,intensity,year_start,year_end
 Chŏngsu,Minjae,3,3,1907,1921
 Hayun,Minjae,3,1,1902,1943
 Jiurong,Tomohiko,3,1,1896,1947
-Kyoungmin,Jiurong,3,1,1895,1920
+Kyŏngmin,Jiurong,3,1,1895,1920
 Minjae,Chŏngsu,3,3,1907,1921
 Takamasa,Kei,3,2,1898,1934
 Tomohiko,Jiurong,3,1,1910,1936
@@ -15,7 +15,7 @@ Hayun,Hyejin,2,1,1885,1940
 Hyejin,Minjae,2,3,1885,1930
 Hyejin,Sangok,2,1,1887,1947
 Jiurong,Yoshinobu,2,1,1911,1928
-Kyoungmin,Tomohiko,2,1,1901,1925
+Kyŏngmin,Tomohiko,2,1,1901,1925
 Masahirō,Takamasa,2,1,1910,1918
 Minjun,Hyŏnu ,2,2,1891,1932
 Minjun,Hyejin,2,2,1883,1923
@@ -31,7 +31,7 @@ Yoshinobu,Masahirō,2,5,1890,1951
 Chŏngsu,Sunja,1,2,1906,1927
 Guiying,Xiuying,1,4,1888,1945
 Jiurong,Wei,1,2,1886,1932
-Kyoungmin,Yoshinobu,1,2,1920,1940
+Kyŏngmin,Yoshinobu,1,2,1920,1940
 Masahirō,Senjūrō,1,4,1902,1910
 Minjun,Hayun,1,1,1899,1927
 Minjun,Minjae,1,1,1895,1926
