@@ -289,7 +289,7 @@ affiliations
 
 We have now a table with relationships between indivdiuals and organisations, but it would be nice to create a merged node table which joins all the attribute information from organisations, which includes the location of the organisations' headquarters, and all the attribute data for individuals. We can use `full_join()` for this.
 
-```{r Created Merged Nodes}
+```{r Created Merged Nodes, message=FALSE}
 # 
 org_nodes<-read_csv("orgs.csv") # Orgs have a name, but also a HQ location
 
@@ -389,11 +389,15 @@ ggraph(org_projection, layout = "kk") +
     network_theme()
 ```
 
+The lines here are thicker in the cases where members were more linked to each other by mutual membership in multiple organisations. In the second plot we see that four of the organisations each share two members. Not terribly revealing in this case, but with much larger networks, this may reveal interlocking organisations with overlapping memberships that might not be immediately obvious by perusing a table of membership data.
+
 ## One Plot to Rule Them All 
 
-Bimodal networks include only connections between two different modes. But there is nothing preventing you from flattening a bimodal graph and including all the edges from our unimodal network. That is, you can create a visualisation, for illustrative or heuristic purposes, that depicts both relationships between individuals and between these individuals and the organisations. 
+Bimodal networks include only connections between two different modes. But there is nothing preventing you from flattening a bimodal graph and including all the edges from our unimodal network. That is, you can create a visualisation, for illustrative or heuristic purposes, that depicts both relationships between individuals and between these individuals and the organisations. Please note that if formal analysis plays any role in your exploration of these networks, this is not methodologically sound for any number of reasons. Among the issues is that we are mixing a directed network (of individuals) with an undirected network (of affiliations). 
 
-To do this, we will merge the edge table with relationships between individuals and organisations, with that of individuals to individuals. We can then visualise them all together, and use various visual features to help make the plot more readable but anyone who has used software such as Cytoscape, for example, will see that it is much easier to customise the visualisation there than here. Especially if the aim is just to explore your data as a part of the research and thinking process, then Cytoscape is a much easier alternative for this.
+To create our mega plot, we will merge the edge table with relationships between individuals and organisations using `bind_rows()`, with that of individuals to individuals. For simplicity, we will first assign an intensity of 1 and type 4 to all affiliation relationships, and leave all date info as NA. We'll also standardise the naming of the columns as "From" and "To" are capitalised in one case and not in the other. `mutate()` makes it easy to rename the columns.
+
+We can then visualise all the edges together, and use various visual features to help make the plot more readable, but anyone who has used software such as Cytoscape, for example, will see that it is much easier to customise the visualisation of multiple networks together there than here, as far as I have been able to determine. Especially if the aim is just to explore your data as a part of the research and thinking process, then Cytoscape is a much easier alternative to R and igraph/ggraph.
 
 ```{r Merge Edges}
 prep<- affiliations %>%
@@ -404,7 +408,7 @@ merged_edges
 ```
 Now let us create a new network object with this merged edge table and our previously merged node table and plot the results:
 
-```{r One Plot To Rule Them All}
+```{r One Plot To Rule Them All, fig.width=15}
 fully_merged=graph_from_data_frame(d=merged_edges,directed=TRUE,vertices=merged_nodes)
 V(fully_merged)$type<-V(fully_merged)$name  %in% org_nodes$Name
 
