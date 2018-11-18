@@ -198,6 +198,7 @@ ggraph(my_network, layout = "kk") +
     scale_edge_width(range = c(0.2, 2.5), guide=FALSE) +
 	  # Add a node point geometry
 	  geom_node_point(aes(size=mentions,color=factor(gender))) +
+    scale_colour_manual(values=c("f"="green4","m"="sandybrown")) +
     labs(
       title = "Toilers and Gangsters, 1860-1950",
       caption = "Data from the 'Toilers and Gangsters' public dataset",
