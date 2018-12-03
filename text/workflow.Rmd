@@ -1,0 +1,175 @@
+---
+title: "Text Mining Workflow Example"
+output:
+  html_document:
+    df_print: paged
+---
+
+In this example, I'll step through some of the steps (on Mac OS X) of getting a collection of texts into R in a tidy format so you can carry out some of the techniques explored in [*Text Mining with R*](https://www.tidytextmining.com/) by Julia Silge and David Robinson. 
+
+## From Image or PDFs to Text
+
+The first step is to get your material into a raw text form. If your starting point is a PDF that has no ability to select the text in it (that is, it has not yet been OCRed) then the workflow will be:
+
+1. Install Tesseract. If you don't already have [homebrew installed](https://brew.sh/) then install it. Then run: `brew install tesseract` from the terminal.
+2. If you have a PDF in Preview and export the file to a multi-page TIFF document. If you have a collection of images you can leave them as their respective image format. Note, for higher OCR accuracy, it is very important to pre-process the images of the input file. That can result in far fewer OCR errors when you have a higher contrast, lower noise images. You can do this with image magick, or other image processing software, or even preview, but needs to be done before running tesseract. This would require a tutorial of its own. 
+3. Run tesseract on the document to OCR it. `tesseract file-name.tiff file-name.txt` This will produce a text file which contains the text, though likely with some proportion of errors. 
+4. If you have multiple documents, then repeat for each of them
+5. If you are working with a single text or number of texts, you can then directly proceed to cleaning up of the PDF using regular expressions in a regex equipped text editor such as Atom. Alternatively you can follow the steps below to process them in R.
+
+If you have already have a PDF with text in it that is selectable, you may either simply select all the text, copy and paste it into an empty text file in, for example, Atom. Or, you may use this alternative:
+
+1. Install pdftotext. If you don't already have [homebrew installed](https://brew.sh/) then install it. Then run: `brew cask install pdftotext` from the terminal.
+2. In the terminal, navigate to the folder that contains only a collection of PDFs with OCRed text in it. To navigate around directories in the terminal you use the `cd` command. To go "up" a directory you enter `cd ..` and to find out what directory you are currently in you can enter `pwd`. To see what is in the current directory you enter `ls` and to ender a directory in the current directory you can enter `cd name-of-directory` or the full path of the directory location in your file hierarchy `cd /home/user/path/to/directory`
+3. Once you are in the correct folder, you can convert a single pdf to text by simply entering: `pdftotext name-of-file.pdf` or, if you have a large collection of files you can enter `for file in *.pdf; do pdftotext "$file" "$file.txt"; done` which will convert every PDF in the current directory into text.
+
+## From Text to R
+
+In this example, we'll work with some volumes (for this example code I'll just work with #15 and #16) of [Gandhi's complete works](http://www.gandhiashramsevagram.org/gandhi-literature/collected-works-of-mahatma-gandhi-volume-1-to-98.php).
+
+First we'll rename the files do that they refer only to the volume number. This will use the `rename` command, which if you don't have it installed, can be installed with homebrew using `brew install rename`.
+
+`rename 's/.*(\d\d).txt/$1.txt/' *` 
+
+Each volume varies in size from just over 600KB to 1.3MB in size. 
+
+**NOTE**: If you run the below code yourself, I suggest working first with just one or two volumes, then when you are happy with the results overall, then run it for all the volumes, which is much more time consuming. In my test of the below, it took 30 minutes to run this script with 15 volumes.
+
+Let us load some libraries for our use:
+
+```{r Load Libraries}
+library(tidyverse)
+library(stringr)
+library(tidytext)
+```
+
+
+Now let us import all the volumes (in this example, I'll only work with volume #15 and #16). We'll first create an empty variable `mergedlines` and create a `for` loop that cycles through each of the files in the directory containing our text files.
+
+Then we'll import each file. 
+
+```{r Import Volumes}
+mergedlines<-NULL
+
+for(i in list.files("gandhi/")) 
+{
+  importedfile=as_data_frame(list(text=read_lines(paste0("gandhi/",i)),volume=str_replace(i,".txt","")))
+  mergedlines<-bind_rows(mergedlines,importedfile)
+}
+nrow(mergedlines)
+```
+
+The `read_lines()` command will read our file into a vector of lines of text (I have gotten the location of the file by merging the directory location and the file name of the current imported file i using the `paste0()` command). The `as_data_frame()` command, that creates a tibble, expects a `list` so we give it one consisting of the imported file as text and seperately the volume number, which we have extracted from the file name using `str_replace()`
+
+Each time I import a file, I use `bind_rows()` to merge it the the lines of all the previous volumes. Using `nrow()` you can see that the total lines of all these volumes is close to two million lines of text.
+
+```{r Divide by Documents}
+currentdoc<-NA
+mergedlines <- mergedlines %>%
+  mutate(document="Unknown")
+count<-0
+for(i in mergedlines$text)
+{
+  count<-count+1
+  if(str_detect(i,"\\d+\\. [A-Z][A-Z]+"))
+  {
+    currentdoc<-i
+  }
+  mergedlines$document[count]<-str_replace(currentdoc,"\f","")
+}
+
+```
+
+**NOTE**: This process up to here took 6 seconds for me with a single volume (#15) and 42 seconds with three volumes. If you add all the volumes from vol. 15-97, for example it may take as long as 20-30 minutes to process everything. It is not unusual to have large data sets take a very long time to process. 
+
+Now let us break this down into tokens, remove common stop words and look at basic frequencies:
+
+```{r}
+tidy_volumes <- mergedlines %>%
+  unnest_tokens(word,text)
+
+data(stop_words) # load the stop words vector
+
+# Remove the stop words from the letter word list using anti_join():
+tidy_volumes <- tidy_volumes %>%  
+  anti_join(stop_words)
+
+# Get the word frequencies:
+word_freq <- tidy_volumes %>%
+  count(word,sort=TRUE)
+
+head(word_freq,40) %>%
+  mutate(word=reorder(word,n)) %>%
+  ggplot(aes(word,n)) +
+  geom_col() +
+  coord_flip()
+```
+
+It looks like some numbers might have been worth adding to the stop word list...
+
+```{r Add Your own Stop Words}
+my_stop_words <- c("gandhi","letter","1","2","3","4","5","6","7","8","9") # list a few stop words of my own from the letters
+my_stop_words_df <- data_frame(word=my_stop_words,lexicon="custom") # prepare to add to custom stop words
+stop_words <- stop_words %>% bind_rows(my_stop_words_df) # add the custom stop words to the list
+
+# remove the stop words again:
+tidy_volumes <- tidy_volumes %>%  
+  anti_join(stop_words)
+```
+
+What if we wanted only look at word frequencies for letters to one group of recipients?
+
+```{r}
+chhaganlal<-tidy_volumes %>%
+  filter(str_detect(document,"GANDHI")|str_detect(document,"KALLENBACH")) %>% 
+  # filters for letter by Chhanganlal, Maganlal, Ramdas, Narandas, Manilal, Khushalchand Gandhi - OR Hermann Kallenbach
+  count(word,sort=TRUE)
+
+head(chhaganlal,40) %>%
+  mutate(word=reorder(word,n)) %>%
+  ggplot(aes(word,n)) +
+  geom_col() +
+  coord_flip()
+  
+```
+
+Still looks like 
+What if we wanted a list of all documents that use a certain term?
+
+```{r}
+caste<-tidy_volumes %>%
+  filter(word=="caste"|word=="castes") %>%
+  distinct(document)
+
+caste
+```
+
+What if we wanted all the lines that mention a particular word?
+
+```{r}
+caste_lines<-mergedlines %>%
+  filter(str_detect(text,"caste")) %>%
+  select(text, document)
+
+caste_lines
+```
+
+adding tf_idf:
+
+```{r TF-IDF}
+counts_by_document <- tidy_volumes %>%
+  count(document,word,sort=TRUE) %>%
+  ungroup()
+
+gandhi_tf_idf <- left_join(tidy_volumes,counts_by_document) %>%
+  bind_tf_idf(word,document,n)
+
+gandhi_tf_idf %>%
+  arrange(desc(tf_idf)) %>%
+  distinct(word,.keep_all=TRUE)
+
+```
+
+
+
+

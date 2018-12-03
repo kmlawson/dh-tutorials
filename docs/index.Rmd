@@ -11,3 +11,7 @@ output:
 This website will serve as a host for various tutorials I put together. 
 
 [Toilers and Gangsters: Simple Network Visualization with R for Historians](https://kmlawson.github.io/dh-tutorials/network.html)
+
+In progress:
+
+[Text Mining Workflow - Gandhi Example](https://kmlawson.github.io/dh-tutorials/text.html)
