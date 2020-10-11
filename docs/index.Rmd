@@ -10,7 +10,8 @@ output:
 
 This website will serve as a host for various tutorials I put together. 
 
-[Toilers and Gangsters: Simple Network Visualization with R for Historians](https://kmlawson.github.io/dh-tutorials/network.html)
+[Toilers and Gangsters: Simple Network Visualization with R for Historians](https://kmlawson.github.io/dh-tutorials/network.html)  
+[Visualising Social Networks with Cytoscape](https://kmlawson.github.io/dh-tutorials/cytoscape.html)
 
 In progress:
 

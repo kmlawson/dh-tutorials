@@ -1,0 +1,347 @@
+<!DOCTYPE html>  
+<html lang="GB">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <title>SNA Examples</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style id="mkstylesheet">
+body{-webkit-font-smoothing:antialiased;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;margin:30px 0 0;padding:0;background:#fff;color:#303030;font-size:14px;line-height:1.45}#wrapper{padding:20px}li{font-size:110%}li li{font-size:100%}li p{font-size:100%;margin:.5em 0}h1{color:#000}h2{color:#111}h3{color:#111}h4{color:#111}h5{color:#111}h6{color:#111;font-style:italic}p,td,div{color:#111;font-family:"Helvetica Neue",Helvetica,Arial,Verdana,sans-serif;word-wrap:break-word}a{color:#0d6ea1;text-decoration:none;-webkit-transition:color .2s ease-in-out;-moz-transition:color .2s ease-in-out;-o-transition:color .2s ease-in-out;-ms-transition:color .2s ease-in-out;transition:color .2s ease-in-out}a:hover{color:#3593d9}h1,h2,h3,h4,h5{margin:2.75rem 0 1rem;font-weight:600;line-height:1.15}h1{margin-top:0;font-size:3.052em}h2{font-size:2.441em}h3{font-size:1.953em}h4{font-size:1.563em}h5{font-size:1.25em}ul,ol,pre,table,blockquote{margin-top:.625em;margin-bottom:.625em}hr{border:1px solid;margin:-1px 0}ul ul,ol ol,ul ol,ol ul{margin-top:0;margin-bottom:0}b,strong,em,small,code{line-height:1}.footnote{color:#0d6ea1;font-size:.8em;vertical-align:super}abbr,acronym{border-bottom:1px dotted #aaa}#wrapper img{max-width:100%;height:auto}dd{font-size:1em;margin-bottom:1em}li>p:first-of-type{margin:0}li p+p{margin-top:16px}ul,ol{padding-left:2.5rem}#wrapper ol{list-style-position:outside}ul ul,ul ol{margin-bottom:.4em}caption,col,colgroup,table,tbody,td,tfoot,th,thead,tr{border-spacing:0}table{border:1px solid rgba(0,0,0,0.25);border-collapse:collapse;display:table;empty-cells:hide;margin:-1px 0 1.3125em;padding:0;table-layout:fixed}caption{display:table-caption;font-weight:700}col{display:table-column}colgroup{display:table-column-group}tbody{display:table-row-group}tfoot{display:table-footer-group}thead{display:table-header-group}td,th{display:table-cell}tr{display:table-row}table th,table td{font-size:1.1em;line-height:1.3;padding:.5em 1em 0}table thead{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-bottom:1px solid rgba(0,0,0,0.2)}table tbody{background:rgba(0,0,0,0.05)}table tfoot{background:rgba(0,0,0,0.15);border:1px solid rgba(0,0,0,0.15);border-top:1px solid rgba(0,0,0,0.2)}figure{display:inline-block;overflow:hidden;position:relative;margin:1em 0 2em}figcaption{font-style:italic;text-align:center;background:white;color:#666}.poetry pre{display:block;font-family:Georgia,Garamond,serif !important;font-size:110% !important;font-style:italic;line-height:1.6em;margin-left:1em}.poetry pre code{font-family:Georgia,Garamond,serif !important;word-break:break-all;word-break:break-word;-webkit-hyphens:auto;-moz-hyphens:auto;hyphens:auto;white-space:pre-wrap}blockquote p{font-size:110%;font-style:italic;line-height:1.6em}sup,sub,a.footnote{font-size:1.4ex;height:0;line-height:1;position:relative;vertical-align:super}sub{vertical-align:sub;top:-1px}p{font-size:1.1429em;line-height:1.3125em;margin:1.3125em 0}dt,th{font-weight:700}table tr:nth-child(odd),table th:nth-child(odd),table td:nth-child(odd){background:rgba(255,255,255,0.06)}table tr:nth-child(even),table td:nth-child(even){background:rgba(200,200,200,0.25)}@media print{img,table,figure{page-break-inside:avoid}#wrapper{background:#fff;color:#303030;padding:10px;position:relative;text-indent:0}}@media screen{.inverted{background:#252a2a}.inverted #wrapper{background:#252a2a;color:#eee}.inverted hr{border-color:#333f40 !important}.inverted p,.inverted td,.inverted li,.inverted h1,.inverted h2,.inverted h3,.inverted h4,.inverted h5,.inverted h6,.inverted th,.inverted .math,.inverted caption,.inverted dt,.inverted dd{color:#eee}.inverted pre{background:#ccc;color:#111}.inverted table{background:none}.inverted table tr:nth-child(odd),.inverted table td:nth-child(odd){background:none}.inverted a{color:#acd1d5}::selection{background:rgba(157,193,200,0.5)}h1::selection{background-color:rgba(45,156,208,0.3)}h2::selection{background-color:rgba(90,182,224,0.3)}h3::selection,h4::selection,h5::selection,h6::selection,li::selection,ol::selection{background-color:rgba(133,201,232,0.3)}code::selection{background-color:rgba(0,0,0,0.7);color:#eee}code span::selection{background-color:rgba(0,0,0,0.7) !important;color:#eee !important}a::selection{background-color:rgba(255,230,102,0.2)}.inverted a::selection{background-color:rgba(255,230,102,0.6)}td::selection,th::selection,caption::selection{background-color:rgba(180,237,95,0.5)}}.mkstyle--swiss #wrapper aside.blurb:before{margin-top:.7em}
+#mkreplaced-toc{list-style-position:inside;padding:0;margin:0 0 0 1rem;list-style-type:none}#mkreplaced-toc li::before{content:''}#mkreplaced-toc li{font-size:1rem;line-height:1.25;font-weight:normal}#mkreplaced-toc li ul{font-size:1.3rem;font-weight:300;padding:.5rem 0;margin:0 0 0 1rem}#mkreplaced-toc li.missing{list-style-type:none !important}#mkreplaced-toc.max-1 ul,#mkreplaced-toc.max1 ul{display:none}#mkreplaced-toc.max-2 ul ul,#mkreplaced-toc.max2 ul ul{display:none}#mkreplaced-toc.max-3 ul ul ul,#mkreplaced-toc.max3 ul ul ul{display:none}#mkreplaced-toc.max-4 ul ul ul ul,#mkreplaced-toc.max4 ul ul ul ul{display:none}#mkreplaced-toc.max-5 ul ul ul ul ul,#mkreplaced-toc.max5 ul ul ul ul ul{display:none}.mk-rtl{direction:rtl;text-align:right}.mkprinting,.mkprinting #wrapper{height:auto;margin-bottom:0;padding-bottom:0}.hideProgress #generated-toc,.hideProgress #firstdiff,.hideProgress #toc-title,.hideProgress #mkdocumentprogress,.hideProgress #mkincludechart,.hideProgress #mkprogressbar1,.hideProgress #mkprogressbar2,.hideProgress b.bookmark,.hideProgress .mkscrollmeter,.hideProgress #alllinks,.hideProgress #criticnav,.hideProgress .popup,.hideProgress #progressindicator,.hideProgress #mkautoscroll,.mkprinting #generated-toc,.mkprinting #firstdiff,.mkprinting #toc-title,.mkprinting #mkdocumentprogress,.mkprinting #mkincludechart,.mkprinting #mkprogressbar1,.mkprinting #mkprogressbar2,.mkprinting b.bookmark,.mkprinting .mkscrollmeter,.mkprinting #alllinks,.mkprinting #criticnav,.mkprinting .popup,.mkprinting #progressindicator,.mkprinting #mkautoscroll{display:none !important}.hideProgress .mkstyledtag,.mkprinting .mkstyledtag{display:none}.mkprinting.mkshowcomments .mkstyledtag{display:inline;background:#ccc;padding:3px 9px;border-radius:20px;font-size:1}@media print{body{background:white;line-height:1.4}html,body,#wrapper{-moz-box-shadow:none;-webkit-box-shadow:none;box-shadow:none;-webkit-perspective:none !important;-webkit-text-size-adjust:none;border:0;box-sizing:border-box;float:none;margin:0;max-width:100%;padding:0;margin-top:0;width:auto}.critic #wrapper mark.crit{background-color:#fffd38 !important;text-decoration:none;color:#000}h1,h2,h3,h4,h5,h6{page-break-after:avoid}p,h2,h3{orphans:3;widows:3}section{page-break-before:avoid}pre>code{white-space:pre;word-break:break-word}#generated-toc,#firstdiff,#toc-title,#mkdocumentprogress,#mkincludechart,#mkprogressbar1,#mkprogressbar2,.mkscrollmeter,#alllinks,.popup{display:none !important}.suppressprintlinks a{border-bottom:none !important;color:inherit !important;cursor:default !important;text-decoration:none !important}.hrefafterlinktext #wrapper a:link:after,.hrefafterlinktext #wrapper a:visited:after{content:" (" attr(href) ") ";font-size:90%;opacity:.9}.nocodebreak pre{page-break-inside:avoid}img,table,figure{page-break-inside:avoid}.breakfootnotes .footnotes{page-break-before:always}.breakfootnotes .footnotes hr{display:none}#mktoctitle{display:block}#print-title{border-bottom:solid 1px #666;display:block}#wrapper pre{white-space:pre;white-space:pre-wrap;word-wrap:break-word}#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{display:block}.task-list .task-list-item{list-style-type:none !important}.task-list .gh-complete.task-list-item .task-list-item-checkbox:before{background:#838387;content:'\2713'}.task-list .task-list-item-checkbox{-webkit-appearance:none;position:relative}.task-list .task-list-item-checkbox:before{border:solid 1px #aaa;border-radius:2px;color:white;content:' ';display:block;font-weight:bold;height:1em;left:-20px;line-height:1;position:absolute;text-align:center;top:-.75em;width:1em}}
+#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc,#wrapper #generated-toc-clone ul,#wrapper #mkreplaced-toc ul{list-style-position:inside}#wrapper #generated-toc-clone li.missing,#wrapper #mkreplaced-toc li.missing{list-style-type: none!important}#wrapper #generated-toc-clone ul,#wrapper #mkreplaced-toc ul{list-style-type: upper-roman}#wrapper #generated-toc-clone>ul>li>ul,#wrapper #mkreplaced-toc>li>ul {list-style-type: decimal}#wrapper #generated-toc-clone>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul{list-style-type: decimal-leading-zero}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul{list-style-type: lower-greek}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul{list-style-type: disc}#wrapper #generated-toc-clone>ul>li>ul>li>ul>li>ul>li>ul>li>ul,#wrapper #mkreplaced-toc>li>ul>li>ul>li>ul>li>ul>li>ul{list-style-type: square}#wrapper #generated-toc-clone,#wrapper #mkreplaced-toc{}
+</style>
+
+<style id="mkprintstyles">@media print{#wrapper #generated-toc-clone,#generated-toc{display:none!important}
+html,body,#wrapper{font-size:10pt!important}
+}
+</style>
+
+
+  </head>
+<body class="normal">
+  <div id="wrapper">
+<h1 id="terms">Terms</h1>
+
+<ul>
+<li><strong>Network</strong> - A network is a catalog of a system&#8217;s components - often called nodes or vertices - and the direct interactions between them, called links or edges</li>
+<li><strong>Graph</strong> - In network science, simply a set of lines connecting points. Also called a <strong>sociogram</strong>.</li>
+<li><strong>Adjacency Matrix</strong> - The adjacency matrix of a directed network of N nodes has N rows and N columns with its elements being 1 or 0 depending on whether it has a link pointing from one node to its corresponding node. An adjacency matrix of an undirected network has two entries for each edge - and it is thus completely symmetric.</li>
+<li><strong>Node</strong> - Also called <strong>vertices</strong>. These are the agents, organisation, objects etc. that comprise the connected units of a network. <strong>Attribute data</strong> about them is usually collected in a node table. Represented as the points in a graph.</li>
+<li><strong>Edge</strong> - Also called <strong>links</strong>. These are the relations between nodes in a network graph, represented by lines. Edges can be represented in an edge table as two points, an origin and a target node, or in an <strong>adjacency matrix</strong> as a 1 in the matched row and column of two nodes. Additional <strong>relational data</strong> about an edge can be listed in columns of an edge table.</li>
+<li><strong>Relational Data</strong> - Data which is comprised of the connections, affiliations of social relations between <em>cases</em> of agents, organisations, objects, etc. In network graphs, these become the columns (as in the attributes in GIS) of data associated with an edge table, a table of the edges between nodes.</li>
+<li><strong>Attribute Data</strong> - Features that describe the agents, organisations, objects etc. which comprise the nodes of one&#8217;s network. These become the columns (as in the attributes in GIS) of data which fill out information about each node in a node table.</li>
+<li><strong>Ideational Data</strong> - Data related to the meanings, motives, definitions and typifications involved in actions. Challenging to represent in graphs. When done so, usually quantified as attribute data (if it is identified as the feature of an individual) or as relational data (if it represents, for example, an attitude of one individual towards another)</li>
+<li><strong>Clique</strong> - In general, an informal association of two or more individuals not primarily formed of kinship relations. More narrowly defined in formal analysis somewhat differently as a &#8220;maximal complete sub-graph&#8221; - the maximum number of actors that have all possible ties present. Various modifications of this exist, for example the more relaxed <strong>k-core</strong> which includes a node in a clique if it is minimally connected to an assigned number k. A group (such as a k-core) which is relatively cohesive but not strictly a clique is sometimes called a <strong>cohesive group</strong> (see Wasserman and Faust, 1994, chapter 7)</li>
+<li><strong>Dyad</strong> - Two connected nodes.</li>
+<li><strong>Social Structure</strong> - In traditional social analysis, the attributes of individuals are primary in defining social structure (Wetherell 1998), while in network analysis, arguments that identify patterns in the relations between individuals are said to comprise a social structure.</li>
+<li><strong>Whole Network</strong> - Also known as a &#8220;total network&#8221;</li>
+<li><strong>Egocentric Network</strong> - Centrality measures are no longer particularly useful.</li>
+<li><strong>Durability</strong> - A measure of how long-lasting are the underlying relations and obligations activated in particular transactions.</li>
+<li><strong>Transitivity</strong> - A measure or attribution of a chain of ties across connected nodes. One is claiming transitivity when a claim that A trusting B and B trusting C implies A trusting C. Partial transitivity is implied when we claim that A knowing B and B knowing C makes it more likely that A knows C than a random person D.</li>
+<li><strong>Network Size</strong> - N equals the number of nodes. L is the number of links (edges)</li>
+<li><strong>One-Mode</strong> vs <strong>Two-Mode</strong> (also called a <strong>Bipartite Network</strong> or <strong>Bimodal Network</strong>) vs <strong>Multi-Mode</strong> - A network which has a set of nodes of a single type (a group of people, say) is a single or one-mode network. A bpartite or bimodal or two-mode network contains two types (a group of people, and a group of organisations). Typically these are used to generate <strong>projections</strong> for a bipartite network that allows you to extract relations between the second group implicit in their shared relations with nodes in the first (e.g. two organisations which share a mutual member will show, in a projection, that the two organisations are linked).</li>
+<li><strong>Degree</strong> - The number of edges a node contains.
+
+<ul>
+<li><em>Total Degree</em>* - in degree (incoming edges) and out degree (outgoing edges) added together</li>
+<li><strong>Average Degree</strong> - Average across all nodes of the network (</li>
+<li><strong>Indegree</strong> and <strong>Outdegree</strong> - Degree as measured by incoming connections or outgoing connections only.</li>
+</ul></li>
+<li><strong>Distance</strong> - A measure comprised of the number of edges that together comprise a given <strong>path</strong> between two nodes.</li>
+<li><strong>Path</strong> - A specific <strong>path</strong> (also known as a <strong>walk</strong>) between two nodes is any unique possible non-repeated sequence of edges to reach from one node to another.
+
+<ul>
+<li><strong>Shortest Path</strong> - Also called a <strong>Geodesic Path</strong>. The path with fewest edges between two nodes. This is expressed in the distance, here sometimes called the <strong>Geodesic Distance</strong>. In an undirected network it is the same in either direction. Can be difficult to calculate for large networks.</li>
+<li><strong>Network Diameter</strong> - The maximum shortest path between nodes (the largest geodesic distance) in the network.</li>
+<li><strong>Average Path Length</strong> - d - The average distance between all pairs of nodes in the network.</li>
+</ul></li>
+<li><strong>Centrality</strong>
+
+<ul>
+<li><strong>Degree Centrality</strong> - A node is important if it has many neighbors = A node is considered central if it has a high degree. Only useful as a measure of centrality among nodes of the same network or between networks of the same size.</li>
+<li><strong>Closeness Centrality</strong> - Measured by the mean geodesic distance (shortest paths) from a node to other nodes. Read <a href="https://www.sci.unich.it/~francesc/teaching/network/closeness.html">more</a></li>
+<li><strong>Local Centrality</strong> - A local measure which may include centrality at, say, 1 or 2 path distance</li>
+<li><strong>Betweenness Centrality</strong> - Measures the fraction of shortest paths passing through a vertex. It is a measure of the degree to which a node is a key &#8216;broker&#8217; or &#8216;gatekeeper&#8217; to bind the network together. It may itself have a very low degree relative to other nodes in the network but its importance may be disproportionately high. Often, a node with a very high betweenness centrality in a network will have one or more <strong>bridges</strong> that serve as the only connection between two more more <strong>components</strong>.</li>
+<li><strong>Eigenvector Centrality</strong> - One of several measures of centrality that are recursive. A node is important if it is linked by other important nodes. Works well only if a network is strongly connected, which is true for many undirected networks but less so for directed networks (nodes with no incoming edges have a null eigenvector centrality). Read more <a href="https://www.sci.unich.it/~francesc/teaching/network/eigenvector.html">here</a></li>
+<li><strong>Katz Centrality</strong> - A recursive centrality measure. Overcomes the weakness of Eigenvector Centrality in directed networks by giving a small amount of centrality for free. A node is important if it is linked from other important nodes or if it is highly linked. Read <a href="https://www.sci.unich.it/~francesc/teaching/network/katz.html">more</a></li>
+<li><strong>Stress Centrality</strong> - Measures the absolute number of shortest paths passing through a node.</li>
+<li><strong>Kleinberg Centrality</strong> - Another attempt to overcome problems of Eigenvector Centrality in director networks. A node is an authority if it is linked to by hubs; it is a hub if it links to authorities. Read <a href="https://www.sci.unich.it/~francesc/teaching/network/kleinberg.html">more</a></li>
+</ul></li>
+<li><strong>Degree Distribution</strong> - Identical to <strong>degree sequence</strong> of a network. The probability that a randomly selected node in the network has a particular degree p<sub>k</sub>. The degree distribution has assumed a central role in network theory following the discovery of scale-free networks. In real networks, the degree distribution is usually highly asymmetric (including a &#8216;long tail&#8217;) with most nodes having very low degrees and a few having much higher ones.</li>
+<li><strong>Directionality</strong> - <strong>Undirected</strong> vs <strong>Directed</strong> networks. A network is called directed (or a digraph) if all of its links are directed; it is called undirected if all of its links are undirected.</li>
+<li><strong>Reciprocity</strong> - A measure used in directed networks to describe the degree to which edges between nodes are reciprocated. In a directed network (dyad) of A and B, one in which A connects to B, B connects to A, has higher reciprocity than one in which A only connects to B, or in which B connects to A. The proportion of edges in which the &#8216;arrow&#8217; of edges goes both ways.</li>
+<li><strong>Weight</strong> - <strong>Binary</strong> vs <strong>Valued</strong> or <strong>Weighted</strong> relations, or relations expressing <strong>Intensity</strong>. A network with binary relations has edges which are either present or absent. One either has the relation or one doesn&#8217;t. A weighted or valued network has relations which have non-binary values which may be positive or negative, larger or smaller depending on its &#8220;value.&#8221; For example, a directed valued correspondence network will have one or two edges from one person to another that might be weighted by the number of letters sent in one direction or another, or edges for both. An undirectional correspondence network may reduce the weight of an edge between two people to the total number of letters exchanged between two parties. Other weights may represent ideational data (number of times insulted by someone, number of gifts given), or in a projected bibmodal network, number of shared individuals establishing a connection between two organisations.</li>
+<li><strong>Clustering Coefficient</strong> - The C<sub>i</sub> captures the degree to which neighbors of a given node link to each other. It is the <em>probability that two neighbors of a node link to each other</em>. A number between 0 and 1. Thus C=0.5 implies that there is a 50% chance that two neighbors of a node are linked.</li>
+<li><strong>Density</strong> - Most real networks are sparse. The measure of a network&#8217;s density is the proportion of actual relations to total potential relations. A network in which the actual relations is equal to the total potential relations is a <strong>connected network</strong> with a network density of 1 (100%). Any other network is an <strong>unconnected network</strong> comprised of <strong>components</strong> with a density between 0 an 1.</li>
+<li><strong>Connectedness</strong> - Two modes are said to be <strong>connected</strong> or also known as <strong>reachable</strong> if there is a path between them. A network as a whole is said to be connected if there is a connection between all nodes. Any disconnected network will end up with <strong>components</strong> or <strong>clusters</strong></li>
+<li><strong>Component</strong> - A subset of nodes in a network such that there is a path between any two nodes that belong to the component, but one cannot add any more nodes to it that would have the same property.</li>
+<li><strong>Bridge</strong> - If there are two components, an edge which connects them is called a bridge. Any edge such that, if cut, disconnects the network.</li>
+<li><strong>Connectivity</strong> - Also called the &#8220;cohesion&#8221; of a network.</li>
+<li><strong>Modularity</strong> - Mark Newman: &#8220;the number of edges falling within groups minus the expected number in an equivalent network with edges placed at random.&#8221;</li>
+<li><strong>Radiality</strong> - Refers to the degree an individual&#8217;s relations reach out into the network providing access to many and diverse others.</li>
+<li><strong>Small Worlds</strong> - Networks that have a high average clustering coefficient. Paths between any two nodes is relatively small. Found in many real networks.</li>
+<li><strong>Chord Diagram</strong> - A diagram depicted by a circle in which flows (or in network analysis, edges between nodes) between nodes on the rim of the diagram are depicted as curved lines (of different thicknesses in the case of flows) crossing the centre of the circle.</li>
+<li><strong>Dendrogram</strong> - A tree diagram which depicts relations that exist in a hierarchy. Although marriage complicates things, the cross-generational relationships depicted by a genealogy generally resembles a dendrogram. Simple organisational charts also are often dendrograms. Dendrograms are useful in representing hierarchical clusters.</li>
+<li><strong>Sankey Diagram</strong> - A flow diagram, resembling a series of joining and splitting streams, which visualizes the flow of separate agents or organisations into and out of each other, often depicted over a time horizontal axis from left to right. Think of charts showing the joining and splitting of political parties over a period of time.</li>
+<li><strong>Hairball</strong> - A visualisation of a network that resembles a ball of yarn or a hairball. A network visualisation that fails to communicate anything meaningful.</li>
+<li><strong>Zipf’s Law</strong> - A type of power law in which is said to fit many real networks. Reflects the fact that there are some nodes with a very high degree followed by a long tail when depicted in rank-frequency distribution.</li>
+<li><strong>Metcalfe&#8217;s Law:</strong> The Value of a Network is proportional to the square of the number of its nodes. Limits: in fact the value in real networks tends to grow only lenearly because most networks are sparse and not all links are of equal value.</li>
+</ul>
+
+<h1 id="organisations">Organisations</h1>
+
+<ul>
+<li><a href="http://historicalnetworkresearch.org/">Historical Network Research</a>
+
+<ul>
+<li>Zotero Group: <a href="https://www.zotero.org/groups/209983/historical_network_research">Historical Network Research</a></li>
+</ul></li>
+<li><a href="https://www.insna.org/">INSNA - International Network for Social Network Analysis</a>
+
+<ul>
+<li>Publishes <a href="https://www.insna.org/connections"><em>Connections</em></a>, <a href="https://www.exeley.com/journal/journal_of_social_structure"><em>Journal of Social Structure</em></a>, and <a href="https://www.insna.org/social-networks"><em>Social Networks</em></a>. Of these the last, <em>Social Networks</em> also lists history as target subject but few articles are historical.</li>
+</ul></li>
+<li><a href="https://www.facebook.com/groups/366736340519859/#_=_">Social Network Analysis Researches of the Middle Ages</a></li>
+<li><a href="https://connectedpast.net/">Connected Past</a></li>
+</ul>
+
+<h1 id="projects">Projects</h1>
+
+<ul>
+<li><a href="https://projects.iq.harvard.edu/cbdb">China Biographical Database</a></li>
+<li><a href="https://pbw2016.kdl.kcl.ac.uk/">Prosopography of the Byzantine World</a></li>
+<li><a href="https://sites.fas.harvard.edu/~histecon/visualizing/about.html">Visualizing Historical Networks</a></li>
+<li><a href="http://sixdegreesoffrancisbacon.com/?ids=10000473&amp;min_confidence=60&amp;type=network">Six Degrees of Bacon</a></li>
+<li><a href="https://archaeologicalnetworks.wordpress.com/">Archaeological Networks</a></li>
+<li><a href="https://www.jessesadler.com/project/dvdm-correspondence/">The Correspondence Network of Daniel van der Meulen, 1578–1591</a>
+
+<ul>
+<li><a href="https://jessesadler.com/visualization/leaflet-map">Uses Interactive Leaflet Map</a></li>
+<li><a href="https://rstudio.github.io/leaflet/">Using leaflet package R</a></li>
+<li><a href="https://jessesadler.com/visualization/sankey-diagram/">Sankey diagram of correspondence network</a></li>
+<li><a href="https://github.com/jessesadler/dvdm-correspondence">Github Repository</a></li>
+</ul></li>
+<li><a href="http://histograph.eu/">HistoGraph</a>
+
+<ul>
+<li><a href="https://github.com/C2DH/histograph">histograph on github</a></li>
+</ul></li>
+<li><a href="http://www.biographynet.nl/">BiographyNet</a>
+
+<ul>
+<li>Look at some of their <a href="http://www.biographynet.nl/publications/">publications</a></li>
+</ul></li>
+<li><a href="https://senereko.ceres.rub.de/en/">SeNeReKo - Social-semantic network analysis as a means to study religious contact</a></li>
+<li><a href="https://oeaw.academia.edu/TopographiesofEntanglements">Topographies of Entanglements</a></li>
+<li><a href="http://www.biographynet.nl/">BiographyNet</a></li>
+<li><a href="https://letters.nialloleary.ie/index.php">Visual Correspondence</a></li>
+<li><a href="http://ieg-ego.eu/en/threads/european-networks">European Networks</a></li>
+<li>Prosopography of Anglo-Saxon England - link currently down?</li>
+</ul>
+
+<h1 id="learningsnaingeneral">Learning SNA in General</h1>
+
+<ul>
+<li><a href="http://journalofdigitalhumanities.org/1-1/demystifying-networks-by-scott-weingart/">Demystifying Networks, I &amp; II</a> by Scott B. Weingart</li>
+<li><a href="http://scottbot.net/tag/networks-demystified/">Demystifying Networks - 9 Full Potsts</a> - The full series of posts on networks by Scott B. Weingart</li>
+<li><a href="https://visualisingadvocacy.org/node/739.html">If Everything is a Network, Nothing is a Network</a> by Mushon Zer-Aviv</li>
+<li><a href="http://www.faculty.ucr.edu/~hanneman/nettext/">Introduction to Social Network Methods</a></li>
+<li><a href="https://www.sci.unich.it/~francesc/teaching/network/">Massimo Franceschet&#8217;s Network Pages</a></li>
+<li><a href="https://mbingenheimer.net/tools/socnet/index.html">SNA and Chinese Buddhist History</a></li>
+<li><a href="https://cvcedhlab.hypotheses.org/125">Should I Do SNA?</a></li>
+<li><a href="https://kieranhealy.org/blog/archives/2013/06/09/using-metadata-to-find-paul-revere/">Using Metadata to find Paul Revere</a></li>
+<li><a href="https://github.com/briatte/awesome-network-analysis">Awesome Network Analysis</a> - Curated list of links and resources</li>
+<li><a href="http://www.visualcomplexity.com/vc/">Visual Complexity</a></li>
+<li><a href="http://egweb.bcgsc.ca/">Hive Plots</a></li>
+<li><a href="https://bost.ocks.org/mike/hive/">Hive Plots - Mike Bostock</a></li>
+<li><a href="https://yro.ch/visualising-networks-part-1-a-critique/">Visualising Networks Part 1: A Critique</a></li>
+<li><a href="http://scottbot.net/networks-demystified-5-communities-pagerank-and-sampling-caveats/">Communities and Page-Rank</a></li>
+<li><a href="http://scottbot.net/networks-demystified-9-modality/">Bimodal Networks</a></li>
+<li><a href="http://scottbot.net/networks-demystified-3-the-power-law-rant/">Power Law Rant</a></li>
+<li><a href="http://scottbot.net/networks-demystified-4-co-citation-analysis/">Co-Citation Analysis</a></li>
+<li><a href="https://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/syllabus.html">Data Science, reloaded</a> - A wealth of SNA learning links here.</li>
+<li><a href="http://www.themacroscope.org/?page_id=424">Networks in Practice</a></li>
+<li><a href="https://prosopography.history.ox.ac.uk/course_syllabuses.htm">Guide to the Principles and Practice of Prosopography</a></li>
+<li><a href="http://www.mfj-online.org/journalPages/MFJ34/Manovich_Database_FrameSet.html">Database as a Symbolic Form</a> (1999) by Lev Manovich</li>
+</ul>
+
+<h1 id="tutorialsfortoolsandexampleuses">Tutorials for Tools and Example Uses</h1>
+
+<ul>
+<li>Cytoscape
+
+<ul>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials">Miriam Posner&#8217;s Cytoscape Tutorial</a> <a href="https://zenodo.org/record/56245">DOI</a>
+
+<ul>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials/blob/master/preparing-data-1-making-an-edge-list.md">Making an Edge List</a>
+
+<ul>
+<li>Note, the use of a name or first-last name combination instead of numbered ID key presents risks if the names are not unique</li>
+</ul></li>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials/blob/master/preparing-data-2-making-a-node-list-from-an-edge-list.md">Making a Node Table from an Edge Table</a></li>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials/blob/master/working-with-selections.md">Working with Selections</a></li>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials/blob/master/get-a-unimodal-network.md">Unimodal Network from a Bimodal Network</a> - Using R and package projectoR</li>
+<li><a href="https://github.com/miriamposner/cytoscape_tutorials/blob/master/publishing-your-network-diagram.md">Publishing your Cytoscape Network Diagram</a></li>
+<li><a href="http://miriamposner.com/classes/dh201w19/tutorials-guides/network-analysis/create-a-network-graph-with-cytoscape/">Cytoscape - Creating a Network Graph with Cytoscape</a></li>
+<li><a href="http://miriamposner.com/classes/dh201w19/tutorials-guides/network-analysis/cytoscape-working-with-attributes/">Cytoscape - Working with Attributes</a></li>
+</ul></li>
+<li><a href="https://digi.uga.edu/network-graphs/">Network Graphs - DH University of Georgia</a></li>
+<li><a href="http://ebeshero.github.io/thalaba/cytosc.html">An Introduction to Network Analysis and Cytoscape for XML Coders</a> by Elisa E. Beshero-Bondar</li>
+<li><a href="https://digitalromanticist.wordpress.com/2013/08/23/spectacular-intersections-of-place-in-southeys-thalaba-the-destroyer/">Spectacular Intersections of Place in Southey&#8217;s <em>Thalaba the Destroyer</em></a></li>
+</ul></li>
+<li>Network Visualization in R
+
+<ul>
+<li><a href="https://kateto.net/network-visualization">Static and dynamic network visualization with R</a></li>
+<li><a href="https://kmlawson.github.io/dh-tutorials/network.html">Simple Network Visualization with R for Historians - Toilers and Gangsters</a></li>
+<li><a href="https://learn.datacamp.com/courses/network-science-in-r-a-tidy-approach">Network Analysis in the Tidyverse</a></li>
+<li><a href="https://www.data-imaginist.com/2019/1-giraffe-2-giraffe-go/">1 giraffe, 2 giraffe, GO!</a></li>
+<li><a href="http://users.dimi.uniud.it/~massimo.franceschet/ns/syllabus/make/ggraph/ggraph.html">An introduction to ggraph</a></li>
+<li><a href="https://www.r-bloggers.com/2018/03/another-game-of-thrones-network-analysis-this-time-with-tidygraph-and-ggraph/">Another Game of Thrones network analysis</a></li>
+<li><a href="https://kateto.net/netscix2016.html">Network Analysis and Visualization with R and igraph</a></li>
+<li><a href="http://skyeome.net/wordpress/?p=866">Network-on-a-map in R</a></li>
+</ul></li>
+<li><a href="https://quanthum.hypotheses.org/239#more-239">Tips for Spreadsheets</a> useful when preparing network data.</li>
+<li><a href="https://archaeologicalnetworks.wordpress.com/resources/">Archaeological Networks - Tutorials and Resources</a>
+
+<ul>
+<li>Includes tutorials for <a href="https://archaeologicalnetworks.wordpress.com/resources/#Visone">Visone</a>, <a href="https://archaeologicalnetworks.wordpress.com/resources/#vistorian">Vistorian</a>, <a href="https://archaeologicalnetworks.wordpress.com/resources/#cytoscape">Cytoscape</a>, <a href="https://archaeologicalnetworks.wordpress.com/resources/#netlogo">NetLogo</a></li>
+</ul></li>
+<li><a href="https://quanthum.hypotheses.org/176#more-176">Network analysis tools and tutorials</a></li>
+<li>SeNeReKo Tutorial:
+
+<ul>
+<li><a href="http://senereko.hypotheses.org/101">Text Networks I: Primer</a></li>
+<li><a href="http://senereko.hypotheses.org/109">Text Networks II: Cooccurrence Networks</a></li>
+<li><a href="http://senereko.hypotheses.org/165">Text Networks III: Dependency Networks</a></li>
+</ul></li>
+<li><a href="https://programminghistorian.org/en/lessons/creating-network-diagrams-from-historical-sources">From Hermeneutics to Data to Networks: Data Extraction and Network Visualization of Historical Sources</a> - Using Palladio</li>
+<li><a href="https://programminghistorian.org/en/lessons/temporal-network-analysis-with-r">Temporal Network Analysis with R</a></li>
+<li><a href="https://programminghistorian.org/en/lessons/dealing-with-big-data-and-network-analysis-using-neo4j">Dealing with Big Data and Network Analysis Using Neo4j</a></li>
+<li><a href="https://programminghistorian.org/en/lessons/?topic=network-analysis">Correspondence Analysis for Historical Research with R </a></li>
+<li><a href="https://programminghistorian.org/en/lessons/exploring-and-analyzing-network-data-with-python">Exploring and Analyzing Network Data with Python</a></li>
+<li><a href="https://dhintro18.commons.gc.cuny.edu/2018/11/03/a-network-analysis-of-our-initial-class-readings/">CUNY DHUM 7000 - A Network Analysis of our Initial Class Readings</a></li>
+<li><a href="https://github.com/gephi/gephi/wiki/Datasets">Geph Sample Datasets</a></li>
+</ul>
+
+<h1 id="datasets">Datasets</h1>
+
+<ul>
+<li>See datasets linked on the <a href="https://github.com/briatte/awesome-network-analysis#datasets">awesome network analysis</a> curated list.</li>
+<li><a href="http://snap.stanford.edu/data/index.html">Stanford Large Network Dataset Collection</a></li>
+<li><a href="https://github.com/mbingenheimer/ChineseBuddhism_SNA">Chinese Buddhist - Historical Social Network Dataset (CB_HSNA)</a></li>
+<li><a href="https://mbingenheimer.net/tools/socnet/cbdb_SNAusableData.zip">Chinese Bibliographic Database (CBDB)</a></li>
+<li><a href="http://oxrep.classics.ox.ac.uk/">Oxford Roman Economy Project</a> - see databases</li>
+<li><a href="https://networkdata.ics.uci.edu/">UCIrvine Network Data Repository</a></li>
+</ul>
+
+<h1 id="somearticles">Some Articles</h1>
+
+<ul>
+<li><p>See the growing list here for full list: <a href="http://historicalnetworkresearch.org/bibliography/">HNR Bibliography</a></p></li>
+<li><p>Erickson, Bonnie H. ‘Social Networks and History: A Review Essay’. <em>Historical Methods: A Journal of Quantitative and Interdisciplinary History</em> 30, no. 3 (1 January 1997): 149&#8211;57</p></li>
+<li>Wetherell, C. &#8220;Historical Social Network Analysis&#8221; <em>International Review of Social History</em> 43.6, 125&#8211;144
+
+<ul>
+<li>Discusses three reasons by historians have been slow to adopt SNA, gives an overview of the history of SNA as a field. Argues that the basic principles of SNA (as Wasserman and Faust 1994 argue) are claims of the interdependent nature of actors, that relations channel information, that the structure of relations constrain and facilitate action, and that patterns in relations define economic, political and social structure. Discusses the findings of past HSNA research including general patterns in size, composition, spatial dispersion, interconnection, and support between individuals in communities. Ends with a case study of landed estate of Pinkenhof in Livlannd to argue that kinship density is extremely low, and kinship connections between households connected a farmstead with more than 20% of the other farmsteads.</li>
+</ul></li>
+<li><p>“Who was ‘Central’ for Chinese Buddhist History? - A Social Network Approach.” International Journal of Buddhist Thought and Culture. Vol.28&#8211;2 (Dec. 2018): 45&#8211;67. </p></li>
+<li><p>Ansell, Christopher K. &#8220;Symbolic Networks: The Realignment of the French Working Class, 1887&#8211;1894&#8221; <em>American Journal of Sociology</em> 103 (1997) </p></li>
+<li><p>Bearman, Peter S. <em>Relations into Rhetorics: Local Elite Social Structure in Norfolk, England, 1540&#8211;1640</em> (1993) </p></li>
+<li><p>Bearman, Peter and Glenn Deane &#8220;The Structure of Opportunity: Middle-Class Mobility in England, 1548&#8211;1689&#8221; <em>American Journal of Sociology</em> 98 (1992) </p></li>
+<li><p>Düring, M., &amp; Stark, M. 2011. Historical Network Analysis. In G. Barnett &amp; J. G. Golson (eds) Encyclopedia of Social Networking, London: Sage </p></li>
+<li><p>Gould, Roger V. <em>Insurgent Identities: Class, Community and Protest in Paris from 1848 to the Commune</em> (1995) </p></li>
+<li><p>Gould, Roger V. ‘Patron-Client Ties, State Centralization, and the Whiskey Rebellion’. <em>American Journal of Sociology</em> 102, no. 2 (1996): 400&#8211;429. </p></li>
+<li><p>Krempel, L., &amp; Schnegg, M. 2005. About the Image : Diffusion Dynamics in an Historical Network. Structure and Dynamics 1(1). </p></li>
+<li><p>Lemercier, Claire &#8220;Formal network methods in history&#8221; </p></li>
+<li><p>Malkin, I. 2011. A small Greek world: networks in the Ancient Mediterranean. Oxford – New York: Oxford University Press. </p></li>
+<li><p>Marcus BINGENHEIMER, Jen-Jou HUNG, Simon WILES: &#8220;Social Network Visualization from TEI Data.&#8221; Literary and Linguistic Computing 26(3), 2011, pp. 271&#8211;278. Doi: 10.1093/llc/fqr020. (SSCI) </p></li>
+<li><p>Padgett, J.F. &amp; McLean, P.D., 2006. Organizational Invention and Elite Transformation: The Birth of Partnership Systems in Renaissance Florence. American Journal of Sociology, 6(5), pp.1463&#8211;1568. </p></li>
+<li><p>Padgett, J. &amp; Ansell, C., 1993. &#8220;Robust Action and the Rise of the Medici, 1400&#8211;1434.&#8221; <em>American Journal of Sociology</em> 98(6), pp.1259&#8211;1319. </p></li>
+<li><p>Popovic, M. St. 2013. Networks of Border Zones : A Case Study on the Historical Region of Macedonia in the 14th Century AD. In Understanding different geographies, 227–241. </p></li>
+<li><p>Preiser-Kapeller, J. 2011. Calculating the Synod ? A network analysis of the synod and the episcopacy in the register of the patriarchate of Constantinople in the years 1379&#8211;1390. In C. Gastgeber, E. Mitsiou, &amp; J. </p></li>
+<li><p>Ruffini, G.R., 2008. Social networks in Byzantine Egypt, Cambridge: Cambridge University Press. </p></li>
+<li><p>Rutman, Anita H. and Darrett B. <strong>A Place in Time: Middlesex County, Virginia, 1650&#8211;1750</strong> (1984)</p></li>
+</ul>
+
+<h1 id="textbooks">Textbooks</h1>
+
+<ul>
+<li>Scott, John. <em>Social Network Analysis</em>. 4th ed., 2017.</li>
+<li>Wasserman, Stanley, and Katherine Faust. <em>Social Network Analysis: Methods and Applications</em>. Cambridge University Press, 1994.</li>
+<li>Barabási, Albert-László. <em>Network Science</em>. Cambridge University Press, 2016.</li>
+<li>Borgatti, Stephen P., Martin G. Everett, and Jeffrey C. Johnson. <em>Analyzing Social Networks</em>. SAGE, 2018.</li>
+<li>Newman, Mark. <em>Networks</em>. 2nd ed. Oxford University Press, 2018.</li>
+<li>Zweig, Katharina A. <em>Network Analysis Literacy: A Practical Approach to the Analysis of Networks</em>. Springer Science &amp; Business Media, 2016.</li>
+<li>Freeman, Linton C., Douglas R. White, and Antone Kimball Romney. <em>Research Methods in Social Network Analysis</em>. Transaction Publishers, 1991.</li>
+<li>Canning, John. <em>Statistics for the Humanities</em> <a href="http://statisticsforhumanities.net/book/">Free Online</a></li>
+<li>Available in 2021: <em>Oxford Handbook of Social Networks</em></li>
+<li>R and SNA:
+
+<ul>
+<li>Luke, Douglas. <em>A User’s Guide to Network Analysis in R</em>. Springer, 2015.</li>
+<li>Kolaczyk, Eric D., and Gábor Csárdi. <em>Statistical Analysis of Network Data with R</em>. Springer, 2014.</li>
+<li>Grolemund, Garrett, and Hadley Wickham. <em>R for Data Science</em> Accessed 11 October 2020. <a href="https://r4ds.had.co.nz/">Online</a>.</li>
+<li>Arnold, Taylor, and Lauren Tilton. <em>Humanities Data in R: Exploring Networks, Geospatial Data, Images, and Text.</em> Springer, 2015.</li>
+</ul></li>
+</ul>
+
+<h1 id="tools">Tools</h1>
+
+<ul>
+<li><a href="https://cytoscape.org/">Cytoscape</a> - A free multi-platform software package for visualizing networks.</li>
+<li><a href="http://cynetshare.ucsd.edu/#/">CyNetShare</a> - A way to share and view network visualizations created in Cytoscape.</li>
+<li><a href="https://vistorian.net/">Vistorian</a> - Online tool for network visualization.</li>
+<li><a href="https://hdlab.stanford.edu/palladio/">Palladio</a> - Simple online tool, adds geographic dimension</li>
+<li><a href="http://visone.ethz.ch/html/about.html">Visone</a></li>
+<li><a href="mrvar.fdv.uni-lj.si/pajek/">Pajek</a> - Windows only, one of the main older tools</li>
+<li><a href="https://github.com/Nhogs/popoto/wiki">Popoto</a> - works with Neo4j</li>
+<li><a href="https://neo4j.com/">Neo4j</a></li>
+<li><a href="https://socnetv.org/">Socnetv</a></li>
+<li><a href="https://openrefine.org/">OpenRefine</a> - Useful tool for the cleaning of data.</li>
+<li><a href="https://orange.biolab.si/">Orange</a> - Some limited support for network visualization</li>
+<li><a href="https://nodegoat.net/">nodegoad</a> - An online research database with visualization features.</li>
+<li><a href="https://www.vosviewer.com/">VOSviewer</a> - for visualizing bibliometric networks.</li>
+<li><a href="https://www.vennmaker.com/">VennMaker</a> - offers &#8220;free&#8221; network drawing and ego network tools</li>
+<li><a href="https://gephi.org/">Gephi</a> - popular vizualization tool but last release in 2017</li>
+<li><a href="http://www.graphviz.org/">Graphviz</a> - flexible network graphing software</li>
+<li><a href="https://ccl.northwestern.edu/netlogo/">NetLogo</a></li>
+<li><a href="http://www.netminer.com/main/main-read.do">NetMiner</a> - Commercial software</li>
+<li><a href="https://archive.codeplex.com/?p=nodexl">NodeXL</a> - Network graphs through an Excel template</li>
+<li><a href="https://sites.google.com/site/ucinetsoftware/home">UCINET</a> - Windows only. Commercial software.</li>
+<li><a href="https://public.tableau.com/en-us/s/">Tableau Public</a> - Free version of commercial data exploration platform</li>
+<li><a href="https://www.tableau.com/">Tableau</a> - Data exploration platform with network visualization. Commercial software.</li>
+<li><a href="https://www.gertstulp.com/gensi/">GENSI</a> - tool for collecting ego network data.</li>
+<li>Python
+
+<ul>
+<li><a href="https://networkx.github.io/">NetworkX</a></li>
+</ul></li>
+<li>R Packages and Tools
+
+<ul>
+<li><a href="https://www.stats.ox.ac.uk/~snijders/siena/">RSiena</a></li>
+<li><a href="https://github.com/thomasp85/ggraph">ggraph</a></li>
+<li><a href="https://cran.r-project.org/web/packages/tidygraph/index.html">tidygraph</a></li>
+<li><a href="https://igraph.org/redirect.html">igraph</a> - Also used in Python and other settings</li>
+<li><a href="https://datastorm-open.github.io/visNetwork/">visNetwork</a></li>
+</ul></li>
+</ul>
+
+<h1 id="journals">Journals</h1>
+
+<ul>
+<li><a href="https://jhnr.uni.lu/index.php/jhnr">Journal of Historical Network Research</a></li>
+<li><a href="https://www.cambridge.org/core/journals/network-science">Network Science</a></li>
+<li><a href="https://revistes.uab.cat/redes/index">REDES - Revista hispana para el análisis de redes sociales</a></li>
+<li><a href="https://www.insna.org/social-networks">Social Networks</a></li>
+<li><a href="http://www.digitalhumanities.org/dhq/">Digital Humanities Quarterly</a></li>
+<li><a href="https://academic.oup.com/dsh">Digital Scholarship in the Humanities</a></li>
+<li><a href="https://www.insna.org/connections">Connections</a></li>
+<li><a href="https://www.exeley.com/journal/journal_of_social_structure">Journal of Social Structure</a></li>
+</ul>
+<!-- ##END MARKED WRAPPER## -->
+    </div>
+</body>
+</html>
