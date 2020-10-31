@@ -117,11 +117,11 @@ html,body,#wrapper{font-size:10pt!important}
 
 <p><em>Dimensionality Reduction:</em> These methods attempt to &#8220;reduce the dimensions&#8221; of a text on the assumption that high co-occurrence rates imply latent structures. Methods that explore this include methods such as Principal Component Analysis (<strong>PCA</strong>), Multi-Dimensional Scaling (MDS) and Correspondence Analysis performed on a Document Term Matrix (DTM, see above). The output can, for example, be projected in a two-dimensional space. Latent Semantic Analysis (LSA), Latent Semantic Indexing (LSI), which attempts to overcome shortcomings of LSA, employ a linear algebra technique called singular value decomposition (SVD) to identify concepts in a text. Another statistical approach, assuming a set of latent variables called a latent class model (LCM) is Probabilistic latent semantic analysis (PLSA), and when a so-called Dirichlet distribution is assumed, a Latent Dirichlet Allocation (LDA) model can be used (see topic modelling below).</p>
 
-<p><strong>See:</strong> Kwartler 129&#8211;147, Bengfort 97&#8211;110, 170&#8211;176 (<em>Python</em>); Desagulier 239&#8211;282; McGillivray 81&#8211;115 (Ch 6); Levshina 367&#8211;386 (Ch 19 on correspondence analysis)</p>
+<p><strong>See:</strong> Kwartler 129&#8211;147, Bengfort 97&#8211;110, 170&#8211;176 (<em>Python</em>); McGillivray 81&#8211;115 (Ch 6); Levshina 367&#8211;386 (Ch 19 on correspondence analysis); Desagulier 257&#8211;276 (10.4&#8211;5 correspondence analysis)</p>
 
 <p>Principal Component Analysis (<strong>PCA</strong>) is a form of multivariate statistical analysis often used in stylometry (sometimes calling it eigenanalysis) to analyse texts and their authorship. The technique breaks texts down into &#8220;principal components&#8221; and tries to explain as much variation in the data as possible from as few components as possible. Input is often frequencies of certain key words in a collection of text blocks. This then used to map the structural features of collection. It has some similarities with process of text clustering (see above) and can be used together with methods such as k-means clustering.</p>
 
-<p><strong>See:</strong> Savoy 46&#8211;52 (3.5); Levshina 353&#8211;366 (18.2.2); Jo 44&#8211;45 (3.2.2)</p>
+<p><strong>See:</strong> Savoy 46&#8211;52 (3.5); Levshina 353&#8211;366 (18.2.2); Jo 44&#8211;45 (3.2.2); Desagulier 242&#8211;256 (10.2)</p>
 
 <p>Some of the methods discussed here may be applied to <strong>Topic Modeling</strong>, using methods such as the unsupervised machine learning approach Latent Dirichlet allocation (<strong>LDA</strong>) which takes a similar approach to the clustering (see above) approach to identify clusters (of a designated number, for example k=3 or three topics) within a text that correspond to certain defined topics. It assumes every document is a mix of topics and every topic a mix of words. In R, <em>topicmodels</em>, <em>mallet</em>, and <em>lda</em> are three common topic modelling libraries. Since 2013, a new approach called &#8220;Word Embedding&#8221; is growing in use with <em>wordVectors</em>, <em>text2vec</em> as R libraries.</p>
 
@@ -156,7 +156,7 @@ html,body,#wrapper{font-size:10pt!important}
 
 <p><a href="https://kmlawson.github.io/dh-tutorials/">DH Tutorials Home</a><br/>
 The <a href="https://github.com/kmlawson/dh-tutorials">GitHub Repository</a> for this handout and its files.<br/>
-<a href="https://muninn.net/">Konrad M. Lawson</a> @kmlawson<br/>
+<a href="https://muninn.net/">Konrad M. Lawson</a>. @kmlawson<br/>
 Creative Commons - Attribution CC BY, 2020. </p>
 <!-- ##END MARKED WRAPPER## -->
     </div>
