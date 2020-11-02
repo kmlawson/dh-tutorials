@@ -1,0 +1,213 @@
+---
+title: "Notes on Text Mining with R - MO5161 Skills in Transnational History"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+One of the texts we have been using, [*Text Mining with R*](https://www.tidytextmining.com/) provides details on the easy to use `tidytext` package. However, it assumes students have a strong foundation in the R programming language in order to fully understand what is happening in the code used in the book. Although students should be making progress on their introductory R and tidyverse training through the DataCamp assignments, the below is designed to help explain and practice some of the book's material.
+
+In addition to the [book](https://www.tidytextmining.com/) itself, other sources include the package vignette (`vignette("tidytext")`) and the [CRAN entry](https://cran.r-project.org/web/packages/tidytext/index.html) for tidtytext, where you can download the [reference manual](https://cran.r-project.org/web/packages/tidytext/tidytext.pdf)
+
+## Notes on Ch 1: The Tidy Text Format
+
+### [The unnest_tokens Function](https://www.tidytextmining.com/tidytext.html#the-unnest_tokens-function)
+
+The `unnest_tokens()` is a useful command that is part of the pre-processing workflow. The first example takes a few lines of poetry from Emily Dickinson, puts it into a tibble, a special kind of data frame class often used in tidy tools, and then is tokenized. 
+
+**`c()`** - This command combines a collection of items into a vector.
+
+- e.g. `my_fruit_basket <- c("apple","orange","pear")`
+
+**`library(dplyr)`** - This package is a colection of tools or rather "a grammar for data manipulation." Read more with `vignette("dplyr")` or at its [homepage](https://dplyr.tidyverse.org/). All of its functions assume that you will offer it a tibble as its first argument, but you can also pass data to it with a "pipe" in the form of `%>%`. Here is an example. If we start with this:
+
+```{r message=FALSE}
+library(dplyr)
+```
+```{r}
+my_fruit_basket <- c("apple","orange","pear")
+my_fruit_sizes <- c(3,4,6)
+```
+Here we have two vectors, one holding the names of the fruit, the other some sizes of the fruit. Here is where the pipe comes in handy. The following two pieces of code do the same thing, the first without the pipe:
+```{r}
+basket_tible <- tibble(fruit=my_fruit_basket,size=my_fruit_sizes)   
+big_fruit <- filter(basket_tible, size>3)
+big_fruit
+```
+And the second with:
+```{r}
+big_fruit <- tibble(fruit=my_fruit_basket,size=my_fruit_sizes) %>%
+  filter(size>3)
+big_fruit
+```
+The `dplyr` command `filter()` can be used to filter by certain statements. Here, if we had done `filter(fruit=="apple")` it would have returned only the apple and its size (notice that it uses `==` instead of `=`). The other major commands used by `dplyr` are `select()` (to select only certain columns), `mutate()` (add new columns/variables), `arrange()` and `summarise()`.
+
+**`tibble()`** - Older editions of the book use the now deprecated `data_frame()` command. This will create a tibble from a collection of input variables. Above, we fed two vectors, the character vecotr `my_fruit_basket`, and the numeric vector `my_fruit_sizes` to `tibble()`.
+
+**`unnest_tokens()`** In the Silge book, the first use of `unnest_tokens()` transforms the `text_df` tibble, which contains two columns ("line" and "text") and carries out *tokenization* on the variable. It runs the command `unnest_tokens(word, text)` which produces a new tibble with two columns ("line" and "word"). The basic structure of this command, assuming you are sending it a tibble via pipe:
+
+`unnest_tokens(name_of_output_column_for_tokenized_words, name_of_column_in_input_tibble_to_tokenize)`
+
+The outputed table in the book contains also the "line" column as well, and shows what line each word came from. The tokenizer merely copied over the "line" column from the first tibble, and left its name and the contents for the "line" column for all words that come from that line. It may be a bit clearer if we use some nonsense data instead with completely different column names:
+
+```{r}
+some_numbers <- c("one","two","three","four")
+some_sentences <- c("Here is the first sentence","Here is the second","And a third sentence","Finally, a fourth sentence.")
+all_together <- tibble(number_list=some_numbers,sentence_list=some_sentences)
+all_together
+```
+Here you can see that I have just created a tibble similar in structure to the Dickenson poems, but instead of "line" and "text" we have used different column titles.
+```{r  message=FALSE}
+library(tidytext)
+```
+```{r}
+all_together %>%
+  unnest_tokens(just_the_words,sentence_list)
+```
+From this we can see that the `number_list` column was just copied over and preserved for each row containing a word from a given matching line. Obviously, numeric line numbers are more useful.
+
+### Getting Your Text Into R
+
+The subsequent sections of the chapter work with texts that are added to variables thanks to the `janeaustenr` and `gutenbergr` packages. In most cases, however,  you will want to bring your own historical sources that you have obtained from historical databases and other web resources, OCRed and cleaned before hand, or which has been transcribed. If you have PDFs that are not image scans, but contain text, you can use command line utilities such as the `pdftotext` utility that comes with [xpdf](https://www.xpdfreader.com/download.html) (OSX users can install xpdf, which will come with pdftotext with [homebrew](https://formulae.brew.sh/formula/xpdf)) to extract it.
+
+Once you have a text you wish to work with in R, you have an abundance of ways to import it. Notice that all of the following can import a file directly from your hard drive (remember to set your working directory from the Session menu or with `setwd()`)
+
+I suggest you use the `readr` package command `read_lines()` as your main way to get files into R. Compare the following that you may see used in other people's code:
+
+**scan** - In the base collection of R utilities, produces a character vector, with each line in an element. If you are importing text, assign "character" to the "what" parameter and the regular expression metacharacter for the newline character used by your text (such as "\n"). The below examples work with a sample text file [lear.txt](http://transnationalhistory.net/files/lear.txt).
+
+`lear <- scan("lear.txt",what="character",sep="\n")`
+Also works directly on texts imported by a web URL:
+`household_management <- scan("http://www.gutenberg.org/cache/epub/10136/pg10136.txt",what="character",sep="\n")`
+
+**read.table** - This command, which is in the basic uitilities in R, is better used for reading in a regular table of information that is delimited by some character such as a comma (csv) or a tab (tsv), etc. You can, however, set the delimiter to a newline character and read in a file. The output will be a data frame, rather than a character vector.
+
+`lear <- read.table("lear.txt",sep="\n")`
+`household_management <- read.table("http://www.gutenberg.org/cache/epub/10136/pg10136.txt",sep="\n")`
+
+**readLines** - In the base collection of R utilities. However `read_lines()` may be slower than either the `readr` command `read_lines()` or the brio `read_lines()`
+
+`lear <- readLines("lear.txt")`
+`hm <- readLines("http://www.gutenberg.org/cache/epub/10136/pg10136.txt")`
+
+**read_file** - This is in the tidyverse's `readr` package. It will read an entire file into a single vector object of length one. It does not divide up the lines.
+
+`lear <- read_file("lear.txt")`
+`household_management <- read_file("http://www.gutenberg.org/cache/epub/10136/pg10136.txt")`
+
+**read_lines** - This command is in the tidyverse's `readr` package. It is a great default command to use for importing text into a character vector. It appears to work faster than the `readLines()` command.
+
+`lear <- read_lines("lear.txt")` 
+`household_management <- read_lines("http://www.gutenberg.org/cache/epub/10136/pg10136.txt")`
+
+**brio: read_lines** - The `brio` package is an input/output package that always reads and writes UTF-8 Unicode files. It has its own `read_lines()` command which appears to run faster than the `readr` version. This might be useful if you are reading lots of very large files. However, note, that it will not download files remotely through a URL. 
+
+`lear <- read_lines("lear.txt")` 
+
+## [Tidying the Words of Jane Austen](https://www.tidytextmining.com/tidytext.html#tidyausten)
+
+This section makes use of the package `janeaustenr`. The `austen_books()` command returns a tibble with two columns `text` and `books`. The first contains each line from each of the six completed published novels of Jane Austen, and the second column `book` gives the title of the book. The goal of the first commands are to add a column of line numbers.
+
+**group_by()** - To do this it uses the `group_by()` command to "group by" book and repeat the addition of line numbers for each book, starting each time from one. It also uses a regular expression, with `str_detect()` and `cumsum()` to add chapter numbers. 
+
+Let us explain what is happening step by step. First, what does the `group_by()` do here? Examine the example code below using data from the `gapminder` package:
+
+```{r}
+library(gapminder)
+gapminder
+gapminder_withmedian <- gapminder %>% 
+  group_by(year) %>% 
+  mutate(medianlife=median(lifeExp), 
+         over_under=(lifeExp-median(lifeExp))) %>% 
+  ungroup()
+```
+This package has a `lifeExp` column. When we `group_by(year)` we are combining all the different observations of various countries into groups, one for all the observations from 1952, one for all the observations from 1957, and so on. Then, when we pass this on to `mutate()`, which adds two new columns, the `median(lifeExp)` grabs the median of all life expectancies calculated for each grouped year, and for `over_under_median` subtracts the median across all observations for the year from the life expectancy of each row in turn, telling us how much the life expectancy is over or under the global median for that year. When we are done performing actions on a particular grouped set of data, we `ungroup()`. We see the resulting data for Cuba below:
+```{r}
+gapminder_withmedian %>%
+  filter(country=="Cuba")
+```
+Read more in section 5.1.3 of of *R for Data Science* [here](https://r4ds.had.co.nz/transform.html).
+
+**mutate()** - As we saw above the `mutate()` function or "verb" can add new variables or new columns to a tibble, usually by carrying out some transformation on existing data. In the example above, we added two columns, one with the median life expectancy for all countries in a given year, and one which shows the gap between each country in that year and the median. Read more in section 5.5 of of *R for Data Science* [here](https://r4ds.had.co.nz/transform.html).
+
+**str_detect** and **cumsum()** - In the Jane Austen example, two new columns are added. One of them uses `row_number()` to give an incrementing line number to each line, in each group containing all the lines of a book. The second is more complicated:
+
+`chapter = cumsum(str_detect(text, regex("^chapter [\\divxlc]", ignore_case = TRUE))))`
+
+Let us examine this line step by step from the inside out. We want to find the location of the beginning of each chapter. This will be a line which is called something like "Chapter 14" or "Chapter IV". So, a regular expression which, in a case insensitive way, looks for a line beginning with the word "chapter" (as a regular epxression `^chapter`) followed by a space and any of the following: any digit, or the letters i, v, x, l, or c (`[\\divxlc]`) will find the lines we are looking for. We don't have to capture anything else: as long as we have found this, we have seen enough to conclude that this is the beginning of a chapter. This explains the `regex("^chapter [\\divxlc]", ignore_case = TRUE)`. 
+
+Now for the `str_detect()`. This `stringr` function will search a character vector for a given phrase (in this case, a regular expression, rather than a simple string), and when it finds it, will return `TRUE`, otherwise it will return `FALSE`. For example, let us imagine I have a fruit basket with an apple, a pear, and a banana. If I want to search the basket to see if I have a banana, here is what that would look like with a search using `str_detect()`:
+```{r banana}
+library(stringr)
+fruit_basket <- c("apple", "pear", "banana")
+find_banana <- fruit_basket %>% str_detect("banana")
+find_banana
+```
+As you can see, it returned FALSE twice, because neither the apple nor the pear are bananas. Then, finding the banana, it returned TRUE. This collection of vectors can now be used to "select" just a few words from a list. In this case, we could make a new basket with just the banana we found:
+```{r}
+new_basket <- fruit_basket[find_banana]
+new_basket
+```
+But what about the case of our book? It has returned a `TRUE` for every line in every Jane Austen book which is the beginning of a chapter. For example, the tenth line of `original_books` is "CHAPTER 1" so the tenth object in the vector returned by `str_detect` will be TRUE. Here is where `cumsum()` comes in. If I have a vector x, which contains some numbers, `cumsum()` will take the number (Any `TRUE` gets interpreted or "coerced" to a 1, and `FALSE` gets coerced to a 0) found in each vector and add to it cumulative sum of the items that come before it. So if:
+`x <- c(1,2,3)`
+Then `cumsum(x)` will result in 1 3 and 6. The sum of 1 is just 1. The sum of 1+2 = 3, and the sum of 1+2+3 is 6. With logical vectors containing `FALSE` and `TRUE` here is an example:
+```{r}
+logical_example <- c(TRUE,FALSE,TRUE,FALSE,TRUE)
+cumsum(logical_example)
+```
+The first `TRUE` is coerced to 1, then 1+0=1, then 1+0+1=2, then 1+0+1+0=2, then 1+0+1+0+1=3. This is why we end up with 1 1 2 2 3. And this is how the chapter numbers were obtained, by incrementing the chapter each time it finds (`TRUE`) another chapter head. 
+
+After using `unnest_tokens()` to break the text down into words, the next piece of code loads a dataset called `stop_words` from the `tidytext` package. This is simple dataset with two columns, a "word" for a list of English language words, and second a "lexicon" to indicate the source of the list of stop words (onix, SMART, and snowball). 
+
+**anti_join()** - The `anti_join()` command is like a cookie cutter: we "cut out" the words in the stop words list from the `tidy_books` variable. Let us show another example:
+```{r}
+seven_sins <- tibble(characteristics=c("gluttony","lust","greed","sloth","wrath","envy","pride"))
+my_personality <- tibble(characteristics=c("gluttony","modesty","lust","restraint","greed","industriousness","sloth","tolerance","wrath","generosity","envy","strenght","pride"))
+new_me <- my_personality %>%
+  anti_join(seven_sins)
+new_me
+```
+Notice that `my_personality` had a column `characteristics` which was the same as a column `characteristics` in the `seven_sins` tibble. Since they had the same name, we didn't have to tell `anti_join()` which columns matched eachother.
+
+**count()** - Now that the stop words were removed, the remaining words were counted and sorted with the `dplyr` verb `count()`. This counts things in an inputted tibble and produces a list, optionally sorted, with the frequency in an "n" column. Here is another very simple example:
+```{r}
+drawer_contents <- tibble(objects=c("pen","pen","pen","pen","pen","pen","pencil","pencil","eraser","highlighter","highlighter","highlighter","usb stick","usb stick"))
+drawer_contents %>%
+  count(objects, sort = TRUE)
+```
+
+Finally `ggplot2` is used to plot the resulting frequencies. Ggplot 2 is not something easily explained, and I would suggest you read the (online) [chapter 3](https://r4ds.had.co.nz/data-visualisation.html) of *R for Data Science* for more details.
+
+## Word Frequencies
+
+Much of this section builds on techniques from the earlier sections, but using the `gutenbergr` package to download and work with multiple books at once. There is one somewhat complicated section which uses `bind_rows()` to merge together several tibbles, uses `select()` with a negative to exclude only one column, then uses `spread()` and `gather()` from the `tidyr` package to reformulate the table.
+
+**bind_rows()** - This function from `dplyr` takes two tibbles or data frames and merges them together by stacking them on top of each other. Here is a simple example:
+```{r}
+some_countries <- tibble(name=c("Hungary","Lebanon","Panama"),language=c("Hungarian","Arabic","Spanish"))
+more_countries <- tibble(name=c("Cambodia","Morroco","Argentina"),language=c("Khmer","Arabic","Spanish"))
+all_countries <- bind_rows(some_countries,more_countries)
+all_countries %>% arrange(language)
+```
+Here I used the `dplyr` verb `arrange()` to sort the final results by language. In the text, you will notice that instead of just passing it the `tidy_bronte` and `tidy_hgwells` etc. tibbles, it also used `mutate()` to first add a column with author information.
+
+Another column that is added is the percentage of words a given frequency is with: `mutate(proportion = n / sum(n))`. If the most frequent word is found 1,200 times in a text, but there are 1,200,000, then the proportional frequency of that word is 0.1% (1,200/1,200,000). The `sum(n)` derives the total number of words in the text by adding all the frequencies together.
+
+The `select(-n)` uses the `dplyr` verb `select()` which grabs data from only certain columns. However, if you put a "-" before the name of a column, you are saying, "Give me all the columns except this one." For example, using the `all_countries` tibble above I can grab a list of just the names of the countries with either of the following:
+```{r}
+all_countries %>% select(name)
+all_countries %>% select(-language)
+```
+
+The `spread()` and `gather()` have, in recent versions of the `tidyr` package been renamed `pivot_wider` and `pivot_longer`. The best way to understand what is happening here is to take a closer look at the `tidyr` [vignette on pivot](https://tidyr.tidyverse.org/articles/pivot.html). The plot that follows uses `ggplot` with the `scales` package, both of which cannot be covered in detail here. The final `cor.test()` is a simple correlation test between paired samples using Pearson's product-moment correlation. You can read more in the documentation for this command.
+
+Coming Soon:
+
+- Ch 2 Sentiment Analysis with Tidy Data
+- Ch 3 Word and Document Frequency: tf-idf
+- Ch 4 N-Grams and Correlations
+- Ch 6 Topic Modeling
