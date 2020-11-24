@@ -12,7 +12,7 @@
 <meta name="author" content="Konrad M. Lawson" />
 
 
-<title>Notes on Text Mining with R - MO5161 Skills in Transnational History</title>
+<title>xml2 Examples</title>
 
 <script>/*! jQuery v1.11.3 | (c) 2005, 2015 jQuery Foundation, Inc. | jquery.org/license */
 !function(a,b){"object"==typeof module&&"object"==typeof module.exports?module.exports=a.document?b(a,!0):function(a){if(!a.document)throw new Error("jQuery requires a window with a document");return b(a)}:b(a)}("undefined"!=typeof window?window:this,function(a,b){var c=[],d=c.slice,e=c.concat,f=c.push,g=c.indexOf,h={},i=h.toString,j=h.hasOwnProperty,k={},l="1.11.3",m=function(a,b){return new m.fn.init(a,b)},n=/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g,o=/^-ms-/,p=/-([\da-z])/gi,q=function(a,b){return b.toUpperCase()};m.fn=m.prototype={jquery:l,constructor:m,selector:"",length:0,toArray:function(){return d.call(this)},get:function(a){return null!=a?0>a?this[a+this.length]:this[a]:d.call(this)},pushStack:function(a){var b=m.merge(this.constructor(),a);return b.prevObject=this,b.context=this.context,b},each:function(a,b){return m.each(this,a,b)},map:function(a){return this.pushStack(m.map(this,function(b,c){return a.call(b,c,b)}))},slice:function(){return this.pushStack(d.apply(this,arguments))},first:function(){return this.eq(0)},last:function(){return this.eq(-1)},eq:function(a){var b=this.length,c=+a+(0>a?b:0);return this.pushStack(c>=0&&b>c?[this[c]]:[])},end:function(){return this.prevObject||this.constructor(null)},push:f,sort:c.sort,splice:c.splice},m.extend=m.fn.extend=function(){var a,b,c,d,e,f,g=arguments[0]||{},h=1,i=arguments.length,j=!1;for("boolean"==typeof g&&(j=g,g=arguments[h]||{},h++),"object"==typeof g||m.isFunction(g)||(g={}),h===i&&(g=this,h--);i>h;h++)if(null!=(e=arguments[h]))for(d in e)a=g[d],c=e[d],g!==c&&(j&&c&&(m.isPlainObject(c)||(b=m.isArray(c)))?(b?(b=!1,f=a&&m.isArray(a)?a:[]):f=a&&m.isPlainObject(a)?a:{},g[d]=m.extend(j,f,c)):void 0!==c&&(g[d]=c));return g},m.extend({expando:"jQuery"+(l+Math.random()).replace(/\D/g,""),isReady:!0,error:function(a){throw new Error(a)},noop:function(){},isFunction:function(a){return"function"===m.type(a)},isArray:Array.isArray||function(a){return"array"===m.type(a)},isWindow:function(a){return null!=a&&a==a.window},isNumeric:function(a){return!m.isArray(a)&&a-parseFloat(a)+1>=0},isEmptyObject:function(a){var b;for(b in a)return!1;return!0},isPlainObject:function(a){var b;if(!a||"object"!==m.type(a)||a.nodeType||m.isWindow(a))return!1;try{if(a.constructor&&!j.call(a,"constructor")&&!j.call(a.constructor.prototype,"isPrototypeOf"))return!1}catch(c){return!1}if(k.ownLast)for(b in a)return j.call(a,b);for(b in a);return void 0===b||j.call(a,b)},type:function(a){return null==a?a+"":"object"==typeof a||"function"==typeof a?h[i.call(a)]||"object":typeof a},globalEval:function(b){b&&m.trim(b)&&(a.execScript||function(b){a.eval.call(a,b)})(b)},camelCase:function(a){return a.replace(o,"ms-").replace(p,q)},nodeName:function(a,b){return a.nodeName&&a.nodeName.toLowerCase()===b.toLowerCase()},each:function(a,b,c){var d,e=0,f=a.length,g=r(a);if(c){if(g){for(;f>e;e++)if(d=b.apply(a[e],c),d===!1)break}else for(e in a)if(d=b.apply(a[e],c),d===!1)break}else if(g){for(;f>e;e++)if(d=b.call(a[e],e,a[e]),d===!1)break}else for(e in a)if(d=b.call(a[e],e,a[e]),d===!1)break;return a},trim:function(a){return null==a?"":(a+"").replace(n,"")},makeArray:function(a,b){var c=b||[];return null!=a&&(r(Object(a))?m.merge(c,"string"==typeof a?[a]:a):f.call(c,a)),c},inArray:function(a,b,c){var d;if(b){if(g)return g.call(b,a,c);for(d=b.length,c=c?0>c?Math.max(0,d+c):c:0;d>c;c++)if(c in b&&b[c]===a)return c}return-1},merge:function(a,b){var c=+b.length,d=0,e=a.length;while(c>d)a[e++]=b[d++];if(c!==c)while(void 0!==b[d])a[e++]=b[d++];return a.length=e,a},grep:function(a,b,c){for(var d,e=[],f=0,g=a.length,h=!c;g>f;f++)d=!b(a[f],f),d!==h&&e.push(a[f]);return e},map:function(a,b,c){var d,f=0,g=a.length,h=r(a),i=[];if(h)for(;g>f;f++)d=b(a[f],f,c),null!=d&&i.push(d);else for(f in a)d=b(a[f],f,c),null!=d&&i.push(d);return e.apply([],i)},guid:1,proxy:function(a,b){var c,e,f;return"string"==typeof b&&(f=a[b],b=a,a=f),m.isFunction(a)?(c=d.call(arguments,2),e=function(){return a.apply(b||this,c.concat(d.call(arguments)))},e.guid=a.guid=a.guid||m.guid++,e):void 0},now:function(){return+new Date},support:k}),m.each("Boolean Number String Function Array Date RegExp Object Error".split(" "),function(a,b){h["[object "+b+"]"]=b.toLowerCase()});function r(a){var b="length"in a&&a.length,c=m.type(a);return"function"===c||m.isWindow(a)?!1:1===a.nodeType&&b?!0:"array"===c||0===b||"number"==typeof b&&b>0&&b-1 in a}var s=function(a){var b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u="sizzle"+1*new Date,v=a.document,w=0,x=0,y=ha(),z=ha(),A=ha(),B=function(a,b){return a===b&&(l=!0),0},C=1<<31,D={}.hasOwnProperty,E=[],F=E.pop,G=E.push,H=E.push,I=E.slice,J=function(a,b){for(var c=0,d=a.length;d>c;c++)if(a[c]===b)return c;return-1},K="checked|selected|async|autofocus|autoplay|controls|defer|disabled|hidden|ismap|loop|multiple|open|readonly|required|scoped",L="[\\x20\\t\\r\\n\\f]",M="(?:\\\\.|[\\w-]|[^\\x00-\\xa0])+",N=M.replace("w","w#"),O="\\["+L+"*("+M+")(?:"+L+"*([*^$|!~]?=)"+L+"*(?:'((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\"|("+N+"))|)"+L+"*\\]",P=":("+M+")(?:\\((('((?:\\\\.|[^\\\\'])*)'|\"((?:\\\\.|[^\\\\\"])*)\")|((?:\\\\.|[^\\\\()[\\]]|"+O+")*)|.*)\\)|)",Q=new RegExp(L+"+","g"),R=new RegExp("^"+L+"+|((?:^|[^\\\\])(?:\\\\.)*)"+L+"+$","g"),S=new RegExp("^"+L+"*,"+L+"*"),T=new RegExp("^"+L+"*([>+~]|"+L+")"+L+"*"),U=new RegExp("="+L+"*([^\\]'\"]*?)"+L+"*\\]","g"),V=new RegExp(P),W=new RegExp("^"+N+"$"),X={ID:new RegExp("^#("+M+")"),CLASS:new RegExp("^\\.("+M+")"),TAG:new RegExp("^("+M.replace("w","w*")+")"),ATTR:new RegExp("^"+O),PSEUDO:new RegExp("^"+P),CHILD:new RegExp("^:(only|first|last|nth|nth-last)-(child|of-type)(?:\\("+L+"*(even|odd|(([+-]|)(\\d*)n|)"+L+"*(?:([+-]|)"+L+"*(\\d+)|))"+L+"*\\)|)","i"),bool:new RegExp("^(?:"+K+")$","i"),needsContext:new RegExp("^"+L+"*[>+~]|:(even|odd|eq|gt|lt|nth|first|last)(?:\\("+L+"*((?:-\\d)?\\d*)"+L+"*\\)|)(?=[^-]|$)","i")},Y=/^(?:input|select|textarea|button)$/i,Z=/^h\d$/i,$=/^[^{]+\{\s*\[native \w/,_=/^(?:#([\w-]+)|(\w+)|\.([\w-]+))$/,aa=/[+~]/,ba=/'|\\/g,ca=new RegExp("\\\\([\\da-f]{1,6}"+L+"?|("+L+")|.)","ig"),da=function(a,b,c){var d="0x"+b-65536;return d!==d||c?b:0>d?String.fromCharCode(d+65536):String.fromCharCode(d>>10|55296,1023&d|56320)},ea=function(){m()};try{H.apply(E=I.call(v.childNodes),v.childNodes),E[v.childNodes.length].nodeType}catch(fa){H={apply:E.length?function(a,b){G.apply(a,I.call(b))}:function(a,b){var c=a.length,d=0;while(a[c++]=b[d++]);a.length=c-1}}}function ga(a,b,d,e){var f,h,j,k,l,o,r,s,w,x;if((b?b.ownerDocument||b:v)!==n&&m(b),b=b||n,d=d||[],k=b.nodeType,"string"!=typeof a||!a||1!==k&&9!==k&&11!==k)return d;if(!e&&p){if(11!==k&&(f=_.exec(a)))if(j=f[1]){if(9===k){if(h=b.getElementById(j),!h||!h.parentNode)return d;if(h.id===j)return d.push(h),d}else if(b.ownerDocument&&(h=b.ownerDocument.getElementById(j))&&t(b,h)&&h.id===j)return d.push(h),d}else{if(f[2])return H.apply(d,b.getElementsByTagName(a)),d;if((j=f[3])&&c.getElementsByClassName)return H.apply(d,b.getElementsByClassName(j)),d}if(c.qsa&&(!q||!q.test(a))){if(s=r=u,w=b,x=1!==k&&a,1===k&&"object"!==b.nodeName.toLowerCase()){o=g(a),(r=b.getAttribute("id"))?s=r.replace(ba,"\\$&"):b.setAttribute("id",s),s="[id='"+s+"'] ",l=o.length;while(l--)o[l]=s+ra(o[l]);w=aa.test(a)&&pa(b.parentNode)||b,x=o.join(",")}if(x)try{return H.apply(d,w.querySelectorAll(x)),d}catch(y){}finally{r||b.removeAttribute("id")}}}return i(a.replace(R,"$1"),b,d,e)}function ha(){var a=[];function b(c,e){return a.push(c+" ")>d.cacheLength&&delete b[a.shift()],b[c+" "]=e}return b}function ia(a){return a[u]=!0,a}function ja(a){var b=n.createElement("div");try{return!!a(b)}catch(c){return!1}finally{b.parentNode&&b.parentNode.removeChild(b),b=null}}function ka(a,b){var c=a.split("|"),e=a.length;while(e--)d.attrHandle[c[e]]=b}function la(a,b){var c=b&&a,d=c&&1===a.nodeType&&1===b.nodeType&&(~b.sourceIndex||C)-(~a.sourceIndex||C);if(d)return d;if(c)while(c=c.nextSibling)if(c===b)return-1;return a?1:-1}function ma(a){return function(b){var c=b.nodeName.toLowerCase();return"input"===c&&b.type===a}}function na(a){return function(b){var c=b.nodeName.toLowerCase();return("input"===c||"button"===c)&&b.type===a}}function oa(a){return ia(function(b){return b=+b,ia(function(c,d){var e,f=a([],c.length,b),g=f.length;while(g--)c[e=f[g]]&&(c[e]=!(d[e]=c[e]))})})}function pa(a){return a&&"undefined"!=typeof a.getElementsByTagName&&a}c=ga.support={},f=ga.isXML=function(a){var b=a&&(a.ownerDocument||a).documentElement;return b?"HTML"!==b.nodeName:!1},m=ga.setDocument=function(a){var b,e,g=a?a.ownerDocument||a:v;return g!==n&&9===g.nodeType&&g.documentElement?(n=g,o=g.documentElement,e=g.defaultView,e&&e!==e.top&&(e.addEventListener?e.addEventListener("unload",ea,!1):e.attachEvent&&e.attachEvent("onunload",ea)),p=!f(g),c.attributes=ja(function(a){return a.className="i",!a.getAttribute("className")}),c.getElementsByTagName=ja(function(a){return a.appendChild(g.createComment("")),!a.getElementsByTagName("*").length}),c.getElementsByClassName=$.test(g.getElementsByClassName),c.getById=ja(function(a){return o.appendChild(a).id=u,!g.getElementsByName||!g.getElementsByName(u).length}),c.getById?(d.find.ID=function(a,b){if("undefined"!=typeof b.getElementById&&p){var c=b.getElementById(a);return c&&c.parentNode?[c]:[]}},d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){return a.getAttribute("id")===b}}):(delete d.find.ID,d.filter.ID=function(a){var b=a.replace(ca,da);return function(a){var c="undefined"!=typeof a.getAttributeNode&&a.getAttributeNode("id");return c&&c.value===b}}),d.find.TAG=c.getElementsByTagName?function(a,b){return"undefined"!=typeof b.getElementsByTagName?b.getElementsByTagName(a):c.qsa?b.querySelectorAll(a):void 0}:function(a,b){var c,d=[],e=0,f=b.getElementsByTagName(a);if("*"===a){while(c=f[e++])1===c.nodeType&&d.push(c);return d}return f},d.find.CLASS=c.getElementsByClassName&&function(a,b){return p?b.getElementsByClassName(a):void 0},r=[],q=[],(c.qsa=$.test(g.querySelectorAll))&&(ja(function(a){o.appendChild(a).innerHTML="<a id='"+u+"'></a><select id='"+u+"-\f]' msallowcapture=''><option selected=''></option></select>",a.querySelectorAll("[msallowcapture^='']").length&&q.push("[*^$]="+L+"*(?:''|\"\")"),a.querySelectorAll("[selected]").length||q.push("\\["+L+"*(?:value|"+K+")"),a.querySelectorAll("[id~="+u+"-]").length||q.push("~="),a.querySelectorAll(":checked").length||q.push(":checked"),a.querySelectorAll("a#"+u+"+*").length||q.push(".#.+[+~]")}),ja(function(a){var b=g.createElement("input");b.setAttribute("type","hidden"),a.appendChild(b).setAttribute("name","D"),a.querySelectorAll("[name=d]").length&&q.push("name"+L+"*[*^$|!~]?="),a.querySelectorAll(":enabled").length||q.push(":enabled",":disabled"),a.querySelectorAll("*,:x"),q.push(",.*:")})),(c.matchesSelector=$.test(s=o.matches||o.webkitMatchesSelector||o.mozMatchesSelector||o.oMatchesSelector||o.msMatchesSelector))&&ja(function(a){c.disconnectedMatch=s.call(a,"div"),s.call(a,"[s!='']:x"),r.push("!=",P)}),q=q.length&&new RegExp(q.join("|")),r=r.length&&new RegExp(r.join("|")),b=$.test(o.compareDocumentPosition),t=b||$.test(o.contains)?function(a,b){var c=9===a.nodeType?a.documentElement:a,d=b&&b.parentNode;return a===d||!(!d||1!==d.nodeType||!(c.contains?c.contains(d):a.compareDocumentPosition&&16&a.compareDocumentPosition(d)))}:function(a,b){if(b)while(b=b.parentNode)if(b===a)return!0;return!1},B=b?function(a,b){if(a===b)return l=!0,0;var d=!a.compareDocumentPosition-!b.compareDocumentPosition;return d?d:(d=(a.ownerDocument||a)===(b.ownerDocument||b)?a.compareDocumentPosition(b):1,1&d||!c.sortDetached&&b.compareDocumentPosition(a)===d?a===g||a.ownerDocument===v&&t(v,a)?-1:b===g||b.ownerDocument===v&&t(v,b)?1:k?J(k,a)-J(k,b):0:4&d?-1:1)}:function(a,b){if(a===b)return l=!0,0;var c,d=0,e=a.parentNode,f=b.parentNode,h=[a],i=[b];if(!e||!f)return a===g?-1:b===g?1:e?-1:f?1:k?J(k,a)-J(k,b):0;if(e===f)return la(a,b);c=a;while(c=c.parentNode)h.unshift(c);c=b;while(c=c.parentNode)i.unshift(c);while(h[d]===i[d])d++;return d?la(h[d],i[d]):h[d]===v?-1:i[d]===v?1:0},g):n},ga.matches=function(a,b){return ga(a,null,null,b)},ga.matchesSelector=function(a,b){if((a.ownerDocument||a)!==n&&m(a),b=b.replace(U,"='$1']"),!(!c.matchesSelector||!p||r&&r.test(b)||q&&q.test(b)))try{var d=s.call(a,b);if(d||c.disconnectedMatch||a.document&&11!==a.document.nodeType)return d}catch(e){}return ga(b,n,null,[a]).length>0},ga.contains=function(a,b){return(a.ownerDocument||a)!==n&&m(a),t(a,b)},ga.attr=function(a,b){(a.ownerDocument||a)!==n&&m(a);var e=d.attrHandle[b.toLowerCase()],f=e&&D.call(d.attrHandle,b.toLowerCase())?e(a,b,!p):void 0;return void 0!==f?f:c.attributes||!p?a.getAttribute(b):(f=a.getAttributeNode(b))&&f.specified?f.value:null},ga.error=function(a){throw new Error("Syntax error, unrecognized expression: "+a)},ga.uniqueSort=function(a){var b,d=[],e=0,f=0;if(l=!c.detectDuplicates,k=!c.sortStable&&a.slice(0),a.sort(B),l){while(b=a[f++])b===a[f]&&(e=d.push(f));while(e--)a.splice(d[e],1)}return k=null,a},e=ga.getText=function(a){var b,c="",d=0,f=a.nodeType;if(f){if(1===f||9===f||11===f){if("string"==typeof a.textContent)return a.textContent;for(a=a.firstChild;a;a=a.nextSibling)c+=e(a)}else if(3===f||4===f)return a.nodeValue}else while(b=a[d++])c+=e(b);return c},d=ga.selectors={cacheLength:50,createPseudo:ia,match:X,attrHandle:{},find:{},relative:{">":{dir:"parentNode",first:!0}," ":{dir:"parentNode"},"+":{dir:"previousSibling",first:!0},"~":{dir:"previousSibling"}},preFilter:{ATTR:function(a){return a[1]=a[1].replace(ca,da),a[3]=(a[3]||a[4]||a[5]||"").replace(ca,da),"~="===a[2]&&(a[3]=" "+a[3]+" "),a.slice(0,4)},CHILD:function(a){return a[1]=a[1].toLowerCase(),"nth"===a[1].slice(0,3)?(a[3]||ga.error(a[0]),a[4]=+(a[4]?a[5]+(a[6]||1):2*("even"===a[3]||"odd"===a[3])),a[5]=+(a[7]+a[8]||"odd"===a[3])):a[3]&&ga.error(a[0]),a},PSEUDO:function(a){var b,c=!a[6]&&a[2];return X.CHILD.test(a[0])?null:(a[3]?a[2]=a[4]||a[5]||"":c&&V.test(c)&&(b=g(c,!0))&&(b=c.indexOf(")",c.length-b)-c.length)&&(a[0]=a[0].slice(0,b),a[2]=c.slice(0,b)),a.slice(0,3))}},filter:{TAG:function(a){var b=a.replace(ca,da).toLowerCase();return"*"===a?function(){return!0}:function(a){return a.nodeName&&a.nodeName.toLowerCase()===b}},CLASS:function(a){var b=y[a+" "];return b||(b=new RegExp("(^|"+L+")"+a+"("+L+"|$)"))&&y(a,function(a){return b.test("string"==typeof a.className&&a.className||"undefined"!=typeof a.getAttribute&&a.getAttribute("class")||"")})},ATTR:function(a,b,c){return function(d){var e=ga.attr(d,a);return null==e?"!="===b:b?(e+="","="===b?e===c:"!="===b?e!==c:"^="===b?c&&0===e.indexOf(c):"*="===b?c&&e.indexOf(c)>-1:"$="===b?c&&e.slice(-c.length)===c:"~="===b?(" "+e.replace(Q," ")+" ").indexOf(c)>-1:"|="===b?e===c||e.slice(0,c.length+1)===c+"-":!1):!0}},CHILD:function(a,b,c,d,e){var f="nth"!==a.slice(0,3),g="last"!==a.slice(-4),h="of-type"===b;return 1===d&&0===e?function(a){return!!a.parentNode}:function(b,c,i){var j,k,l,m,n,o,p=f!==g?"nextSibling":"previousSibling",q=b.parentNode,r=h&&b.nodeName.toLowerCase(),s=!i&&!h;if(q){if(f){while(p){l=b;while(l=l[p])if(h?l.nodeName.toLowerCase()===r:1===l.nodeType)return!1;o=p="only"===a&&!o&&"nextSibling"}return!0}if(o=[g?q.firstChild:q.lastChild],g&&s){k=q[u]||(q[u]={}),j=k[a]||[],n=j[0]===w&&j[1],m=j[0]===w&&j[2],l=n&&q.childNodes[n];while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if(1===l.nodeType&&++m&&l===b){k[a]=[w,n,m];break}}else if(s&&(j=(b[u]||(b[u]={}))[a])&&j[0]===w)m=j[1];else while(l=++n&&l&&l[p]||(m=n=0)||o.pop())if((h?l.nodeName.toLowerCase()===r:1===l.nodeType)&&++m&&(s&&((l[u]||(l[u]={}))[a]=[w,m]),l===b))break;return m-=e,m===d||m%d===0&&m/d>=0}}},PSEUDO:function(a,b){var c,e=d.pseudos[a]||d.setFilters[a.toLowerCase()]||ga.error("unsupported pseudo: "+a);return e[u]?e(b):e.length>1?(c=[a,a,"",b],d.setFilters.hasOwnProperty(a.toLowerCase())?ia(function(a,c){var d,f=e(a,b),g=f.length;while(g--)d=J(a,f[g]),a[d]=!(c[d]=f[g])}):function(a){return e(a,0,c)}):e}},pseudos:{not:ia(function(a){var b=[],c=[],d=h(a.replace(R,"$1"));return d[u]?ia(function(a,b,c,e){var f,g=d(a,null,e,[]),h=a.length;while(h--)(f=g[h])&&(a[h]=!(b[h]=f))}):function(a,e,f){return b[0]=a,d(b,null,f,c),b[0]=null,!c.pop()}}),has:ia(function(a){return function(b){return ga(a,b).length>0}}),contains:ia(function(a){return a=a.replace(ca,da),function(b){return(b.textContent||b.innerText||e(b)).indexOf(a)>-1}}),lang:ia(function(a){return W.test(a||"")||ga.error("unsupported lang: "+a),a=a.replace(ca,da).toLowerCase(),function(b){var c;do if(c=p?b.lang:b.getAttribute("xml:lang")||b.getAttribute("lang"))return c=c.toLowerCase(),c===a||0===c.indexOf(a+"-");while((b=b.parentNode)&&1===b.nodeType);return!1}}),target:function(b){var c=a.location&&a.location.hash;return c&&c.slice(1)===b.id},root:function(a){return a===o},focus:function(a){return a===n.activeElement&&(!n.hasFocus||n.hasFocus())&&!!(a.type||a.href||~a.tabIndex)},enabled:function(a){return a.disabled===!1},disabled:function(a){return a.disabled===!0},checked:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&!!a.checked||"option"===b&&!!a.selected},selected:function(a){return a.parentNode&&a.parentNode.selectedIndex,a.selected===!0},empty:function(a){for(a=a.firstChild;a;a=a.nextSibling)if(a.nodeType<6)return!1;return!0},parent:function(a){return!d.pseudos.empty(a)},header:function(a){return Z.test(a.nodeName)},input:function(a){return Y.test(a.nodeName)},button:function(a){var b=a.nodeName.toLowerCase();return"input"===b&&"button"===a.type||"button"===b},text:function(a){var b;return"input"===a.nodeName.toLowerCase()&&"text"===a.type&&(null==(b=a.getAttribute("type"))||"text"===b.toLowerCase())},first:oa(function(){return[0]}),last:oa(function(a,b){return[b-1]}),eq:oa(function(a,b,c){return[0>c?c+b:c]}),even:oa(function(a,b){for(var c=0;b>c;c+=2)a.push(c);return a}),odd:oa(function(a,b){for(var c=1;b>c;c+=2)a.push(c);return a}),lt:oa(function(a,b,c){for(var d=0>c?c+b:c;--d>=0;)a.push(d);return a}),gt:oa(function(a,b,c){for(var d=0>c?c+b:c;++d<b;)a.push(d);return a})}},d.pseudos.nth=d.pseudos.eq;for(b in{radio:!0,checkbox:!0,file:!0,password:!0,image:!0})d.pseudos[b]=ma(b);for(b in{submit:!0,reset:!0})d.pseudos[b]=na(b);function qa(){}qa.prototype=d.filters=d.pseudos,d.setFilters=new qa,g=ga.tokenize=function(a,b){var c,e,f,g,h,i,j,k=z[a+" "];if(k)return b?0:k.slice(0);h=a,i=[],j=d.preFilter;while(h){(!c||(e=S.exec(h)))&&(e&&(h=h.slice(e[0].length)||h),i.push(f=[])),c=!1,(e=T.exec(h))&&(c=e.shift(),f.push({value:c,type:e[0].replace(R," ")}),h=h.slice(c.length));for(g in d.filter)!(e=X[g].exec(h))||j[g]&&!(e=j[g](e))||(c=e.shift(),f.push({value:c,type:g,matches:e}),h=h.slice(c.length));if(!c)break}return b?h.length:h?ga.error(a):z(a,i).slice(0)};function ra(a){for(var b=0,c=a.length,d="";c>b;b++)d+=a[b].value;return d}function sa(a,b,c){var d=b.dir,e=c&&"parentNode"===d,f=x++;return b.first?function(b,c,f){while(b=b[d])if(1===b.nodeType||e)return a(b,c,f)}:function(b,c,g){var h,i,j=[w,f];if(g){while(b=b[d])if((1===b.nodeType||e)&&a(b,c,g))return!0}else while(b=b[d])if(1===b.nodeType||e){if(i=b[u]||(b[u]={}),(h=i[d])&&h[0]===w&&h[1]===f)return j[2]=h[2];if(i[d]=j,j[2]=a(b,c,g))return!0}}}function ta(a){return a.length>1?function(b,c,d){var e=a.length;while(e--)if(!a[e](b,c,d))return!1;return!0}:a[0]}function ua(a,b,c){for(var d=0,e=b.length;e>d;d++)ga(a,b[d],c);return c}function va(a,b,c,d,e){for(var f,g=[],h=0,i=a.length,j=null!=b;i>h;h++)(f=a[h])&&(!c||c(f,d,e))&&(g.push(f),j&&b.push(h));return g}function wa(a,b,c,d,e,f){return d&&!d[u]&&(d=wa(d)),e&&!e[u]&&(e=wa(e,f)),ia(function(f,g,h,i){var j,k,l,m=[],n=[],o=g.length,p=f||ua(b||"*",h.nodeType?[h]:h,[]),q=!a||!f&&b?p:va(p,m,a,h,i),r=c?e||(f?a:o||d)?[]:g:q;if(c&&c(q,r,h,i),d){j=va(r,n),d(j,[],h,i),k=j.length;while(k--)(l=j[k])&&(r[n[k]]=!(q[n[k]]=l))}if(f){if(e||a){if(e){j=[],k=r.length;while(k--)(l=r[k])&&j.push(q[k]=l);e(null,r=[],j,i)}k=r.length;while(k--)(l=r[k])&&(j=e?J(f,l):m[k])>-1&&(f[j]=!(g[j]=l))}}else r=va(r===g?r.splice(o,r.length):r),e?e(null,g,r,i):H.apply(g,r)})}function xa(a){for(var b,c,e,f=a.length,g=d.relative[a[0].type],h=g||d.relative[" "],i=g?1:0,k=sa(function(a){return a===b},h,!0),l=sa(function(a){return J(b,a)>-1},h,!0),m=[function(a,c,d){var e=!g&&(d||c!==j)||((b=c).nodeType?k(a,c,d):l(a,c,d));return b=null,e}];f>i;i++)if(c=d.relative[a[i].type])m=[sa(ta(m),c)];else{if(c=d.filter[a[i].type].apply(null,a[i].matches),c[u]){for(e=++i;f>e;e++)if(d.relative[a[e].type])break;return wa(i>1&&ta(m),i>1&&ra(a.slice(0,i-1).concat({value:" "===a[i-2].type?"*":""})).replace(R,"$1"),c,e>i&&xa(a.slice(i,e)),f>e&&xa(a=a.slice(e)),f>e&&ra(a))}m.push(c)}return ta(m)}function ya(a,b){var c=b.length>0,e=a.length>0,f=function(f,g,h,i,k){var l,m,o,p=0,q="0",r=f&&[],s=[],t=j,u=f||e&&d.find.TAG("*",k),v=w+=null==t?1:Math.random()||.1,x=u.length;for(k&&(j=g!==n&&g);q!==x&&null!=(l=u[q]);q++){if(e&&l){m=0;while(o=a[m++])if(o(l,g,h)){i.push(l);break}k&&(w=v)}c&&((l=!o&&l)&&p--,f&&r.push(l))}if(p+=q,c&&q!==p){m=0;while(o=b[m++])o(r,s,g,h);if(f){if(p>0)while(q--)r[q]||s[q]||(s[q]=F.call(i));s=va(s)}H.apply(i,s),k&&!f&&s.length>0&&p+b.length>1&&ga.uniqueSort(i)}return k&&(w=v,j=t),r};return c?ia(f):f}return h=ga.compile=function(a,b){var c,d=[],e=[],f=A[a+" "];if(!f){b||(b=g(a)),c=b.length;while(c--)f=xa(b[c]),f[u]?d.push(f):e.push(f);f=A(a,ya(e,d)),f.selector=a}return f},i=ga.select=function(a,b,e,f){var i,j,k,l,m,n="function"==typeof a&&a,o=!f&&g(a=n.selector||a);if(e=e||[],1===o.length){if(j=o[0]=o[0].slice(0),j.length>2&&"ID"===(k=j[0]).type&&c.getById&&9===b.nodeType&&p&&d.relative[j[1].type]){if(b=(d.find.ID(k.matches[0].replace(ca,da),b)||[])[0],!b)return e;n&&(b=b.parentNode),a=a.slice(j.shift().value.length)}i=X.needsContext.test(a)?0:j.length;while(i--){if(k=j[i],d.relative[l=k.type])break;if((m=d.find[l])&&(f=m(k.matches[0].replace(ca,da),aa.test(j[0].type)&&pa(b.parentNode)||b))){if(j.splice(i,1),a=f.length&&ra(j),!a)return H.apply(e,f),e;break}}}return(n||h(a,o))(f,b,!p,e,aa.test(a)&&pa(b.parentNode)||b),e},c.sortStable=u.split("").sort(B).join("")===u,c.detectDuplicates=!!l,m(),c.sortDetached=ja(function(a){return 1&a.compareDocumentPosition(n.createElement("div"))}),ja(function(a){return a.innerHTML="<a href='#'></a>","#"===a.firstChild.getAttribute("href")})||ka("type|href|height|width",function(a,b,c){return c?void 0:a.getAttribute(b,"type"===b.toLowerCase()?1:2)}),c.attributes&&ja(function(a){return a.innerHTML="<input/>",a.firstChild.setAttribute("value",""),""===a.firstChild.getAttribute("value")})||ka("value",function(a,b,c){return c||"input"!==a.nodeName.toLowerCase()?void 0:a.defaultValue}),ja(function(a){return null==a.getAttribute("disabled")})||ka(K,function(a,b,c){var d;return c?void 0:a[b]===!0?b.toLowerCase():(d=a.getAttributeNode(b))&&d.specified?d.value:null}),ga}(a);m.find=s,m.expr=s.selectors,m.expr[":"]=m.expr.pseudos,m.unique=s.uniqueSort,m.text=s.getText,m.isXMLDoc=s.isXML,m.contains=s.contains;var t=m.expr.match.needsContext,u=/^<(\w+)\s*\/?>(?:<\/\1>|)$/,v=/^.[^:#\[\.,]*$/;function w(a,b,c){if(m.isFunction(b))return m.grep(a,function(a,d){return!!b.call(a,d,a)!==c});if(b.nodeType)return m.grep(a,function(a){return a===b!==c});if("string"==typeof b){if(v.test(b))return m.filter(b,a,c);b=m.filter(b,a)}return m.grep(a,function(a){return m.inArray(a,b)>=0!==c})}m.filter=function(a,b,c){var d=b[0];return c&&(a=":not("+a+")"),1===b.length&&1===d.nodeType?m.find.matchesSelector(d,a)?[d]:[]:m.find.matches(a,m.grep(b,function(a){return 1===a.nodeType}))},m.fn.extend({find:function(a){var b,c=[],d=this,e=d.length;if("string"!=typeof a)return this.pushStack(m(a).filter(function(){for(b=0;e>b;b++)if(m.contains(d[b],this))return!0}));for(b=0;e>b;b++)m.find(a,d[b],c);return c=this.pushStack(e>1?m.unique(c):c),c.selector=this.selector?this.selector+" "+a:a,c},filter:function(a){return this.pushStack(w(this,a||[],!1))},not:function(a){return this.pushStack(w(this,a||[],!0))},is:function(a){return!!w(this,"string"==typeof a&&t.test(a)?m(a):a||[],!1).length}});var x,y=a.document,z=/^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,A=m.fn.init=function(a,b){var c,d;if(!a)return this;if("string"==typeof a){if(c="<"===a.charAt(0)&&">"===a.charAt(a.length-1)&&a.length>=3?[null,a,null]:z.exec(a),!c||!c[1]&&b)return!b||b.jquery?(b||x).find(a):this.constructor(b).find(a);if(c[1]){if(b=b instanceof m?b[0]:b,m.merge(this,m.parseHTML(c[1],b&&b.nodeType?b.ownerDocument||b:y,!0)),u.test(c[1])&&m.isPlainObject(b))for(c in b)m.isFunction(this[c])?this[c](b[c]):this.attr(c,b[c]);return this}if(d=y.getElementById(c[2]),d&&d.parentNode){if(d.id!==c[2])return x.find(a);this.length=1,this[0]=d}return this.context=y,this.selector=a,this}return a.nodeType?(this.context=this[0]=a,this.length=1,this):m.isFunction(a)?"undefined"!=typeof x.ready?x.ready(a):a(m):(void 0!==a.selector&&(this.selector=a.selector,this.context=a.context),m.makeArray(a,this))};A.prototype=m.fn,x=m(y);var B=/^(?:parents|prev(?:Until|All))/,C={children:!0,contents:!0,next:!0,prev:!0};m.extend({dir:function(a,b,c){var d=[],e=a[b];while(e&&9!==e.nodeType&&(void 0===c||1!==e.nodeType||!m(e).is(c)))1===e.nodeType&&d.push(e),e=e[b];return d},sibling:function(a,b){for(var c=[];a;a=a.nextSibling)1===a.nodeType&&a!==b&&c.push(a);return c}}),m.fn.extend({has:function(a){var b,c=m(a,this),d=c.length;return this.filter(function(){for(b=0;d>b;b++)if(m.contains(this,c[b]))return!0})},closest:function(a,b){for(var c,d=0,e=this.length,f=[],g=t.test(a)||"string"!=typeof a?m(a,b||this.context):0;e>d;d++)for(c=this[d];c&&c!==b;c=c.parentNode)if(c.nodeType<11&&(g?g.index(c)>-1:1===c.nodeType&&m.find.matchesSelector(c,a))){f.push(c);break}return this.pushStack(f.length>1?m.unique(f):f)},index:function(a){return a?"string"==typeof a?m.inArray(this[0],m(a)):m.inArray(a.jquery?a[0]:a,this):this[0]&&this[0].parentNode?this.first().prevAll().length:-1},add:function(a,b){return this.pushStack(m.unique(m.merge(this.get(),m(a,b))))},addBack:function(a){return this.add(null==a?this.prevObject:this.prevObject.filter(a))}});function D(a,b){do a=a[b];while(a&&1!==a.nodeType);return a}m.each({parent:function(a){var b=a.parentNode;return b&&11!==b.nodeType?b:null},parents:function(a){return m.dir(a,"parentNode")},parentsUntil:function(a,b,c){return m.dir(a,"parentNode",c)},next:function(a){return D(a,"nextSibling")},prev:function(a){return D(a,"previousSibling")},nextAll:function(a){return m.dir(a,"nextSibling")},prevAll:function(a){return m.dir(a,"previousSibling")},nextUntil:function(a,b,c){return m.dir(a,"nextSibling",c)},prevUntil:function(a,b,c){return m.dir(a,"previousSibling",c)},siblings:function(a){return m.sibling((a.parentNode||{}).firstChild,a)},children:function(a){return m.sibling(a.firstChild)},contents:function(a){return m.nodeName(a,"iframe")?a.contentDocument||a.contentWindow.document:m.merge([],a.childNodes)}},function(a,b){m.fn[a]=function(c,d){var e=m.map(this,b,c);return"Until"!==a.slice(-5)&&(d=c),d&&"string"==typeof d&&(e=m.filter(d,e)),this.length>1&&(C[a]||(e=m.unique(e)),B.test(a)&&(e=e.reverse())),this.pushStack(e)}});var E=/\S+/g,F={};function G(a){var b=F[a]={};return m.each(a.match(E)||[],function(a,c){b[c]=!0}),b}m.Callbacks=function(a){a="string"==typeof a?F[a]||G(a):m.extend({},a);var b,c,d,e,f,g,h=[],i=!a.once&&[],j=function(l){for(c=a.memory&&l,d=!0,f=g||0,g=0,e=h.length,b=!0;h&&e>f;f++)if(h[f].apply(l[0],l[1])===!1&&a.stopOnFalse){c=!1;break}b=!1,h&&(i?i.length&&j(i.shift()):c?h=[]:k.disable())},k={add:function(){if(h){var d=h.length;!function f(b){m.each(b,function(b,c){var d=m.type(c);"function"===d?a.unique&&k.has(c)||h.push(c):c&&c.length&&"string"!==d&&f(c)})}(arguments),b?e=h.length:c&&(g=d,j(c))}return this},remove:function(){return h&&m.each(arguments,function(a,c){var d;while((d=m.inArray(c,h,d))>-1)h.splice(d,1),b&&(e>=d&&e--,f>=d&&f--)}),this},has:function(a){return a?m.inArray(a,h)>-1:!(!h||!h.length)},empty:function(){return h=[],e=0,this},disable:function(){return h=i=c=void 0,this},disabled:function(){return!h},lock:function(){return i=void 0,c||k.disable(),this},locked:function(){return!i},fireWith:function(a,c){return!h||d&&!i||(c=c||[],c=[a,c.slice?c.slice():c],b?i.push(c):j(c)),this},fire:function(){return k.fireWith(this,arguments),this},fired:function(){return!!d}};return k},m.extend({Deferred:function(a){var b=[["resolve","done",m.Callbacks("once memory"),"resolved"],["reject","fail",m.Callbacks("once memory"),"rejected"],["notify","progress",m.Callbacks("memory")]],c="pending",d={state:function(){return c},always:function(){return e.done(arguments).fail(arguments),this},then:function(){var a=arguments;return m.Deferred(function(c){m.each(b,function(b,f){var g=m.isFunction(a[b])&&a[b];e[f[1]](function(){var a=g&&g.apply(this,arguments);a&&m.isFunction(a.promise)?a.promise().done(c.resolve).fail(c.reject).progress(c.notify):c[f[0]+"With"](this===d?c.promise():this,g?[a]:arguments)})}),a=null}).promise()},promise:function(a){return null!=a?m.extend(a,d):d}},e={};return d.pipe=d.then,m.each(b,function(a,f){var g=f[2],h=f[3];d[f[1]]=g.add,h&&g.add(function(){c=h},b[1^a][2].disable,b[2][2].lock),e[f[0]]=function(){return e[f[0]+"With"](this===e?d:this,arguments),this},e[f[0]+"With"]=g.fireWith}),d.promise(e),a&&a.call(e,e),e},when:function(a){var b=0,c=d.call(arguments),e=c.length,f=1!==e||a&&m.isFunction(a.promise)?e:0,g=1===f?a:m.Deferred(),h=function(a,b,c){return function(e){b[a]=this,c[a]=arguments.length>1?d.call(arguments):e,c===i?g.notifyWith(b,c):--f||g.resolveWith(b,c)}},i,j,k;if(e>1)for(i=new Array(e),j=new Array(e),k=new Array(e);e>b;b++)c[b]&&m.isFunction(c[b].promise)?c[b].promise().done(h(b,k,c)).fail(g.reject).progress(h(b,j,i)):--f;return f||g.resolveWith(k,c),g.promise()}});var H;m.fn.ready=function(a){return m.ready.promise().done(a),this},m.extend({isReady:!1,readyWait:1,holdReady:function(a){a?m.readyWait++:m.ready(!0)},ready:function(a){if(a===!0?!--m.readyWait:!m.isReady){if(!y.body)return setTimeout(m.ready);m.isReady=!0,a!==!0&&--m.readyWait>0||(H.resolveWith(y,[m]),m.fn.triggerHandler&&(m(y).triggerHandler("ready"),m(y).off("ready")))}}});function I(){y.addEventListener?(y.removeEventListener("DOMContentLoaded",J,!1),a.removeEventListener("load",J,!1)):(y.detachEvent("onreadystatechange",J),a.detachEvent("onload",J))}function J(){(y.addEventListener||"load"===event.type||"complete"===y.readyState)&&(I(),m.ready())}m.ready.promise=function(b){if(!H)if(H=m.Deferred(),"complete"===y.readyState)setTimeout(m.ready);else if(y.addEventListener)y.addEventListener("DOMContentLoaded",J,!1),a.addEventListener("load",J,!1);else{y.attachEvent("onreadystatechange",J),a.attachEvent("onload",J);var c=!1;try{c=null==a.frameElement&&y.documentElement}catch(d){}c&&c.doScroll&&!function e(){if(!m.isReady){try{c.doScroll("left")}catch(a){return setTimeout(e,50)}I(),m.ready()}}()}return H.promise(b)};var K="undefined",L;for(L in m(k))break;k.ownLast="0"!==L,k.inlineBlockNeedsLayout=!1,m(function(){var a,b,c,d;c=y.getElementsByTagName("body")[0],c&&c.style&&(b=y.createElement("div"),d=y.createElement("div"),d.style.cssText="position:absolute;border:0;width:0;height:0;top:0;left:-9999px",c.appendChild(d).appendChild(b),typeof b.style.zoom!==K&&(b.style.cssText="display:inline;margin:0;border:0;padding:1px;width:1px;zoom:1",k.inlineBlockNeedsLayout=a=3===b.offsetWidth,a&&(c.style.zoom=1)),c.removeChild(d))}),function(){var a=y.createElement("div");if(null==k.deleteExpando){k.deleteExpando=!0;try{delete a.test}catch(b){k.deleteExpando=!1}}a=null}(),m.acceptData=function(a){var b=m.noData[(a.nodeName+" ").toLowerCase()],c=+a.nodeType||1;return 1!==c&&9!==c?!1:!b||b!==!0&&a.getAttribute("classid")===b};var M=/^(?:\{[\w\W]*\}|\[[\w\W]*\])$/,N=/([A-Z])/g;function O(a,b,c){if(void 0===c&&1===a.nodeType){var d="data-"+b.replace(N,"-$1").toLowerCase();if(c=a.getAttribute(d),"string"==typeof c){try{c="true"===c?!0:"false"===c?!1:"null"===c?null:+c+""===c?+c:M.test(c)?m.parseJSON(c):c}catch(e){}m.data(a,b,c)}else c=void 0}return c}function P(a){var b;for(b in a)if(("data"!==b||!m.isEmptyObject(a[b]))&&"toJSON"!==b)return!1;
@@ -547,476 +547,157 @@ summary {
 
 
 
-<h1 class="title toc-ignore">Notes on Text Mining with R - MO5161 Skills in Transnational History</h1>
+<h1 class="title toc-ignore">xml2 Examples</h1>
 <h4 class="author">Konrad M. Lawson</h4>
 
 </div>
 
 <div id="TOC">
 <ul>
-<li><a href="#introduction"><span class="toc-section-number">0.1</span> Introduction</a></li>
-<li><a href="#notes-on-ch-1-the-tidy-text-format"><span class="toc-section-number">1</span> Notes on Ch 1: The Tidy Text Format</a><ul>
-<li><a href="#the-unnest_tokens-function"><span class="toc-section-number">1.1</span> <span>The unnest_tokens Function</span></a><ul>
-<li><a href="#c"><span class="toc-section-number">1.1.1</span> c()</a></li>
-<li><a href="#librarydplyr"><span class="toc-section-number">1.1.2</span> library(dplyr)</a></li>
-<li><a href="#tibble"><span class="toc-section-number">1.1.3</span> tibble()</a></li>
-<li><a href="#unnest_tokens"><span class="toc-section-number">1.1.4</span> unnest_tokens()</a></li>
-</ul></li>
-<li><a href="#getting-your-text-into-r"><span class="toc-section-number">1.2</span> Getting Your Text Into R</a><ul>
-<li><a href="#scan"><span class="toc-section-number">1.2.1</span> scan()</a></li>
-<li><a href="#read.table"><span class="toc-section-number">1.2.2</span> read.table()</a></li>
-<li><a href="#readlines"><span class="toc-section-number">1.2.3</span> readLines()</a></li>
-<li><a href="#read_file"><span class="toc-section-number">1.2.4</span> read_file()</a></li>
-<li><a href="#read_lines"><span class="toc-section-number">1.2.5</span> read_lines()</a></li>
-<li><a href="#brio-read_lines"><span class="toc-section-number">1.2.6</span> brio: read_lines()</a></li>
-</ul></li>
-<li><a href="#tidying-the-words-of-jane-austen"><span class="toc-section-number">1.3</span> <span>Tidying the Words of Jane Austen</span></a><ul>
-<li><a href="#group_by"><span class="toc-section-number">1.3.1</span> group_by()</a></li>
-<li><a href="#mutate"><span class="toc-section-number">1.3.2</span> mutate()</a></li>
-<li><a href="#str_detect-and-cumsum"><span class="toc-section-number">1.3.3</span> str_detect()** and <strong>cumsum()</strong></a></li>
-<li><a href="#anti_join"><span class="toc-section-number">1.3.4</span> anti_join()</a></li>
-<li><a href="#count"><span class="toc-section-number">1.3.5</span> count()</a></li>
-</ul></li>
-<li><a href="#word-frequencies"><span class="toc-section-number">1.4</span> Word Frequencies</a><ul>
-<li><a href="#bind_rows"><span class="toc-section-number">1.4.1</span> bind_rows()</a></li>
-<li><a href="#pivot_wider"><span class="toc-section-number">1.4.2</span> pivot_wider()</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#notes-on-ch-2-sentiment-analysis-with-tidy-data"><span class="toc-section-number">2</span> Notes on Ch 2: Sentiment Analysis with Tidy Data</a><ul>
-<li><a href="#inner_join"><span class="toc-section-number">2.0.1</span> inner_join()</a></li>
-<li><a href="#get_sentiments"><span class="toc-section-number">2.0.2</span> get_sentiments()</a></li>
-<li><a href="#summarise"><span class="toc-section-number">2.0.3</span> summarise()</a></li>
-<li><a href="#top_n"><span class="toc-section-number">2.0.4</span> top_n()</a></li>
-<li><a href="#wordclouds"><span class="toc-section-number">2.0.5</span> Wordclouds</a></li>
-<li><a href="#with"><span class="toc-section-number">2.0.6</span> with()</a></li>
-<li><a href="#wordcloud"><span class="toc-section-number">2.0.7</span> wordcloud()</a></li>
-<li><a href="#acast---reshape2"><span class="toc-section-number">2.0.8</span> acast() - reshape2</a></li>
-<li><a href="#comparison.cloud"><span class="toc-section-number">2.0.9</span> comparison.cloud()</a></li>
-<li><a href="#looking-at-units-beyond-just-words"><span class="toc-section-number">2.1</span> Looking at Units Beyond Just Words</a><ul>
-<li><a href="#semi_join"><span class="toc-section-number">2.1.1</span> semi_join()</a></li>
-<li><a href="#left_join"><span class="toc-section-number">2.1.2</span> left_join()</a></li>
-</ul></li>
-</ul></li>
-<li><a href="#notes-on-ch-3-analyzing-word-and-document-frequency-tf-idf"><span class="toc-section-number">3</span> Notes on Ch 3: Analyzing Word and Document Frequency: tf-idf</a><ul>
-<li><a href="#term-frequency-in-jane-austens-novels"><span class="toc-section-number">3.1</span> Term Frequency in Jane Austen’s Novels</a></li>
-<li><a href="#zipfs-law"><span class="toc-section-number">3.2</span> Zipf’s Law</a></li>
-<li><a href="#the-bind_tf_idf-function"><span class="toc-section-number">3.3</span> The bind_tf_idf Function</a></li>
-<li><a href="#a-corpus-of-physics-texts"><span class="toc-section-number">3.4</span> A Corpus of Physics Texts</a></li>
-</ul></li>
+<li><a href="#children">Children</a></li>
+<li><a href="#xpath">Xpath</a></li>
+<li><a href="#limiting-the-xpath-search">Limiting the Xpath Search</a></li>
 </ul>
 </div>
 
-<div id="introduction" class="section level2">
-<h2><span class="header-section-number">0.1</span> Introduction</h2>
-<p><strong><a href="https://www.tidytextmining.com/"><em>Text Mining with R</em></a></strong> by <a href="https://juliasilge.com/">Julia Silge</a> and <a href="http://varianceexplained.org/">David Robinson</a> provides a wonderful overview of ways to explore and analyse texts using their <code>tidytext</code> package. It allows students to immediately engage with historical and literary texts with the approaches of the <a href="https://www.tidyverse.org/">tidyverse</a>. However, it understandably assumes that students have a strong foundation in the R programming language in order to fully understand what is happening in the code used in the book. Although students in MO5161 should be making progress on their introductory R and tidyverse training through their <a href="https://learn.datacamp.com/">DataCamp</a> assignments, the below is designed to help explain some of the book’s material.</p>
-<p>In addition to the <a href="https://www.tidytextmining.com/">book</a> itself, other important sources include the package vignette (<code>vignette(&quot;tidytext&quot;)</code>), the <a href="https://cran.r-project.org/web/packages/tidytext/index.html">CRAN entry</a> for tidtytext, where you can download the <a href="https://cran.r-project.org/web/packages/tidytext/tidytext.pdf">reference manual</a> and <a href="https://r4ds.had.co.nz/index.html">R for Data Science</a> by Hadley Wickham and Garrett Grolemund.</p>
+<p>This is a quick R Notebook to help a student work with an XML file using the <code>xml2</code> library, extracting various useful information from it.</p>
+<p>Setup:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(xml2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(tidyverse)</span></code></pre></div>
+<p>In xml2 you can use <code>read_xml()</code> to import a document, and it will be saved as a class <code>xml_document</code> that can be further manipulated.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>xmlimport &lt;-<span class="st"> </span><span class="kw">read_xml</span>(<span class="st">&quot;xml/example.xml&quot;</span>)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">class</span>(xmlimport)</span></code></pre></div>
+<pre><code>## [1] &quot;xml_document&quot; &quot;xml_node&quot;</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>xmlimport</span></code></pre></div>
+<pre><code>## {xml_document}
+## &lt;TEI.2&gt;
+## [1] &lt;text&gt;\n  &lt;body&gt;\n    &lt;div0 type=&quot;sessionsPaper&quot; id=&quot;16770601&quot;&gt;\n      &lt;i ...</code></pre>
+<div id="children" class="section level1">
+<h1>Children</h1>
+<p>You can manually “step down” through an xml file with <code>xml_child</code>. Here are some examples of us stepping slowly down into the file (not the recommended way if you just want to grab something inside!).</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>firstchild &lt;-<span class="st"> </span>xmlimport <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_children</span>()</span>
+<span id="cb6-2"><a href="#cb6-2"></a>firstchild</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;text&gt;\n  &lt;body&gt;\n    &lt;div0 type=&quot;sessionsPaper&quot; id=&quot;16770601&quot;&gt;\n      &lt;i ...</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>secondchild &lt;-<span class="st"> </span>firstchild <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_children</span>()</span>
+<span id="cb8-2"><a href="#cb8-2"></a>secondchild</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;body&gt;\n  &lt;div0 type=&quot;sessionsPaper&quot; id=&quot;16770601&quot;&gt;\n    &lt;interp inst=&quot;16 ...</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>thirdchild &lt;-<span class="st"> </span>secondchild <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_children</span>()</span>
+<span id="cb10-2"><a href="#cb10-2"></a>thirdchild</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;div0 type=&quot;sessionsPaper&quot; id=&quot;16770601&quot;&gt;\n  &lt;interp inst=&quot;16770601&quot; type ...</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>fourthchild &lt;-<span class="st"> </span>thirdchild <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_children</span>()</span>
+<span id="cb12-2"><a href="#cb12-2"></a>fourthchild</span></code></pre></div>
+<pre><code>## {xml_nodeset (17)}
+##  [1] &lt;interp inst=&quot;16770601&quot; type=&quot;collection&quot; value=&quot;BAILEY&quot;/&gt;
+##  [2] &lt;interp inst=&quot;16770601&quot; type=&quot;year&quot; value=&quot;1677&quot;/&gt;
+##  [3] &lt;interp inst=&quot;16770601&quot; type=&quot;uri&quot; value=&quot;sessionsPapers/16770601&quot;/&gt;
+##  [4] &lt;interp inst=&quot;16770601&quot; type=&quot;date&quot; value=&quot;16770601&quot;/&gt;
+##  [5] &lt;xptr type=&quot;transcription&quot; doc=&quot;16770601&quot;/&gt;
+##  [6] &lt;div1 type=&quot;frontMatter&quot; id=&quot;f16770601-1&quot;&gt;\n  &lt;interp inst=&quot;f16770601-1&quot; ...
+##  [7] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-1&quot;&gt;\n  &lt;interp inst=&quot;t16770601-1 ...
+##  [8] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-2&quot;&gt;\n  &lt;interp inst=&quot;t16770601-2 ...
+##  [9] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-3&quot;&gt;\n  &lt;interp inst=&quot;t16770601-3 ...
+## [10] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-4&quot;&gt;\n  &lt;interp inst=&quot;t16770601-4 ...
+## [11] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-5&quot;&gt;\n  &lt;interp inst=&quot;t16770601-5 ...
+## [12] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-6&quot;&gt;\n  &lt;interp inst=&quot;t16770601-6 ...
+## [13] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-7&quot;&gt;\n  &lt;interp inst=&quot;t16770601-7 ...
+## [14] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-8&quot;&gt;\n  &lt;interp inst=&quot;t16770601-8 ...
+## [15] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-9&quot;&gt;\n  &lt;interp inst=&quot;t16770601-9 ...
+## [16] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-10&quot;&gt;\n  &lt;interp inst=&quot;t16770601- ...
+## [17] &lt;div1 type=&quot;punishmentSummary&quot; id=&quot;s16770601-1&quot;&gt;\n  &lt;interp inst=&quot;s16770 ...</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">print</span>(<span class="st">&quot;Now let us just grab one of these children:&quot;</span>)</span></code></pre></div>
+<pre><code>## [1] &quot;Now let us just grab one of these children:&quot;</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>fifthchild &lt;-<span class="st"> </span>fourthchild[<span class="dv">6</span>]</span>
+<span id="cb16-2"><a href="#cb16-2"></a>fifthchild</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;div1 type=&quot;frontMatter&quot; id=&quot;f16770601-1&quot;&gt;\n  &lt;interp inst=&quot;f16770601-1&quot;  ...</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># This is a div1 case and its enclosed sections</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>div1child &lt;-<span class="st"> </span>fifthchild <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_children</span>()</span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co"># We are now inside of one of the cases and c</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a>div1child</span></code></pre></div>
+<pre><code>## {xml_nodeset (13)}
+##  [1] &lt;interp inst=&quot;f16770601-1&quot; type=&quot;collection&quot; value=&quot;BAILEY&quot;/&gt;
+##  [2] &lt;interp inst=&quot;f16770601-1&quot; type=&quot;year&quot; value=&quot;1677&quot;/&gt;
+##  [3] &lt;interp inst=&quot;f16770601-1&quot; type=&quot;uri&quot; value=&quot;sessionsPapers/16770601&quot;/&gt;
+##  [4] &lt;interp inst=&quot;f16770601-1&quot; type=&quot;date&quot; value=&quot;16770601&quot;/&gt;
+##  [5] &lt;p&gt;&lt;xptr type=&quot;pageFacsimile&quot; doc=&quot;16770601001&quot;/&gt;A true NARRATIVE Of the ...
+##  [6] &lt;p&gt;At a Sessions there held On the 1st. and 2d. of June 1677.&lt;/p&gt;
+##  [7] &lt;p&gt;Being a true Relation of the Tryal and Condemnation of the grand High ...
+##  [8] &lt;p&gt;With the Tryal of the Midwife for pretending to be deliverd of a ston ...
+##  [9] &lt;p&gt;With the Tryal of the two Searchers that were her Confederates.&lt;/p&gt;
+## [10] &lt;p&gt;And all other considerable Transactions there, with the number of tho ...
+## [11] &lt;p&gt;With Allowance. Ro. L&#39;Estrange.&lt;/p&gt;
+## [12] &lt;p&gt;LONDON: Printed for D.M. 1677.&lt;/p&gt;
+## [13] &lt;p&gt;&lt;xptr type=&quot;pageFacsimile&quot; doc=&quot;16770601002&quot;/&gt;A Narrative of the Proc ...</code></pre>
 </div>
-<div id="notes-on-ch-1-the-tidy-text-format" class="section level1">
-<h1><span class="header-section-number">1</span> Notes on Ch 1: The Tidy Text Format</h1>
-<div id="the-unnest_tokens-function" class="section level2">
-<h2><span class="header-section-number">1.1</span> <a href="https://www.tidytextmining.com/tidytext.html#the-unnest_tokens-function">The unnest_tokens Function</a></h2>
-<p>The <code>unnest_tokens()</code> is a useful command that is part of the pre-processing workflow. The first example takes a few lines of poetry from Emily Dickinson, puts it into a tibble, a special kind of data frame class often used in tidy tools, and then is tokenized.</p>
-<div id="c" class="section level3">
-<h3><span class="header-section-number">1.1.1</span> c()</h3>
-<p>This command combines a collection of items into a vector.</p>
-<ul>
-<li>e.g. <code>my_fruit_basket &lt;- c(&quot;apple&quot;,&quot;orange&quot;,&quot;pear&quot;)</code></li>
-</ul>
+<div id="xpath" class="section level1">
+<h1>Xpath</h1>
+<p>You can find something inside an XML file using the incredibly powerful xpath. Using <code>xml_find_all()</code> you can specify an <a href="https://www.w3schools.com/xml/xpath_syntax.asp">xpath</a> that refers to all the div1 tags in the file, for example. Then you could grab just a single one of those by number by digging into the list.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># Find all div1 tags</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>mycases &lt;-<span class="st"> </span>xmlimport <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_all</span>(<span class="st">&quot;//div1&quot;</span>)</span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co"># Let us grab just the first case (after the frontMatter) by direct numerical call:</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>mycases[[<span class="dv">2</span>]]</span></code></pre></div>
+<pre><code>## {xml_node}
+## &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-1&quot;&gt;
+## [1] &lt;interp inst=&quot;t16770601-1&quot; type=&quot;collection&quot; value=&quot;BAILEY&quot;/&gt;
+## [2] &lt;interp inst=&quot;t16770601-1&quot; type=&quot;year&quot; value=&quot;1677&quot;/&gt;
+## [3] &lt;interp inst=&quot;t16770601-1&quot; type=&quot;uri&quot; value=&quot;sessionsPapers/16770601&quot;/&gt;
+## [4] &lt;interp inst=&quot;t16770601-1&quot; type=&quot;date&quot; value=&quot;16770601&quot;/&gt;
+## [5] &lt;join result=&quot;criminalCharge&quot; id=&quot;t16770601-1-off2-c1&quot; targOrder=&quot;Y&quot; targ ...
+## [6] &lt;p&gt;The first Tryal was of a \n               &lt;persName id=&quot;t16770601-1-de ...</code></pre>
+<p>You can also further refine your search. Let us use xpath again to grab only the div1 tags that have the attribute “type” set to “trialAccount”:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>trialaccounts &lt;-<span class="st"> </span>xmlimport <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_all</span>(<span class="st">&#39;//div1[@type=&quot;trialAccount&quot;]&#39;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>trialaccounts</span></code></pre></div>
+<pre><code>## {xml_nodeset (10)}
+##  [1] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-1&quot;&gt;\n  &lt;interp inst=&quot;t16770601-1 ...
+##  [2] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-2&quot;&gt;\n  &lt;interp inst=&quot;t16770601-2 ...
+##  [3] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-3&quot;&gt;\n  &lt;interp inst=&quot;t16770601-3 ...
+##  [4] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-4&quot;&gt;\n  &lt;interp inst=&quot;t16770601-4 ...
+##  [5] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-5&quot;&gt;\n  &lt;interp inst=&quot;t16770601-5 ...
+##  [6] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-6&quot;&gt;\n  &lt;interp inst=&quot;t16770601-6 ...
+##  [7] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-7&quot;&gt;\n  &lt;interp inst=&quot;t16770601-7 ...
+##  [8] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-8&quot;&gt;\n  &lt;interp inst=&quot;t16770601-8 ...
+##  [9] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-9&quot;&gt;\n  &lt;interp inst=&quot;t16770601-9 ...
+## [10] &lt;div1 type=&quot;trialAccount&quot; id=&quot;t16770601-10&quot;&gt;\n  &lt;interp inst=&quot;t16770601- ...</code></pre>
+<p>If you wanted all the defendants of your cases you could search for them across all cases:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>alldefendants &lt;-<span class="st"> </span>xmlimport <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_all</span>(<span class="st">&#39;//persName[@type=&quot;defendantName&quot;]&#39;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>alldefendants</span></code></pre></div>
+<pre><code>## {xml_nodeset (11)}
+##  [1] &lt;persName id=&quot;t16770601-1-defend1&quot; type=&quot;defendantName&quot;&gt;young fellow&lt;int ...
+##  [2] &lt;persName id=&quot;t16770601-2-defend2&quot; type=&quot;defendantName&quot;&gt;pickpocket&lt;inter ...
+##  [3] &lt;persName id=&quot;t16770601-3-defend4&quot; type=&quot;defendantName&quot;&gt;young &lt;rs id=&quot;t1 ...
+##  [4] &lt;persName id=&quot;t16770601-4-defend5&quot; type=&quot;defendantName&quot;&gt;Highway-man&lt;inte ...
+##  [5] &lt;persName id=&quot;t16770601-5-defend7&quot; type=&quot;defendantName&quot;&gt;\n  &lt;rs id=&quot;t167 ...
+##  [6] &lt;persName id=&quot;t16770601-6-defend9&quot; type=&quot;defendantName&quot;&gt;\n  &lt;rs id=&quot;t167 ...
+##  [7] &lt;persName id=&quot;t16770601-6-defend10&quot; type=&quot;defendantName&quot;&gt;aged poor women ...
+##  [8] &lt;persName id=&quot;t16770601-7-defend11&quot; type=&quot;defendantName&quot;&gt;\n  &lt;rs id=&quot;t16 ...
+##  [9] &lt;persName id=&quot;t16770601-8-defend13&quot; type=&quot;defendantName&quot;&gt;person&lt;interp i ...
+## [10] &lt;persName id=&quot;t16770601-9-defend15&quot; type=&quot;defendantName&quot;&gt;woman&lt;interp in ...
+## [11] &lt;persName id=&quot;t16770601-10-defend16&quot; type=&quot;defendantName&quot;&gt;young Man&lt;inte ...</code></pre>
+<p>If you wanted to find all the <strong>defendants</strong> who are also <strong>women</strong>:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>womendefendants &lt;-<span class="st"> </span>xmlimport <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_all</span>(<span class="st">&#39;//persName[@type=&quot;defendantName&quot;]/interp[@type=&quot;gender&quot; and @value=&quot;female&quot;]&#39;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>womendefendants</span></code></pre></div>
+<pre><code>## {xml_nodeset (4)}
+## [1] &lt;interp inst=&quot;t16770601-3-defend4&quot; type=&quot;gender&quot; value=&quot;female&quot;/&gt;
+## [2] &lt;interp inst=&quot;t16770601-6-defend9&quot; type=&quot;gender&quot; value=&quot;female&quot;/&gt;
+## [3] &lt;interp inst=&quot;t16770601-6-defend10&quot; type=&quot;gender&quot; value=&quot;female&quot;/&gt;
+## [4] &lt;interp inst=&quot;t16770601-9-defend15&quot; type=&quot;gender&quot; value=&quot;female&quot;/&gt;</code></pre>
 </div>
-<div id="librarydplyr" class="section level3">
-<h3><span class="header-section-number">1.1.2</span> library(dplyr)</h3>
-<p>This package is a colection of tools or rather “a grammar for data manipulation.” Read more with <code>vignette(&quot;dplyr&quot;)</code> or at its <a href="https://dplyr.tidyverse.org/">homepage</a>. All of its functions assume that you will offer it a tibble as its first argument, but you can also pass data to it with a “pipe” in the form of <code>%&gt;%</code>. Here is an example. If we start with this:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>my_fruit_basket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>,<span class="st">&quot;orange&quot;</span>,<span class="st">&quot;pear&quot;</span>)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>my_fruit_sizes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">4</span>,<span class="dv">6</span>)</span></code></pre></div>
-<p>Here we have two vectors, one holding the names of the fruit, the other some sizes of the fruit. Here is where the pipe comes in handy. The following two pieces of code do the same thing, the first without the pipe:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>basket_tible &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">fruit=</span>my_fruit_basket,<span class="dt">size=</span>my_fruit_sizes)   </span>
-<span id="cb3-2"><a href="#cb3-2"></a>big_fruit &lt;-<span class="st"> </span><span class="kw">filter</span>(basket_tible, size<span class="op">&gt;</span><span class="dv">3</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a>big_fruit</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   fruit   size
-##   &lt;chr&gt;  &lt;dbl&gt;
-## 1 orange     4
-## 2 pear       6</code></pre>
-<p>And the second with:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>big_fruit &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">fruit=</span>my_fruit_basket,<span class="dt">size=</span>my_fruit_sizes) <span class="op">%&gt;%</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">filter</span>(size<span class="op">&gt;</span><span class="dv">3</span>)</span>
-<span id="cb5-3"><a href="#cb5-3"></a>big_fruit</span></code></pre></div>
-<pre><code>## # A tibble: 2 x 2
-##   fruit   size
-##   &lt;chr&gt;  &lt;dbl&gt;
-## 1 orange     4
-## 2 pear       6</code></pre>
-<p>The <code>dplyr</code> packet command <code>filter()</code> can be used to filter data by certain statements. Here, if we had done <code>filter(fruit==&quot;apple&quot;)</code> it would have returned only the apple and its size (notice that it uses <code>==</code> instead of <code>=</code> since the latter is used to assign variables, not check for equivalency). You may also filter by things which don’t match something by using <code>!=</code> instead of <code>==</code> (all fruits except apple: <code>filter(fruit!=&quot;apple&quot;)</code>). The other major commands used by <code>dplyr</code> are <code>select()</code> (to select only certain columns), <code>mutate()</code> (add new columns/variables), <code>arrange()</code> and <code>summarise()</code>.</p>
-</div>
-<div id="tibble" class="section level3">
-<h3><span class="header-section-number">1.1.3</span> tibble()</h3>
-<p>Older editions of the printed book use the now deprecated <code>data_frame()</code> command. The <code>tibble()</code> command builds a data frame from a collection of input variables that also has the special tibble class tbl_df. It offers some advantages over a plain data frame and is the preferred replacement for it in the tidyverse. Above, we fed the <code>tibble()</code> command two input vectors, the character vector <code>my_fruit_basket</code>, and the numeric vector <code>my_fruit_sizes</code> to <code>tibble()</code>.</p>
-</div>
-<div id="unnest_tokens" class="section level3">
-<h3><span class="header-section-number">1.1.4</span> unnest_tokens()</h3>
-<p>In the Silge and Robinson book, the first use of <code>unnest_tokens()</code> transforms the <code>text_df</code> tibble, which contains two columns (“line” and “text”) and carries out <em>tokenization</em> on the variable. It runs the command <code>unnest_tokens(word, text)</code> which produces a new tibble with two columns (“line” and “word”). The basic structure of this command, assuming you are sending it a tibble via pipe:</p>
-<p><code>unnest_tokens(name_of_output_column_for_tokenized_words, name_of_column_in_input_tibble_to_tokenize)</code></p>
-<p>The outputed table in the book contains also the “line” column as well, and shows what line each word came from. The tokenizer merely copied over the “line” column from the first tibble, and left its name and the contents for the “line” column for all words that come from that line. It may be a bit clearer if we use some nonsense data instead with completely different column names:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>some_numbers &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;one&quot;</span>,<span class="st">&quot;two&quot;</span>,<span class="st">&quot;three&quot;</span>,<span class="st">&quot;four&quot;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>some_sentences &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Here is the first sentence&quot;</span>,<span class="st">&quot;Here is the second&quot;</span>,<span class="st">&quot;And a third sentence&quot;</span>,<span class="st">&quot;Finally, a fourth sentence.&quot;</span>)</span>
-<span id="cb7-3"><a href="#cb7-3"></a>all_together &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">number_list=</span>some_numbers,<span class="dt">sentence_list=</span>some_sentences)</span>
-<span id="cb7-4"><a href="#cb7-4"></a>all_together</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 2
-##   number_list sentence_list              
-##   &lt;chr&gt;       &lt;chr&gt;                      
-## 1 one         Here is the first sentence 
-## 2 two         Here is the second         
-## 3 three       And a third sentence       
-## 4 four        Finally, a fourth sentence.</code></pre>
-<p>Here you can see that I have just created a tibble similar in structure to the Dickenson poems, but instead of “line” and “text” we have used different column titles.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">library</span>(tidytext)</span></code></pre></div>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>all_together <span class="op">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">unnest_tokens</span>(just_the_words,sentence_list)</span></code></pre></div>
-<pre><code>## # A tibble: 17 x 2
-##    number_list just_the_words
-##    &lt;chr&gt;       &lt;chr&gt;         
-##  1 one         here          
-##  2 one         is            
-##  3 one         the           
-##  4 one         first         
-##  5 one         sentence      
-##  6 two         here          
-##  7 two         is            
-##  8 two         the           
-##  9 two         second        
-## 10 three       and           
-## 11 three       a             
-## 12 three       third         
-## 13 three       sentence      
-## 14 four        finally       
-## 15 four        a             
-## 16 four        fourth        
-## 17 four        sentence</code></pre>
-<p>From this we can see that the <code>number_list</code> column was just copied over and preserved for each row containing a word from a given matching line. Obviously, numeric line numbers are more useful.</p>
-</div>
-</div>
-<div id="getting-your-text-into-r" class="section level2">
-<h2><span class="header-section-number">1.2</span> Getting Your Text Into R</h2>
-<p>The subsequent sections of the chapter work with texts that are added to variables thanks to the <code>janeaustenr</code> and <code>gutenbergr</code> packages. In most cases, however, you will want to bring your own historical sources that you have obtained from historical databases and other web resources, OCRed and cleaned before hand, or which has been transcribed. If you have PDFs that are not image scans, but contain text, you can use command line utilities such as the <code>pdftotext</code> utility that comes with <a href="https://www.xpdfreader.com/download.html">xpdf</a> (OSX users can install xpdf, which will come with pdftotext with <a href="https://formulae.brew.sh/formula/xpdf">homebrew</a>) to extract it.</p>
-<p>Once you have a text you wish to work with in R, you have an abundance of ways to import it. Notice that all of the following can import a file directly from your hard drive (remember to set your working directory from the Session menu or with <code>setwd()</code>)</p>
-<p>I suggest you use the <code>readr</code> package command <code>read_lines()</code> as your main way to get files into R. Compare the following that you may see used in other people’s code:</p>
-<div id="scan" class="section level3">
-<h3><span class="header-section-number">1.2.1</span> scan()</h3>
-<p>In the base collection of R utilities, produces a character vector, with each line in an element. If you are importing text, assign “character” to the “what” parameter and the regular expression metacharacter for the newline character used by your text (such as “”). The below examples work with a sample text file <a href="http://transnationalhistory.net/files/lear.txt">lear.txt</a>.</p>
-<p><code>lear &lt;- scan(&quot;lear.txt&quot;,what=&quot;character&quot;,sep=&quot;\n&quot;)</code> Also works directly on texts imported by a web URL: <code>household_management &lt;- scan(&quot;http://www.gutenberg.org/cache/epub/10136/pg10136.txt&quot;,what=&quot;character&quot;,sep=&quot;\n&quot;)</code></p>
-</div>
-<div id="read.table" class="section level3">
-<h3><span class="header-section-number">1.2.2</span> read.table()</h3>
-<p>This command, which is in the basic uitilities in R, is better used for reading in a regular table of information that is delimited by some character such as a comma (csv) or a tab (tsv), etc. You can, however, set the delimiter to a newline character and read in a file. The output will be a data frame, rather than a character vector.</p>
-<p><code>lear &lt;- read.table(&quot;lear.txt&quot;,sep=&quot;\n&quot;)</code> <code>household_management &lt;- read.table(&quot;http://www.gutenberg.org/cache/epub/10136/pg10136.txt&quot;,sep=&quot;\n&quot;)</code></p>
-</div>
-<div id="readlines" class="section level3">
-<h3><span class="header-section-number">1.2.3</span> readLines()</h3>
-<p>In the base collection of R utilities. However <code>read_lines()</code> may be slower than either the <code>readr</code> command <code>read_lines()</code> or the brio <code>read_lines()</code></p>
-<p><code>lear &lt;- readLines(&quot;lear.txt&quot;)</code> <code>hm &lt;- readLines(&quot;http://www.gutenberg.org/cache/epub/10136/pg10136.txt&quot;)</code></p>
-</div>
-<div id="read_file" class="section level3">
-<h3><span class="header-section-number">1.2.4</span> read_file()</h3>
-<p>This is in the tidyverse’s <code>readr</code> package. It will read an entire file into a single vector object of length one. It does not divide up the lines.</p>
-<p><code>lear &lt;- read_file(&quot;lear.txt&quot;)</code> <code>household_management &lt;- read_file(&quot;http://www.gutenberg.org/cache/epub/10136/pg10136.txt&quot;)</code></p>
-</div>
-<div id="read_lines" class="section level3">
-<h3><span class="header-section-number">1.2.5</span> read_lines()</h3>
-<p>This command is in the tidyverse’s <code>readr</code> package. It is a great default command to use for importing text into a character vector. It appears to work faster than the <code>readLines()</code> command.</p>
-<p><code>lear &lt;- read_lines(&quot;lear.txt&quot;)</code> <code>household_management &lt;- read_lines(&quot;http://www.gutenberg.org/cache/epub/10136/pg10136.txt&quot;)</code></p>
-</div>
-<div id="brio-read_lines" class="section level3">
-<h3><span class="header-section-number">1.2.6</span> brio: read_lines()</h3>
-<p>The <code>brio</code> package is an input/output package that always reads and writes UTF-8 Unicode files. It has its own <code>read_lines()</code> command which appears to run faster than the <code>readr</code> version. This might be useful if you are reading lots of very large files. However, note, that it will not download files remotely through a URL.</p>
-<p><code>lear &lt;- read_lines(&quot;lear.txt&quot;)</code></p>
-</div>
-</div>
-<div id="tidying-the-words-of-jane-austen" class="section level2">
-<h2><span class="header-section-number">1.3</span> <a href="https://www.tidytextmining.com/tidytext.html#tidyausten">Tidying the Words of Jane Austen</a></h2>
-<p>This section makes use of the package <code>janeaustenr</code>. The <code>austen_books()</code> command returns a tibble with two columns <code>text</code> and <code>books</code>. The first contains each line from each of the six completed published novels of Jane Austen, and the second column <code>book</code> gives the title of the book. The goal of the first commands are to add a column of line numbers.</p>
-<div id="group_by" class="section level3">
-<h3><span class="header-section-number">1.3.1</span> group_by()</h3>
-<p>To do this it uses the <code>group_by()</code> command to “group by” book and repeat the addition of line numbers for each book, starting each time from one. It also uses a regular expression, with <code>str_detect()</code> and <code>cumsum()</code> to add chapter numbers.</p>
-<p>Let us explain what is happening step by step. First, what does the <code>group_by()</code> do here? Examine the example code below using data from the <code>gapminder</code> package:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">library</span>(gapminder)</span>
-<span id="cb12-2"><a href="#cb12-2"></a>gapminder</span></code></pre></div>
-<pre><code>## # A tibble: 1,704 x 6
-##    country     continent  year lifeExp      pop gdpPercap
-##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
-##  1 Afghanistan Asia       1952    28.8  8425333      779.
-##  2 Afghanistan Asia       1957    30.3  9240934      821.
-##  3 Afghanistan Asia       1962    32.0 10267083      853.
-##  4 Afghanistan Asia       1967    34.0 11537966      836.
-##  5 Afghanistan Asia       1972    36.1 13079460      740.
-##  6 Afghanistan Asia       1977    38.4 14880372      786.
-##  7 Afghanistan Asia       1982    39.9 12881816      978.
-##  8 Afghanistan Asia       1987    40.8 13867957      852.
-##  9 Afghanistan Asia       1992    41.7 16317921      649.
-## 10 Afghanistan Asia       1997    41.8 22227415      635.
-## # … with 1,694 more rows</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>gapminder_withmedian &lt;-<span class="st"> </span>gapminder <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-2"><a href="#cb14-2"></a><span class="st">  </span><span class="kw">group_by</span>(year) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-3"><a href="#cb14-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">medianlife=</span><span class="kw">median</span>(lifeExp), </span>
-<span id="cb14-4"><a href="#cb14-4"></a>         <span class="dt">over_under=</span>(lifeExp<span class="op">-</span><span class="kw">median</span>(lifeExp))) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb14-5"><a href="#cb14-5"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
-<p>This package has a <code>lifeExp</code> column. When we <code>group_by(year)</code> we are combining all the different observations of various countries into groups, one for all the observations from 1952, one for all the observations from 1957, and so on. Then, when we pass this on to <code>mutate()</code>, which adds two new columns, the <code>median(lifeExp)</code> grabs the median of all life expectancies calculated for each grouped year, and for <code>over_under_median</code> subtracts the median across all observations for the year from the life expectancy of each row in turn, telling us how much the life expectancy is over or under the global median for that year. When we are done performing actions on a particular grouped set of data, we <code>ungroup()</code>. We see the resulting data for Cuba below:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>gapminder_withmedian <span class="op">%&gt;%</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">filter</span>(country<span class="op">==</span><span class="st">&quot;Cuba&quot;</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 8
-##    country continent  year lifeExp      pop gdpPercap medianlife over_under
-##    &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-##  1 Cuba    Americas   1952    59.4  6007797     5587.       45.1      14.3 
-##  2 Cuba    Americas   1957    62.3  6640752     6092.       48.4      14.0 
-##  3 Cuba    Americas   1962    65.2  7254373     5181.       50.9      14.4 
-##  4 Cuba    Americas   1967    68.3  8139332     5690.       53.8      14.5 
-##  5 Cuba    Americas   1972    70.7  8831348     5305.       56.5      14.2 
-##  6 Cuba    Americas   1977    72.6  9537988     6380.       59.7      13.0 
-##  7 Cuba    Americas   1982    73.7  9789224     7317.       62.4      11.3 
-##  8 Cuba    Americas   1987    74.2 10239839     7533.       65.8       8.34
-##  9 Cuba    Americas   1992    74.4 10723260     5593.       67.7       6.71
-## 10 Cuba    Americas   1997    76.2 10983007     5432.       69.4       6.76
-## 11 Cuba    Americas   2002    77.2 11226999     6341.       70.8       6.33
-## 12 Cuba    Americas   2007    78.3 11416987     8948.       71.9       6.34</code></pre>
-<p>Read more in section 5.1.3 of of <em>R for Data Science</em> <a href="https://r4ds.had.co.nz/transform.html">here</a>.</p>
-</div>
-<div id="mutate" class="section level3">
-<h3><span class="header-section-number">1.3.2</span> mutate()</h3>
-<p>As we saw above the <code>mutate()</code> function or “verb” can add new variables or new columns to a tibble, usually by carrying out some transformation on existing data. In the example above, we added two columns, one with the median life expectancy for all countries in a given year, and one which shows the gap between each country in that year and the median. Read more in section 5.5 of of <em>R for Data Science</em> <a href="https://r4ds.had.co.nz/transform.html">here</a>.</p>
-</div>
-<div id="str_detect-and-cumsum" class="section level3">
-<h3><span class="header-section-number">1.3.3</span> str_detect()** and <strong>cumsum()</strong></h3>
-<p>In the Jane Austen example, two new columns are added. One of them uses <code>row_number()</code> to give an incrementing line number to each line, in each group containing all the lines of a book. The second is more complicated:</p>
-<p><code>chapter = cumsum(str_detect(text, regex(&quot;^chapter [\\divxlc]&quot;, ignore_case = TRUE))))</code></p>
-<p>Let us examine this line step by step from the inside out. We want to find the location of the beginning of each chapter. This will be a line which is called something like “Chapter 14” or “Chapter IV”. So, a regular expression which, in a case insensitive way, looks for a line beginning with the word “chapter” (as a regular epxression <code>^chapter</code>) followed by a space and any of the following: any digit, or the letters i, v, x, l, or c (<code>[\\divxlc]</code>) will find the lines we are looking for. We don’t have to capture anything else: as long as we have found this, we have seen enough to conclude that this is the beginning of a chapter. This explains the <code>regex(&quot;^chapter [\\divxlc]&quot;, ignore_case = TRUE)</code>.</p>
-<p>Now for the <code>str_detect()</code>. This <code>stringr</code> function will search a character vector for a given phrase (in this case, a regular expression, rather than a simple string), and when it finds it, will return <code>TRUE</code>, otherwise it will return <code>FALSE</code>. For example, let us imagine I have a fruit basket with an apple, a pear, and a banana. If I want to search the basket to see if I have a banana, here is what that would look like with a search using <code>str_detect()</code>:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">library</span>(stringr)</span>
-<span id="cb17-2"><a href="#cb17-2"></a>fruit_basket &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;apple&quot;</span>, <span class="st">&quot;pear&quot;</span>, <span class="st">&quot;banana&quot;</span>)</span>
-<span id="cb17-3"><a href="#cb17-3"></a>find_banana &lt;-<span class="st"> </span>fruit_basket <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">str_detect</span>(<span class="st">&quot;banana&quot;</span>)</span>
-<span id="cb17-4"><a href="#cb17-4"></a>find_banana</span></code></pre></div>
-<pre><code>## [1] FALSE FALSE  TRUE</code></pre>
-<p>As you can see, it returned FALSE twice, because neither the apple nor the pear are bananas. Then, finding the banana, it returned TRUE. This collection of vectors can now be used to “select” just a few words from a list. In this case, we could make a new basket with just the banana we found:</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>new_basket &lt;-<span class="st"> </span>fruit_basket[find_banana]</span>
-<span id="cb19-2"><a href="#cb19-2"></a>new_basket</span></code></pre></div>
-<pre><code>## [1] &quot;banana&quot;</code></pre>
-<p>But what about the case of our book? It has returned a <code>TRUE</code> for every line in every Jane Austen book which is the beginning of a chapter. For example, the tenth line of <code>original_books</code> is “CHAPTER 1” so the tenth object in the vector returned by <code>str_detect</code> will be TRUE. Here is where <code>cumsum()</code> comes in. If I have a vector x, which contains some numbers, <code>cumsum()</code> will take the number (Any <code>TRUE</code> gets interpreted or “coerced” to a 1, and <code>FALSE</code> gets coerced to a 0) found in each vector and add to it cumulative sum of the items that come before it. So if: <code>x &lt;- c(1,2,3)</code> Then <code>cumsum(x)</code> will result in 1 3 and 6. The sum of 1 is just 1. The sum of 1+2 = 3, and the sum of 1+2+3 is 6. With logical vectors containing <code>FALSE</code> and <code>TRUE</code> here is an example:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>logical_example &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>,<span class="ot">FALSE</span>,<span class="ot">TRUE</span>)</span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="kw">cumsum</span>(logical_example)</span></code></pre></div>
-<pre><code>## [1] 1 1 2 2 3</code></pre>
-<p>The first <code>TRUE</code> is coerced to 1, then 1+0=1, then 1+0+1=2, then 1+0+1+0=2, then 1+0+1+0+1=3. This is why we end up with 1 1 2 2 3. And this is how the chapter numbers were obtained, by incrementing the chapter each time it finds (<code>TRUE</code>) another chapter head.</p>
-<p>After using <code>unnest_tokens()</code> to break the text down into words, the next piece of code loads a dataset called <code>stop_words</code> from the <code>tidytext</code> package. This is simple dataset with two columns, a “word” for a list of English language words, and second a “lexicon” to indicate the source of the list of stop words (onix, SMART, and snowball).</p>
-</div>
-<div id="anti_join" class="section level3">
-<h3><span class="header-section-number">1.3.4</span> anti_join()</h3>
-<p>The <code>anti_join()</code> command is like a cookie cutter: we “cut out” the words in the stop words list from the <code>tidy_books</code> variable. Also see more discussion of some of the other join commands further below. Let us show another example:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>seven_sins &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">characteristics=</span><span class="kw">c</span>(<span class="st">&quot;gluttony&quot;</span>,<span class="st">&quot;lust&quot;</span>,<span class="st">&quot;greed&quot;</span>,<span class="st">&quot;sloth&quot;</span>,<span class="st">&quot;wrath&quot;</span>,<span class="st">&quot;envy&quot;</span>,<span class="st">&quot;pride&quot;</span>))</span>
-<span id="cb23-2"><a href="#cb23-2"></a>my_personality &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">characteristics=</span><span class="kw">c</span>(<span class="st">&quot;gluttony&quot;</span>,<span class="st">&quot;modesty&quot;</span>,<span class="st">&quot;lust&quot;</span>,<span class="st">&quot;restraint&quot;</span>,<span class="st">&quot;greed&quot;</span>,<span class="st">&quot;industriousness&quot;</span>,<span class="st">&quot;sloth&quot;</span>,<span class="st">&quot;tolerance&quot;</span>,<span class="st">&quot;wrath&quot;</span>,<span class="st">&quot;generosity&quot;</span>,<span class="st">&quot;envy&quot;</span>,<span class="st">&quot;strenght&quot;</span>,<span class="st">&quot;pride&quot;</span>))</span>
-<span id="cb23-3"><a href="#cb23-3"></a>my_personality</span></code></pre></div>
-<pre><code>## # A tibble: 13 x 1
-##    characteristics
-##    &lt;chr&gt;          
-##  1 gluttony       
-##  2 modesty        
-##  3 lust           
-##  4 restraint      
-##  5 greed          
-##  6 industriousness
-##  7 sloth          
-##  8 tolerance      
-##  9 wrath          
-## 10 generosity     
-## 11 envy           
-## 12 strenght       
-## 13 pride</code></pre>
-<p>Notice that <code>my_personality</code> had a column <code>characteristics</code> which was the same as a column <code>characteristics</code> in the <code>seven_sins</code> tibble. We now have a list of sins, and collection of personality traits with some sins among them. Let us now remove all the sins from our personality and examine the result:</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>new_me &lt;-<span class="st"> </span>my_personality <span class="op">%&gt;%</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="st">  </span><span class="kw">anti_join</span>(seven_sins)</span>
-<span id="cb25-3"><a href="#cb25-3"></a>new_me</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 1
-##   characteristics
-##   &lt;chr&gt;          
-## 1 modesty        
-## 2 restraint      
-## 3 industriousness
-## 4 tolerance      
-## 5 generosity     
-## 6 strenght</code></pre>
-<p>Since the two tibbles had a column with the same name, we didn’t have to tell <code>anti_join()</code> which columns matched eachother. If our sins had been listed in column named <code>name</code> instead, we would get an error when running <code>anti_join</code>. To fix that, we can pass the information of what column mantches which column to <code>anti_join()</code> with: <code>anti_join(seven_sins, by = c(&quot;characteristics&quot; = &quot;name&quot;))</code></p>
-</div>
-<div id="count" class="section level3">
-<h3><span class="header-section-number">1.3.5</span> count()</h3>
-<p>Now that the stop words were removed, the remaining words were counted and sorted with the <code>dplyr</code> verb <code>count()</code>. This counts things in an inputted tibble and produces a list, optionally sorted, with the frequency in an “n” column. Here is another very simple example:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>drawer_contents &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">objects=</span><span class="kw">c</span>(<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pen&quot;</span>,<span class="st">&quot;pencil&quot;</span>,<span class="st">&quot;pencil&quot;</span>,<span class="st">&quot;eraser&quot;</span>,<span class="st">&quot;highlighter&quot;</span>,<span class="st">&quot;highlighter&quot;</span>,<span class="st">&quot;highlighter&quot;</span>,<span class="st">&quot;usb stick&quot;</span>,<span class="st">&quot;usb stick&quot;</span>))</span>
-<span id="cb27-2"><a href="#cb27-2"></a>drawer_contents <span class="op">%&gt;%</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a><span class="st">  </span><span class="kw">count</span>(objects, <span class="dt">sort =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
-<pre><code>## # A tibble: 5 x 2
-##   objects         n
-##   &lt;chr&gt;       &lt;int&gt;
-## 1 pen             6
-## 2 highlighter     3
-## 3 pencil          2
-## 4 usb stick       2
-## 5 eraser          1</code></pre>
-<p>Finally <code>ggplot2</code> is used to plot the resulting frequencies. Ggplot 2 is not something easily explained, and I would suggest you read the (online) <a href="https://r4ds.had.co.nz/data-visualisation.html">chapter 3</a> of <em>R for Data Science</em> for more details.</p>
-</div>
-</div>
-<div id="word-frequencies" class="section level2">
-<h2><span class="header-section-number">1.4</span> Word Frequencies</h2>
-<p>Much of this section builds on techniques from the earlier sections, but using the <code>gutenbergr</code> package to download and work with multiple books at once. There is one somewhat complicated section which uses <code>bind_rows()</code> to merge together several tibbles, uses <code>select()</code> with a negative to exclude only one column, then uses <code>spread()</code> and <code>gather()</code> from the <code>tidyr</code> package to reformulate the table.</p>
-<div id="bind_rows" class="section level3">
-<h3><span class="header-section-number">1.4.1</span> bind_rows()</h3>
-<p>This function from <code>dplyr</code> takes two tibbles or data frames and merges them together by stacking them on top of each other. Here is a simple example:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>some_countries &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">&quot;Hungary&quot;</span>,<span class="st">&quot;Lebanon&quot;</span>,<span class="st">&quot;Panama&quot;</span>),<span class="dt">language=</span><span class="kw">c</span>(<span class="st">&quot;Hungarian&quot;</span>,<span class="st">&quot;Arabic&quot;</span>,<span class="st">&quot;Spanish&quot;</span>))</span>
-<span id="cb29-2"><a href="#cb29-2"></a>more_countries &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">&quot;Cambodia&quot;</span>,<span class="st">&quot;Morroco&quot;</span>,<span class="st">&quot;Argentina&quot;</span>),<span class="dt">language=</span><span class="kw">c</span>(<span class="st">&quot;Khmer&quot;</span>,<span class="st">&quot;Arabic&quot;</span>,<span class="st">&quot;Spanish&quot;</span>))</span>
-<span id="cb29-3"><a href="#cb29-3"></a>all_countries &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(some_countries,more_countries)</span>
-<span id="cb29-4"><a href="#cb29-4"></a>all_countries <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">arrange</span>(language)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 2
-##   name      language 
-##   &lt;chr&gt;     &lt;chr&gt;    
-## 1 Lebanon   Arabic   
-## 2 Morroco   Arabic   
-## 3 Hungary   Hungarian
-## 4 Cambodia  Khmer    
-## 5 Panama    Spanish  
-## 6 Argentina Spanish</code></pre>
-<p>Here I used the <code>dplyr</code> verb <code>arrange()</code> to sort the final results by language. In the text, you will notice that instead of just passing it the <code>tidy_bronte</code> and <code>tidy_hgwells</code> etc. tibbles, it also used <code>mutate()</code> to first add a column with author information.</p>
-<p>Another column that is added is the percentage of words a given frequency is with: <code>mutate(proportion = n / sum(n))</code>. If the most frequent word is found 1,200 times in a text, but there are 1,200,000, then the proportional frequency of that word is 0.1% (1,200/1,200,000). The <code>sum(n)</code> derives the total number of words in the text by adding all the frequencies together.</p>
-<p>The <code>select(-n)</code> uses the <code>dplyr</code> verb <code>select()</code> which grabs data from only certain columns. However, if you put a “-” before the name of a column, you are saying, “Give me all the columns except this one.” For example, using the <code>all_countries</code> tibble above I can grab a list of just the names of the countries with either of the following:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>all_countries <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(name)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 1
-##   name     
-##   &lt;chr&gt;    
-## 1 Hungary  
-## 2 Lebanon  
-## 3 Panama   
-## 4 Cambodia 
-## 5 Morroco  
-## 6 Argentina</code></pre>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>all_countries <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="op">-</span>language)</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 1
-##   name     
-##   &lt;chr&gt;    
-## 1 Hungary  
-## 2 Lebanon  
-## 3 Panama   
-## 4 Cambodia 
-## 5 Morroco  
-## 6 Argentina</code></pre>
-<p>The <code>spread()</code> and <code>gather()</code> have, in recent versions of the <code>tidyr</code> package been renamed <code>pivot_wider</code> and <code>pivot_longer</code>. The best way to understand what is happening here is to take a closer look at the <code>tidyr</code> <a href="https://r4ds.had.co.nz/tidy-data.html?q=pivot#pivoting">vignette on pivot</a>.</p>
-</div>
-<div id="pivot_wider" class="section level3">
-<h3><span class="header-section-number">1.4.2</span> pivot_wider()</h3>
-<p>One technique in making data more “tidy” (each column a variable, each row an observation), is to “spread” or <code>pivot_wider()</code> a dataset. Imagine a case where we had some data on things you collected on a walk in the forest. The following data is not tidy because we have the thing collected in one field and the amount of them collected in another:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>foraging &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">day=</span><span class="kw">c</span>(<span class="st">&quot;Monday Trip&quot;</span>,<span class="st">&quot;Monday Trip&quot;</span>,<span class="st">&quot;Tuesday Trip&quot;</span>,<span class="st">&quot;Wednesday Trip&quot;</span>,<span class="st">&quot;Wednesday Trip&quot;</span>,<span class="st">&quot;Friday Trip&quot;</span>),<span class="dt">item=</span><span class="kw">c</span>(<span class="st">&quot;raspberry&quot;</span>,<span class="st">&quot;mushroom&quot;</span>,<span class="st">&quot;raspberry&quot;</span>,<span class="st">&quot;blackberry&quot;</span>,<span class="st">&quot;mushroom&quot;</span>,<span class="st">&quot;strawberry&quot;</span>),<span class="dt">amount=</span><span class="kw">c</span>(<span class="dv">14</span>,<span class="dv">3</span>,<span class="dv">27</span>,<span class="dv">35</span>,<span class="dv">6</span>,<span class="dv">18</span>))</span>
-<span id="cb35-2"><a href="#cb35-2"></a>foraging</span></code></pre></div>
-<pre><code>## # A tibble: 6 x 3
-##   day            item       amount
-##   &lt;chr&gt;          &lt;chr&gt;       &lt;dbl&gt;
-## 1 Monday Trip    raspberry      14
-## 2 Monday Trip    mushroom        3
-## 3 Tuesday Trip   raspberry      27
-## 4 Wednesday Trip blackberry     35
-## 5 Wednesday Trip mushroom        6
-## 6 Friday Trip    strawberry     18</code></pre>
-<p>If we think of our observations as as composed of the combined harvest of single trips to the forest, then the number of mushrooms collected are one variable and the strawberries collected as another, etc., and so these should be columns, not values in separate rows, with the number collected in a separate column. We can resolve this problem with <code>pivot_wider()</code> (the old spread):</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw">library</span>(tidyr)</span>
-<span id="cb37-2"><a href="#cb37-2"></a>tidy_foraging &lt;-<span class="st"> </span>foraging <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_wider</span>(<span class="dt">names_from=</span>item,<span class="dt">values_from=</span>amount,<span class="dt">values_fill=</span><span class="dv">0</span>)</span></code></pre></div>
-<p>The <code>names_from</code> determines where the names of the distinct columns will be pulled. Here the <code>item</code> column will be replaced by four columns corresponding to the four different kinds of things we are collecting. The <code>values_from</code> indicates where the values to be associated with those columns are to be found. Finally, the <code>values_fill</code> will handle cases where there are no available values. For example, when there is no data for one of the things potentially collected on a given trip. The resulting data will look like this:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>tidy_foraging</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 5
-##   day            raspberry mushroom blackberry strawberry
-##   &lt;chr&gt;              &lt;dbl&gt;    &lt;dbl&gt;      &lt;dbl&gt;      &lt;dbl&gt;
-## 1 Monday Trip           14        3          0          0
-## 2 Tuesday Trip          27        0          0          0
-## 3 Wednesday Trip         0        6         35          0
-## 4 Friday Trip            0        0          0         18</code></pre>
-<p>What about <code>pivot_longer()</code>? Imagine an untidy dataset which has a list of candidates and the votes they won in various years (This is very similar to the example used <a href="https://r4ds.had.co.nz/tidy-data.html?q=pivot#pivoting">here</a>).</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>votes &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">name=</span><span class="kw">c</span>(<span class="st">&quot;Mickey&quot;</span>,<span class="st">&quot;Goofy&quot;</span>,<span class="st">&quot;Minnie&quot;</span>,<span class="st">&quot;Donald&quot;</span>),<span class="st">&quot;2004&quot;</span>=<span class="kw">c</span>(<span class="dv">1200</span>,<span class="dv">1600</span>,<span class="dv">1400</span>,<span class="dv">1700</span>),<span class="st">&quot;2008&quot;</span>=<span class="kw">c</span>(<span class="dv">1400</span>,<span class="dv">900</span>,<span class="dv">1600</span>,<span class="dv">2000</span>),<span class="st">&quot;2011&quot;</span>=<span class="kw">c</span>(<span class="dv">1000</span>,<span class="dv">1000</span>,<span class="dv">2500</span>,<span class="dv">900</span>))</span>
-<span id="cb40-2"><a href="#cb40-2"></a>votes</span></code></pre></div>
-<pre><code>## # A tibble: 4 x 4
-##   name   `2004` `2008` `2011`
-##   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
-## 1 Mickey   1200   1400   1000
-## 2 Goofy    1600    900   1000
-## 3 Minnie   1400   1600   2500
-## 4 Donald   1700   2000    900</code></pre>
-<p>This is not a tidy dataset because our rows are not individual observations, as the columns contain multiple years and the individual cells are the observations. To convert this into a tidy format in which each row constitutes a single observation we can use <code>pivot_longer()</code>:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>tidy_votes &lt;-<span class="st"> </span>votes <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="kw">c</span>(<span class="st">&quot;2004&quot;</span>,<span class="st">&quot;2008&quot;</span>,<span class="st">&quot;2011&quot;</span>),<span class="dt">names_to=</span><span class="st">&quot;years&quot;</span>, <span class="dt">values_to=</span><span class="st">&quot;votes&quot;</span>)</span>
-<span id="cb42-2"><a href="#cb42-2"></a>tidy_votes</span></code></pre></div>
-<pre><code>## # A tibble: 12 x 3
-##    name   years votes
-##    &lt;chr&gt;  &lt;chr&gt; &lt;dbl&gt;
-##  1 Mickey 2004   1200
-##  2 Mickey 2008   1400
-##  3 Mickey 2011   1000
-##  4 Goofy  2004   1600
-##  5 Goofy  2008    900
-##  6 Goofy  2011   1000
-##  7 Minnie 2004   1400
-##  8 Minnie 2008   1600
-##  9 Minnie 2011   2500
-## 10 Donald 2004   1700
-## 11 Donald 2008   2000
-## 12 Donald 2011    900</code></pre>
-<p>Now each line of the dataset is an observation, how many votes someone got in a particular year.</p>
-<p>The plot that follows uses <code>ggplot</code> with the <code>scales</code> package, both of which cannot be covered in detail here. The final <code>cor.test()</code> is a simple correlation test between paired samples using Pearson’s product-moment correlation. You can read more in the documentation for this command.</p>
-</div>
-</div>
-</div>
-<div id="notes-on-ch-2-sentiment-analysis-with-tidy-data" class="section level1">
-<h1><span class="header-section-number">2</span> Notes on Ch 2: Sentiment Analysis with Tidy Data</h1>
-<div id="inner_join" class="section level3">
-<h3><span class="header-section-number">2.0.1</span> inner_join()</h3>
-</div>
-<div id="get_sentiments" class="section level3">
-<h3><span class="header-section-number">2.0.2</span> get_sentiments()</h3>
-</div>
-<div id="summarise" class="section level3">
-<h3><span class="header-section-number">2.0.3</span> summarise()</h3>
-</div>
-<div id="top_n" class="section level3">
-<h3><span class="header-section-number">2.0.4</span> top_n()</h3>
-</div>
-<div id="wordclouds" class="section level3">
-<h3><span class="header-section-number">2.0.5</span> Wordclouds</h3>
-</div>
-<div id="with" class="section level3">
-<h3><span class="header-section-number">2.0.6</span> with()</h3>
-</div>
-<div id="wordcloud" class="section level3">
-<h3><span class="header-section-number">2.0.7</span> wordcloud()</h3>
-</div>
-<div id="acast---reshape2" class="section level3">
-<h3><span class="header-section-number">2.0.8</span> acast() - reshape2</h3>
-</div>
-<div id="comparison.cloud" class="section level3">
-<h3><span class="header-section-number">2.0.9</span> comparison.cloud()</h3>
-</div>
-<div id="looking-at-units-beyond-just-words" class="section level2">
-<h2><span class="header-section-number">2.1</span> Looking at Units Beyond Just Words</h2>
-<div id="semi_join" class="section level3">
-<h3><span class="header-section-number">2.1.1</span> semi_join()</h3>
-</div>
-<div id="left_join" class="section level3">
-<h3><span class="header-section-number">2.1.2</span> left_join()</h3>
-</div>
-</div>
-</div>
-<div id="notes-on-ch-3-analyzing-word-and-document-frequency-tf-idf" class="section level1">
-<h1><span class="header-section-number">3</span> Notes on Ch 3: Analyzing Word and Document Frequency: tf-idf</h1>
-<p>“rule of thumb or heuristic quantity” “its theoretical foundations are considered less than firm by information theory experts.”</p>
-<div id="term-frequency-in-jane-austens-novels" class="section level2">
-<h2><span class="header-section-number">3.1</span> Term Frequency in Jane Austen’s Novels</h2>
-</div>
-<div id="zipfs-law" class="section level2">
-<h2><span class="header-section-number">3.2</span> Zipf’s Law</h2>
-</div>
-<div id="the-bind_tf_idf-function" class="section level2">
-<h2><span class="header-section-number">3.3</span> The bind_tf_idf Function</h2>
-</div>
-<div id="a-corpus-of-physics-texts" class="section level2">
-<h2><span class="header-section-number">3.4</span> A Corpus of Physics Texts</h2>
-</div>
+<div id="limiting-the-xpath-search" class="section level1">
+<h1>Limiting the Xpath Search</h1>
+<p>The problem with this, however, is that you have jumped outside the hierarchy and you would have to use the “id” number part of the persName id to figure out “where you are”. One solution would be to loop through the cases one by one, extract the information you need into variables, and then assign them to a row (per case) in a data frame.</p>
+<p>So, let us work with just one case, the first one. You can restrict the search to the current node down in an xpath with “.//”</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>mytrial &lt;-<span class="st"> </span>trialaccounts[[<span class="dv">1</span>]]</span>
+<span id="cb28-2"><a href="#cb28-2"></a>mytrial <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_all</span>(<span class="st">&#39;.//persName[@type=&quot;defendantName&quot;]&#39;</span>)</span></code></pre></div>
+<pre><code>## {xml_nodeset (1)}
+## [1] &lt;persName id=&quot;t16770601-1-defend1&quot; type=&quot;defendantName&quot;&gt;young fellow&lt;inte ...</code></pre>
+<p>Note that this found only the defendant in this trial, not all of them. Had we not included that initial “.” (start at this node) then it would have again found all of the defendants, as if we had run <code>xmlimport %&gt;% xml_find_all(&#39;//persName[@type=&quot;defendantName&quot;]</code> since it “knows” all the nodes, despite the fact we have assigned <code>mytrial</code> only the first of the trials.</p>
+<p><a href="https://kmlawson.github.io/dh-tutorials/">DH Tutorials Home</a><br />
+The <a href="https://github.com/kmlawson/dh-tutorials">GitHub Repository</a> for this handout and its files.<br />
+<a href="https://muninn.net/">Konrad M. Lawson</a>. <span class="citation">@kmlawson</span><br />
+Creative Commons - Attribution CC BY, 2020.</p>
 </div>
 
 

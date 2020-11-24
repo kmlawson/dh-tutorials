@@ -222,6 +222,54 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 </script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
 
 
 
@@ -369,13 +417,13 @@ summary {
 <p>This website will serve as a host for various tutorials I put together.</p>
 <p><a href="https://kmlawson.github.io/dh-tutorials/network.html">Toilers and Gangsters: Simple Network Visualization with R for Historians</a><br />
 <a href="https://kmlawson.github.io/dh-tutorials/cytoscape.html">Visualising Social Networks with Cytoscape</a><br />
-<a href="https://www.youtube.com/watch?v=3aq1jYTLjLg&list=PLIJOEWFlTTsFJUjPbn6W65-XwkArra3mR">QGIS Tutorials - YouTube Playlist</a></p>
-
+<a href="https://www.youtube.com/watch?v=3aq1jYTLjLg&amp;list=PLIJOEWFlTTsFJUjPbn6W65-XwkArra3mR">QGIS Tutorials - YouTube Playlist</a></p>
 <p>Handouts:</p>
-<a href="https://kmlawson.github.io/dh-tutorials/textanalysis.html">Text Analysis: An Overview with Readings</a></p>
-
-<p>In progress:</p>
-<p><a href="https://kmlawson.github.io/dh-tutorials/text.html">Text Mining Workflow - Gandhi Example</a></p>
+<p><a href="https://kmlawson.github.io/dh-tutorials/textanalysis.html">Text Analysis: An Overview with Readings</a></p>
+<p>Bits and Pieces:</p>
+<p><a href="https://kmlawson.github.io/dh-tutorials/textminingwithr_notes.html">Notes on Text Mining with R</a><br />
+<a href="https://kmlawson.github.io/dh-tutorials/text.html">Text Mining Workflow - Gandhi Example</a><br />
+<a href="https://kmlawson.github.io/dh-tutorials/xml2examples.html">xml2 Examples</a></p>
 
 
 
@@ -386,7 +434,7 @@ summary {
 
 // add bootstrap table styles to pandoc tables
 function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
 }
 $(document).ready(function () {
   bootstrapStylePandocTables();

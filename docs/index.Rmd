@@ -11,8 +11,15 @@ output:
 This website will serve as a host for various tutorials I put together. 
 
 [Toilers and Gangsters: Simple Network Visualization with R for Historians](https://kmlawson.github.io/dh-tutorials/network.html)  
-[Visualising Social Networks with Cytoscape](https://kmlawson.github.io/dh-tutorials/cytoscape.html)
+[Visualising Social Networks with Cytoscape](https://kmlawson.github.io/dh-tutorials/cytoscape.html)  
+[QGIS Tutorials - YouTube Playlist](https://www.youtube.com/watch?v=3aq1jYTLjLg&list=PLIJOEWFlTTsFJUjPbn6W65-XwkArra3mR)
 
-In progress:
+Handouts:
 
-[Text Mining Workflow - Gandhi Example](https://kmlawson.github.io/dh-tutorials/text.html)
+[Text Analysis: An Overview with Readings](https://kmlawson.github.io/dh-tutorials/textanalysis.html)
+
+Bits and Pieces:
+
+[Notes on Text Mining with R](https://kmlawson.github.io/dh-tutorials/textminingwithr_notes.html)  
+[Text Mining Workflow - Gandhi Example](https://kmlawson.github.io/dh-tutorials/text.html)  
+[xml2 Examples](https://kmlawson.github.io/dh-tutorials/xml2examples.html)

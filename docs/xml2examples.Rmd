@@ -1,0 +1,96 @@
+---
+title: "xml2 Examples"
+author: "Konrad M. Lawson"
+output: 
+  html_document:
+    highlight: monochrome
+    code_folding: show
+    toc: yes
+    toc_depth: 4
+    toc_float: no
+---
+
+This is a quick R Notebook to help a student work with an XML file using the `xml2` library, extracting various useful information from it. 
+
+Setup:
+```{r  message=FALSE}
+library(xml2)
+library(tidyverse)
+```
+
+In xml2 you can use `read_xml()` to import a document, and it will be saved as a class `xml_document` that can be further manipulated.
+
+```{r}
+xmlimport <- read_xml("xml/example.xml")
+class(xmlimport)
+xmlimport
+```
+# Children
+
+You can manually "step down" through an xml file with `xml_child`. Here are some examples of us stepping slowly down into the file (not the recommended way if you just want to grab something inside!).
+
+```{r}
+firstchild <- xmlimport %>% xml_children()
+firstchild
+secondchild <- firstchild %>% xml_children()
+secondchild
+thirdchild <- secondchild %>% xml_children()
+thirdchild
+fourthchild <- thirdchild %>% xml_children()
+fourthchild
+print("Now let us just grab one of these children:")
+fifthchild <- fourthchild[6]
+fifthchild
+# This is a div1 case and its enclosed sections
+div1child <- fifthchild %>% xml_children()
+# We are now inside of one of the cases and c
+div1child
+```
+# Xpath 
+
+You can find something inside an XML file using the incredibly powerful xpath. Using `xml_find_all()` you can specify an [xpath](https://www.w3schools.com/xml/xpath_syntax.asp) that refers to all the div1 tags in the file, for example. Then you could grab just a single one of those by number by digging into the list.
+```{r}
+# Find all div1 tags
+mycases <- xmlimport %>% xml_find_all("//div1")
+# Let us grab just the first case (after the frontMatter) by direct numerical call:
+mycases[[2]]
+
+```
+You can also further refine your search. Let us use xpath again to grab only the div1 tags that have the attribute "type" set to "trialAccount":
+
+```{r}
+trialaccounts <- xmlimport %>% xml_find_all('//div1[@type="trialAccount"]')
+trialaccounts
+```
+
+If you wanted all the defendants of your cases you could search for them across all cases:
+
+```{r}
+alldefendants <- xmlimport %>% xml_find_all('//persName[@type="defendantName"]')
+alldefendants
+```
+If you wanted to find all the **defendants** who are also **women**:
+
+```{r}
+womendefendants <- xmlimport %>% xml_find_all('//persName[@type="defendantName"]/interp[@type="gender" and @value="female"]')
+womendefendants
+```
+
+# Limiting the Xpath Search
+
+The problem with this, however, is that you have jumped outside the hierarchy and you would have to use the "id" number part of the persName id to figure out "where you are". One solution would be to loop through the cases one by one, extract the information you need into variables, and then assign them to a row (per case) in a data frame. 
+
+So, let us work with just one case, the first one. You can restrict the search to the current node down in an xpath with ".//"
+
+```{r}
+mytrial <- trialaccounts[[1]]
+mytrial %>% xml_find_all('.//persName[@type="defendantName"]')
+```
+Note that this found only the defendant in this trial, not all of them. Had we not included that initial "." (start at this node) then it would have again found all of the defendants, as if we had run `xmlimport %>% xml_find_all('//persName[@type="defendantName"]` since it "knows" all the nodes, despite the fact we have assigned `mytrial` only the first of the trials. 
+
+
+
+[DH Tutorials Home](https://kmlawson.github.io/dh-tutorials/)  
+The [GitHub Repository](https://github.com/kmlawson/dh-tutorials) for this handout and its files.  
+[Konrad M. Lawson](https://muninn.net/). @kmlawson  
+Creative Commons - Attribution CC BY, 2020.  

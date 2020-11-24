@@ -1,0 +1,149 @@
+---
+title: "Text Analysis: What Can you Do?"
+author: "Konrad M. Lawson"
+date: "07/11/2020"
+output: 
+  html_document:
+    highlight: monochrome
+    toc: yes
+    toc_depth: 4
+    toc_float: no
+---
+
+# Introduction: An Overview with Readings
+
+Broadly speaking, the majority of techniques used in historical research and listed below involve text analysis of a "**bag of words**" -- in which a text, or more often, a large collection (corpus) of texts is broken into an atomic collection of words or groups of words (n-grams) that are then operated upon by algorithms. The other method, with a long tradition of computational linguistics and natural language processing (NLP) behind them is "**syntactic parsing**" which uses parts of speech (POS) tagging to examine the sentences of texts within their grammatical context. It can be used for analysis of texts, for computational translation of texts, and the generation of language.
+
+Below are some of the kinds of processing of texts that are done with computational methods for heuristic, analytical, or illustrative purposes. Each section then contains some further reading resources from a handful of readings listed below. The goal is to add more web and video based material to the suggested resources here but it will begin by bringing together what can be found in books. Published books are usually behind the most recent developments, however, so are best combined with a range of other online materials, tutorials, and tools. 
+
+# Acquiring and Preparing Your Data
+
+For you to be able to do anything with your text, you need it in digital form. If you are fortunate to have that already at hand (Gutenberg project, Archive.org, other databases) then you may proceed to organising your material and analysing it. If you don't, one common way to get your texts in digital form is to digitise it with optical character recognition (**OCR**) with software such as ABBY FineReader or the open source Tesseract. If it is available online but embedded into websites, you can use programming or various tools for **Web Scraping** to automatically extract material from websites or download multiple texts automatically. Some works have been meaningfully tagged using the guidelines of the Text Encoding Initiative (**TEI**) and have texts in XML form, and some corpora are in a special format known as a Document Term Matrix (**DTM)** in which each line is a text, each column name a unique word token, and the contents of the cells the frequency of mentions of that word in the text. If you will be carrying out a lot of analysis of a large corpus of text, then consider exploring some of the things to think about when you do this.
+
+**See:** Silge 69-88 (Ch 5); Kwartler 9-50; Bengfort 19-36 (*Python*); Desagulier 1-10, 51-66; McGillivray 12-20
+
+Before you begin to carry out analysis, there is often pre-processing done to prepare the text(s) for use:
+
+- *OCR Correction:* If the text has been scanned and transformed into digital text by use of optical character recognition, some amount of correction of all, most, or at least commonly found OCR errors in the text, as well as removal of regularly appearing non-textual elements that have been recognized as text.  
+- *Language Detection:* If you have a corpus with multiple languages, some process of dividing up by or detecting language in the texts.  
+- *Sentence Segmentation:* Some applications require separation of information by sentences. Filter by punctuation.  
+- *Tokenization*: Bag of words based analyses divide a text into single tokens, words that might be divided by spaces and punctuation. Problems arise with multi-word units (MWUs) where a single term might span multiple words. Tokenization of languages where spaces are not primary means of dividing words etc. may require language specific segmentation tools (e.g. Chinese word segmentation) or compound splitting as in the case of German.  
+- *Removing Punctuation:* If this is not handled automatically during the tokenization process, punctuation can be removed.  
+- *Case Standardization:* In many but not all cases, standardizing on the case of words by making them all lower case, for example, is carried out.  
+- *Filtering out Stop Words:* This process eliminates a set of words, often from a prepared list, that are deemed to have little or no value for the analysis in question.  
+- *Unification:* A series of steps may be carried out to account for words that the analysis wants to treat as identical. Lemmatization (unifying inflected forms of words), stemming (removing a suffix according to a rule), or other forms of the unification of variants in a text. For example, if the same word is spelled in different ways, standardizing on one spelling can be carried out.  
+- *POS Tagging and Morphological Annotation:* The parts of speech may be tagged for disambiguation. In the process of lemmatization (see above), morphological annotation indicating the tense of verbs or the number of a noun.  
+- *NER:* Named-entity recognition can be used to identify words or combinations of words (if carried out prior to tokenization, in the case of bag of words analysis) which refer to named entities such as people, places, times, or the names of things such as institutions etc.  
+
+**See:** Wiedemann 26-28 (2.2.2), McGillivray 20-34 (2.4); Jo 21-40 (Ch 2)
+
+**Regular Expressions**
+
+Regular expressions, the mini-language allowing advanced search, replace, and cleaning of texts are used at all stages of text analysis: cleaning data, parsing data into different pieces, finding and filtering material in the data, and similar tasks throughout the process. It is a truly universal skill for all effective text mining.
+
+# Approaches and Techniques
+
+## Frequency Analysis
+
+One very common basic task, by itself or as part of a larger process, is determining the frequency of the usages of words in a text. This can be visualised with **bar charts** and **word clouds** or other means, or fed into other processes. Examining the frequencies of words need not be done with a single text, it can be compared in context with a group of other texts (see TF-IDF below) or in a large corpus to examine frequencies across time.
+
+*Sequence Alignment / Relative Frequency -* Related to the examination of the frequency of single words is to track similar passages in a group of texts or over time. Plagiarism detection software does this, and it is a basic component of the toolkit of bioinformatics as it traces genetic information, but literary scholars can also use this carry out **diachronic analysis** of texts over time even without any use of software. **Relative document frequency** gives you the percentage of documents within a corpus which contains the given term, with each set often divided by publication date or some other measure.
+
+**See:** McGillivray 43-46 (3.3)
+
+## Dispersion Plots
+
+Lexical Dispersion plots are visualisations that show the distribution of words across a text. They provide a nice at-a-glance view of when certain terms appear.
+
+**See:** Jockers 29-33; Silge 8-12 (Ch 1), 31-34 (Ch 3); Kwartler 51-86
+
+## TF-IDF
+
+Term Frequency and Inverse Document Frequency allows you to examine relative frequency of words in a text when seen in the context of a larger corpus of text. Some terms may be very common to the entire corpus, but TF-IDF can highlight those words in one text which are most uncommon across the average of all texts. It is a way to get a feel for what terms make a text distinct.
+
+**See:** Silge 31-44 (Ch 3); Kwartler 100-101; Bengfort 62-68 (*Python*); Ramsay 11-17; Arnold 157-162
+
+## KWIC / Concordance / Key Term Extraction
+
+A concordance is a list of words in a text with each word listed in its immediate surrounding context. Software called **concordancers**, often used by literary scholars, sociologists and anthropologists, can be used to explore a concordance of a supplied text to look for patterns in word use. Voyant tools and other general purpose text analysis software also offers this capability. This may be also be easily done with programming methods, and can be referred to as Key Word in Context (KWIC). See also collocation and its use in lexical semantics below for more on formal methods.
+
+**See:** Jockers 73-87, Rockwell 32-67; Desagulier 87-103
+
+## Collocation / Correlation
+
+Text analysis can explore the correlations, co-occurance, collocation, colligation (collocation of grammatical components) etc., association measures exploring the relationship between some word/s and other word/s. In Matthew Jocker's correlation example, he asks the question, what is the correlation of the appearance of the word *ahab* with the word *whale* in a text by, say, chapter? That is, the tendency of the presence of one to indicate the presence or lack of occurrence of the other. It allows you to examine the degree to which words are associated with each other. It may use techniques such as Pearson Product-moment correlation or Phi Coefficient. These methods are also employed together with graph software to produce visual representations of collocation or so-called collustruction networks or "word adjacency networks." The analysis does not need be on single separate words, but of particular combinations of words (**n-grams**) including bigrams (two words) and trigrams (three words).
+
+Collocation often compares the observed versus the expected probability of, for example, a particular bigram. Alternatively, it may examine words that co-occur within a certain distance (+/- 5 for example). As McGillivray puts it, the goal of collocation analysis is to distinguish words that occur together only by chance from those that don't (52), with a given strength of association determined by the use of methods such as Chi-square statistic, pointwise mutual information (PMI) calculation for (in a bigram) two words, minimum sensitivity measure, or a log likelihood ratio test. Collocation analysis is also useful in distributional approaches to **lexical semantics**, or the study of word meanings, which assumes that one can learn a lot about the meaning of a word by what other words it "keeps company" with, its context.
+
+**See:** Silge 45-67 (Ch 4), Jockers 47-56, Piper 86-93 and 136-146; Desagulier 198-225, 285-289; McGillivray 47-59 and 62-78; Stefanowitsch 215-260 (Ch 7); Levshina 223-240 (Ch 10)
+
+## Sentiment Analysis
+
+In sentiment analysis a lexicon of a few thousand words, which are each assigned a particular value to reflect its positive, negative, or category of sentiment, is used to trace the sentiment across a text. **Lexicons** such as **AFINN** (which assigns some words a score -5 to 5), **Bing** (which assigns words the value positive or negative), and **NRC** (which assigns words to qualitative categories such as trust, fear, negative, anger) transfer their value for words found in their lexicon to those found in a text or corpus for analysis. This can be used to evaluate the overall sentiment of a text, trace changes in sentiment in different parts of a text or between texts of a corpus, and so on.
+
+**See:** Silge 13-29 (Ch 2), Kwartler 85-127, DataCamp course "Sentiment Analysis in R: The Tidy Way"; see also Erik Cambria et al. *A Practical Guide to Sentiment Analysis* (2017) and Bing Liu, *Sentiment Analysis: Mining Sentiments, Opinions, and Emotions* (2015).
+
+## Measures of Lexical Richness
+
+A variety of computational approaches can explore the richness, difficulty, or variety of language used in a text. One key method is **TTR -- Type Token Ratios** (ratio of unique word types to total word tokens). Some measures of lexical variety are sensitive to the length of the text and should consider ways to counteract the impact when examining multiple texts in comparison. You may use something called Yule's characteristic constant K. A similar category of analysis is exploration of **Hapax legomena** (words that occur only once in a context) in a text.
+
+**See**: Jockers 59-66, and 69-72; Piper 54-65; Desagulier 226-235
+
+## Named-entity Recognition
+
+NER, mentioned above in pre-processing, is a common component of text analysis and makes use of various tools or libraries of code (such as OpenNLP) to extract (also called chunking) people, places, organisations or other custom defined named entities from a text. Once NER has been carried out tools such as RezoViz or graphing code libraries in programming languages can graph the networks of connections of places and people across multiple texts.
+
+**See:** Kwartler 238-247, Rockwell 138-143; Desagulier
+
+## Clustering / Classification / Dimensionality Reduction / Topic Modeling
+
+Document **clustering** is an *unsupervised* machine learning approach to identifying groups of texts (or pieces of a text) by looking at similar features between the texts, using approaches such as "**k-means clustering**" or "string distance" or other approaches. It may involve, for example, calculating the Euclidean "distance" or cosine similarity between texts in terms of their relative difference. The product will be a series of clusters of texts according to how related they are, which can be visualised in various ways, including a root-like dendrogram view.
+
+**See:** Jockers 101-117; Savoy Ch 3; Jo 9-10 (1.3.2), and Ch 9-12
+
+Machine **classification** usually uses a *supervised* modelling approach (such as k-nearest neighbor, naïve bayes, support vector machines) to problems such as author attribution, genre identification, and useful in other cases where you have known categories and which to determine which category a given text more resembles.
+
+**See:** Jockers 119-133, Kwartler 181-236, 209-235, Bengfort 81-96 (*Python*), Piper 94-117; Underwood 34-110; Levshina 291-300 (Ch 14); Savoy 109-152 (Ch 6); Jo 7-8 (1.3.1), and Ch 5-8
+
+*Dimensionality Reduction:* These methods attempt to "reduce the dimensions" of a text on the assumption that high co-occurrence rates imply latent structures. Methods that explore this include methods such as Principal Component Analysis (**PCA**), Multi-Dimensional Scaling (MDS) and Correspondence Analysis performed on a Document Term Matrix (DTM, see above). The output can, for example, be projected in a two-dimensional space. Latent Semantic Analysis (LSA), Latent Semantic Indexing (LSI), which attempts to overcome shortcomings of LSA, employ a linear algebra technique called singular value decomposition (SVD) to identify concepts in a text. Another statistical approach, assuming a set of latent variables called a latent class model (LCM) is Probabilistic latent semantic analysis (PLSA), and when a so-called Dirichlet distribution is assumed, a Latent Dirichlet Allocation (LDA) model can be used (see topic modelling below).
+
+**See:** Kwartler 129-147, Bengfort 97-110, 170-176 (*Python*); McGillivray 81-115 (Ch 6); Levshina 367-386 (Ch 19 on correspondence analysis); Desagulier 257-276 (10.4-5 correspondence analysis)
+
+Principal Component Analysis (**PCA**) is a form of multivariate statistical analysis often used in stylometry (sometimes calling it eigenanalysis) to analyse texts and their authorship. The technique breaks texts down into "principal components" and tries to explain as much variation in the data as possible from as few components as possible. Input is often frequencies of certain key words in a collection of text blocks. This then used to map the structural features of collection. It has some similarities with process of text clustering (see above) and can be used together with methods such as k-means clustering.
+
+**See:** Savoy 46-52 (3.5); Levshina 353-366 (18.2.2); Jo 44-45 (3.2.2); Desagulier 242-256 (10.2)
+
+Some of the methods discussed here may be applied to **Topic Modeling**, using methods such as the unsupervised machine learning approach Latent Dirichlet allocation (**LDA**) which takes a similar approach to the clustering (see above) approach to identify clusters (of a designated number, for example k=3 or three topics) within a text that correspond to certain defined topics. It assumes every document is a mix of topics and every topic a mix of words. In R, *topicmodels*, *mallet*, and *lda* are three common topic modelling libraries. Since 2013, a new approach called "Word Embedding" is growing in use with *wordVectors*, *text2vec* as R libraries.
+
+**See:** Jockers 135-159, Kwartler 154-179, Bengfort 111-123 (*Python*), Piper 66-85; Arnold 162-174; Savoy 160-162
+
+## Syntactic Analysis
+
+This is a collection of analysis approaches that makes use of the syntactic structure of the text, rather than a bag of words. Particularly important in translation software and language generation for artificial intelligence.
+
+**See:** Bengfort 125-150 (Ch 7); Underwood 111-142; Arnold 131-153; Desagulier 59-67
+
+# Books
+
+- Taylor **Arnold** and Lauren Tilton *Humanities Data in R*
+- Matthew L. **Jockers** *Text Analysis with R for Students of Literature*
+- Ted **Kwartler** *Text Mining in Practice with R*
+- Julia **Silge** & David Robinson *Text Mining with R*
+- Benjamin **Bengfort**, Rebeccas Bilbro, and Tony Ojeda *Applied Text Analysis with Python*
+- Geoffrey **Rockwell** and Stéfan Sinclair *Hermeneutica*
+- Gregor **Wiedemann** *Text Mining for Qualitative Data Analysis in the Social Sciences*
+- Taeho **Jo** *Text Mining: Concepts, Implementation, and Big Data Challenge*
+- Guillaume **Desagulier** *Corpus Linguistics and Statistics with R*
+- Anatol **Stefanowitsch** *Corpus Linguistics: A Guide to the Methodology*
+- Jacques **Savoy** *Machine Learning Methods for Stylometry*
+- Barbara **McGillivray** and Gábor Mihály Tóth *Applying Language Technology in Humanities Research*
+- Natalia **Levshina** *How to do Linguistics with R*
+- Stephen **Ramsay** *Reading Machines*
+- Andrew **Piper** *Enumerations: Data and Literary Study*
+- Ted **Underwood** *Distant Horizons*
+
+
+[DH Tutorials Home](https://kmlawson.github.io/dh-tutorials/)  
+The [GitHub Repository](https://github.com/kmlawson/dh-tutorials) for this handout and its files.  
+[Konrad M. Lawson](https://muninn.net/). @kmlawson  
+Creative Commons - Attribution CC BY, 2020.  
