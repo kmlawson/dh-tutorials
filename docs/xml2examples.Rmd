@@ -12,6 +12,8 @@ output:
 
 This is a quick R Notebook to help a student work with an XML file using the `xml2` library, extracting various useful information from it. 
 
+It uses the example file [found here](https://kmlawson.github.io/dh-tutorials/xml/example.xml).
+
 Setup:
 ```{r  message=FALSE}
 library(xml2)
