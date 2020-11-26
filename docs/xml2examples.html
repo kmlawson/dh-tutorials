@@ -557,6 +557,7 @@ summary {
 <li><a href="#children">Children</a></li>
 <li><a href="#xpath">Xpath</a></li>
 <li><a href="#limiting-the-xpath-search">Limiting the Xpath Search</a></li>
+<li><a href="#create-a-tibble-with-a-list-of-all-defendants">Create a Tibble with a List of all Defendants</a></li>
 </ul>
 </div>
 
@@ -695,6 +696,51 @@ summary {
 <pre><code>## {xml_nodeset (1)}
 ## [1] &lt;persName id=&quot;t16770601-1-defend1&quot; type=&quot;defendantName&quot;&gt;young fellow&lt;inte ...</code></pre>
 <p>Note that this found only the defendant in this trial, not all of them. Had we not included that initial “.” (start at this node) then it would have again found all of the defendants, as if we had run <code>xmlimport %&gt;% xml_find_all(&#39;//persName[@type=&quot;defendantName&quot;]</code> since it “knows” all the nodes, despite the fact we have assigned <code>mytrial</code> only the first of the trials.</p>
+</div>
+<div id="create-a-tibble-with-a-list-of-all-defendants" class="section level1">
+<h1>Create a Tibble with a List of all Defendants</h1>
+<p>You can extract the raw material from inside the XML file with a combination of <code>xml_attr()</code> to find the contents of attributes, and <code>xml_text()</code> to extract the inside of <code>&lt;bla&gt;tags&lt;/bla&gt;</code>.</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># We already did this abvoe: trialaccounts &lt;- xmlimport %&gt;% xml_find_all(&#39;//div1[@type=&quot;trialAccount&quot;]&#39;)</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># Just as a precaution, I&#39;m going to create an empty tibble:</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>defendants=<span class="ot">NULL</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(trialaccounts)) {</span>
+<span id="cb30-6"><a href="#cb30-6"></a>  <span class="co"># The trial id is part of the div1 tag, which is the node we are currently on, so just grab the attribute:</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>  trialid &lt;-<span class="st"> </span>trialaccounts[[i]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_attr</span>(<span class="st">&quot;id&quot;</span>)</span>
+<span id="cb30-8"><a href="#cb30-8"></a>  <span class="co"># There should be only one year so just find the first hit among the interp tags:</span></span>
+<span id="cb30-9"><a href="#cb30-9"></a>  year &lt;-<span class="st"> </span>trialaccounts[[i]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_find_first</span>(<span class="st">&#39;.//interp[@type=&quot;year&quot;]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">xml_attr</span>(<span class="st">&quot;value&quot;</span>)</span>
+<span id="cb30-10"><a href="#cb30-10"></a>  <span class="co"># Get the gender of all the defendants:</span></span>
+<span id="cb30-11"><a href="#cb30-11"></a>  genderdefendants &lt;-<span class="st"> </span>trialaccounts[[i]] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-12"><a href="#cb30-12"></a><span class="st">    </span><span class="kw">xml_find_all</span>(<span class="st">&#39;.//persName[@type=&quot;defendantName&quot;]/interp[@type=&quot;gender&quot;]&#39;</span>) <span class="op">%&gt;%</span></span>
+<span id="cb30-13"><a href="#cb30-13"></a><span class="st">    </span><span class="kw">xml_attr</span>(<span class="st">&quot;value&quot;</span>)</span>
+<span id="cb30-14"><a href="#cb30-14"></a>  <span class="co"># Get the text inside the persName tag which gives us the original description:</span></span>
+<span id="cb30-15"><a href="#cb30-15"></a>  descrip &lt;-<span class="st"> </span>trialaccounts[[i]] <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-16"><a href="#cb30-16"></a><span class="st">    </span><span class="kw">xml_find_all</span>(<span class="st">&#39;.//persName[@type=&quot;defendantName&quot;]&#39;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb30-17"><a href="#cb30-17"></a><span class="st">    </span><span class="kw">xml_text</span>(<span class="dt">trim=</span><span class="ot">TRUE</span>)</span>
+<span id="cb30-18"><a href="#cb30-18"></a>  <span class="co"># Now we have all the information we need, now let us add the data to a row of a dataframe.</span></span>
+<span id="cb30-19"><a href="#cb30-19"></a>  <span class="co"># It is possible that we have more than one defendant in genderdefendants so we need another loop:</span></span>
+<span id="cb30-20"><a href="#cb30-20"></a>  <span class="cf">for</span>(j <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="kw">length</span>(genderdefendants)) { </span>
+<span id="cb30-21"><a href="#cb30-21"></a>    defendants &lt;-<span class="st"> </span>defendants <span class="op">%&gt;%</span></span>
+<span id="cb30-22"><a href="#cb30-22"></a><span class="st">      </span><span class="kw">bind_rows</span>(<span class="kw">tibble</span>(<span class="dt">defendantid=</span>i,<span class="dt">trial_id=</span>trialid,<span class="dt">year_tried=</span>year,<span class="dt">description=</span>descrip,<span class="dt">gender=</span>genderdefendants[j]))</span>
+<span id="cb30-23"><a href="#cb30-23"></a>  }</span>
+<span id="cb30-24"><a href="#cb30-24"></a>}</span>
+<span id="cb30-25"><a href="#cb30-25"></a>defendants</span></code></pre></div>
+<pre><code>## # A tibble: 13 x 5
+##    defendantid trial_id     year_tried description     gender
+##          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;      &lt;chr&gt;           &lt;chr&gt; 
+##  1           1 t16770601-1  1677       young fellow    male  
+##  2           2 t16770601-2  1677       pickpocket      male  
+##  3           3 t16770601-3  1677       young Girl      female
+##  4           4 t16770601-4  1677       Highway-man     male  
+##  5           5 t16770601-5  1677       Victualer       male  
+##  6           6 t16770601-6  1677       Midwife         female
+##  7           6 t16770601-6  1677       aged poor women female
+##  8           6 t16770601-6  1677       Midwife         female
+##  9           6 t16770601-6  1677       aged poor women female
+## 10           7 t16770601-7  1677       Gentleman       male  
+## 11           8 t16770601-8  1677       person          male  
+## 12           9 t16770601-9  1677       woman           female
+## 13          10 t16770601-10 1677       young Man       male</code></pre>
 <p><a href="https://kmlawson.github.io/dh-tutorials/">DH Tutorials Home</a><br />
 The <a href="https://github.com/kmlawson/dh-tutorials">GitHub Repository</a> for this handout and its files.<br />
 <a href="https://muninn.net/">Konrad M. Lawson</a>. <span class="citation">@kmlawson</span><br />

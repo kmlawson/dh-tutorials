@@ -41,6 +41,7 @@ Let us load some libraries for our use:
 library(tidyverse)
 library(stringr)
 library(tidytext)
+library(tictoc)
 ```
 
 
@@ -50,13 +51,25 @@ Then we'll import each file.
 
 ```{r Import Volumes}
 mergedlines<-NULL
-
+tic()
 for(i in list.files("gandhi/")) 
 {
   importedfile=as_data_frame(list(text=read_lines(paste0("gandhi/",i)),volume=str_replace(i,".txt","")))
   mergedlines<-bind_rows(mergedlines,importedfile)
 }
 nrow(mergedlines)
+toc()
+```
+```{r}
+mergedlines<-NULL
+tic()
+for(i in list.files("gandhi/")) 
+{
+  importedfile=as_data_frame(list(text=read_lines(paste0("gandhi/",i)),volume=str_replace(i,".txt","")))
+  mergedlines<-bind_rows(mergedlines,importedfile)
+}
+nrow(mergedlines)
+toc()
 ```
 
 The `read_lines()` command will read our file into a vector of lines of text (I have gotten the location of the file by merging the directory location and the file name of the current imported file i using the `paste0()` command). The `as_data_frame()` command, that creates a tibble, expects a `list` so we give it one consisting of the imported file as text and seperately the volume number, which we have extracted from the file name using `str_replace()`
@@ -64,20 +77,26 @@ The `read_lines()` command will read our file into a vector of lines of text (I 
 Each time I import a file, I use `bind_rows()` to merge it the the lines of all the previous volumes. Using `nrow()` you can see that the total lines of all these volumes is close to two million lines of text.
 
 ```{r Divide by Documents}
+tic()
 currentdoc<-NA
 mergedlines <- mergedlines %>%
   mutate(document="Unknown")
-count<-0
-for(i in mergedlines$text)
+finddocs<-function(line)
 {
-  count<-count+1
-  if(str_detect(i,"\\d+\\. [A-Z][A-Z]+"))
-  {
-    currentdoc<-i
-  }
-  mergedlines$document[count]<-str_replace(currentdoc,"\f","")
+  
 }
-
+# count<-0
+# for(i in mergedlines$text)
+# {
+#   count<-count+1
+#   if(str_detect(i,"\\d+\\. [A-Z][A-Z]+"))
+#   {
+#     currentdoc<-i
+#   }
+#  
+# }
+ # mergedlines$document[count]<-str_replace(currentdoc,"\f","")
+toc()
 ```
 
 **NOTE**: This process up to here took 6 seconds for me with a single volume (#15) and 42 seconds with three volumes. If you add all the volumes from vol. 15-97, for example it may take as long as 20-30 minutes to process everything. It is not unusual to have large data sets take a very long time to process. 
@@ -85,6 +104,7 @@ for(i in mergedlines$text)
 Now let us break this down into tokens, remove common stop words and look at basic frequencies:
 
 ```{r}
+tic()
 tidy_volumes <- mergedlines %>%
   unnest_tokens(word,text)
 
@@ -103,6 +123,7 @@ head(word_freq,40) %>%
   ggplot(aes(word,n)) +
   geom_col() +
   coord_flip()
+toc()
 ```
 
 It looks like some numbers might have been worth adding to the stop word list...

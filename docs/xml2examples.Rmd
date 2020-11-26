@@ -90,6 +90,39 @@ mytrial %>% xml_find_all('.//persName[@type="defendantName"]')
 ```
 Note that this found only the defendant in this trial, not all of them. Had we not included that initial "." (start at this node) then it would have again found all of the defendants, as if we had run `xmlimport %>% xml_find_all('//persName[@type="defendantName"]` since it "knows" all the nodes, despite the fact we have assigned `mytrial` only the first of the trials. 
 
+# Create a Tibble with a List of all Defendants
+
+You can extract the raw material from inside the XML file with a combination of `xml_attr()` to find the contents of attributes, and `xml_text()` to extract the inside of `<bla>tags</bla>`.
+
+```{r}
+# We already did this abvoe: trialaccounts <- xmlimport %>% xml_find_all('//div1[@type="trialAccount"]')
+
+# Just as a precaution, I'm going to create an empty tibble:
+defendants=NULL
+for(i in 1:length(trialaccounts)) {
+  # The trial id is part of the div1 tag, which is the node we are currently on, so just grab the attribute:
+  trialid <- trialaccounts[[i]] %>% xml_attr("id")
+  # There should be only one year so just find the first hit among the interp tags:
+  year <- trialaccounts[[i]] %>% xml_find_first('.//interp[@type="year"]') %>% xml_attr("value")
+  # Get the gender of all the defendants:
+  genderdefendants <- trialaccounts[[i]] %>% 
+    xml_find_all('.//persName[@type="defendantName"]/interp[@type="gender"]') %>%
+    xml_attr("value")
+  # Get the text inside the persName tag which gives us the original description:
+  descrip <- trialaccounts[[i]] %>% 
+    xml_find_all('.//persName[@type="defendantName"]') %>% 
+    xml_text(trim=TRUE)
+  # Now we have all the information we need, now let us add the data to a row of a dataframe.
+  # It is possible that we have more than one defendant in genderdefendants so we need another loop:
+  for(j in 1:length(genderdefendants)) { 
+    defendants <- defendants %>%
+      bind_rows(tibble(defendantid=i,trial_id=trialid,year_tried=year,description=descrip,gender=genderdefendants[j]))
+  }
+}
+defendants
+```
+
+
 
 
 [DH Tutorials Home](https://kmlawson.github.io/dh-tutorials/)  
